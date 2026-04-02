@@ -144,7 +144,7 @@ tr:hover td{background:rgba(27,77,62,0.02)}
 .task-item:last-child{border-bottom:none}
 .task-check{width:18px;height:18px;border:1.5px solid var(--border);border-radius:5px;flex-shrink:0;margin-top:1px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
 .task-check.done{background:var(--em);border-color:var(--em)}
-.task-check.done::after{content:'✓';color:white;font-size:10px}
+.task-check.done::after{content:'â';color:white;font-size:10px}
 .task-txt{font-size:13px;line-height:1.5}
 .task-meta{font-size:11px;color:var(--dark60);margin-top:2px}
 
@@ -255,38 +255,38 @@ tr:hover td{background:rgba(27,77,62,0.02)}
 </head>
 <body>
 
-<!-- ═══════════════ SCREEN: LOGIN ═══════════════ -->
+<!-- âââââââââââââââ SCREEN: LOGIN âââââââââââââââ -->
 <div class="screen active" id="screen-login">
 <div class="auth-wrap">
   <div class="auth-logo">
     <div class="auth-mark"><div class="auth-mark-inner"></div></div>
     <div class="auth-app-name">Property Control</div>
-    <div class="auth-tagline" id="l-tagline">Управление недвижимостью · Sofia, Bulgaria</div>
+    <div style="display:flex;gap:6px;justify-content:center;margin-top:12px" id="auth-lang-row"><button onclick="setAuthLang('ru',this)" style="padding:5px 16px;border-radius:20px;border:1.5px solid #1B4D3E;background:#1B4D3E;color:white;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer">RU</button><button onclick="setAuthLang('en',this)" style="padding:5px 16px;border-radius:20px;border:1.5px solid #1B4D3E;background:transparent;color:#1B4D3E;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer">EN</button><button onclick="setAuthLang('bg',this)" style="padding:5px 16px;border-radius:20px;border:1.5px solid #1B4D3E;background:transparent;color:#1B4D3E;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer">BG</button></div><div class="auth-tagline" id="l-tagline">Ð£Ð¿ÑÐ°Ð²Ð»ÐµÐ½Ð¸Ðµ Ð½ÐµÐ´Ð²Ð¸Ð¶Ð¸Ð¼Ð¾ÑÑÑÑ Â· Sofia, Bulgaria</div>
   </div>
   <div class="auth-card">
     <div class="auth-error" id="login-error"></div>
-    <div class="auth-title" id="l-title">Добро пожаловать</div>
+    <div class="auth-title" id="l-title">ÐÐ¾Ð±ÑÐ¾ Ð¿Ð¾Ð¶Ð°Ð»Ð¾Ð²Ð°ÑÑ</div>
     <div class="form-group">
       <label class="form-label" id="l-email">Email</label>
       <input class="form-input" type="email" id="inp-email" placeholder="your@email.com" autocomplete="email">
     </div>
     <div class="form-group">
-      <label class="form-label" id="l-pass">Пароль</label>
-      <input class="form-input" type="password" id="inp-pass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLoginSupabase()">
+      <label class="form-label" id="l-pass">ÐÐ°ÑÐ¾Ð»Ñ</label>
+      <input class="form-input" type="password" id="inp-pass" placeholder="â¢â¢â¢â¢â¢â¢â¢â¢" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLoginSupabase()">
     </div>
-    <button class="btn-main" onclick="doLoginSupabase()" id="l-btn">Войти</button>
-    <div class="auth-divider" id="l-or">или</div>
+    <button class="btn-main" onclick="doLoginSupabase()" id="l-btn">ÐÐ¾Ð¹ÑÐ¸</button>
+    <div class="auth-divider" id="l-or">Ð¸Ð»Ð¸</div>
     <button class="btn-google" onclick="doGoogleLogin()">
       <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-      <span id="l-google">Войти через Google</span>
+      <span id="l-google">ÐÐ¾Ð¹ÑÐ¸ ÑÐµÑÐµÐ· Google</span>
     </button>
-    <div class="auth-link"><span id="l-no-acc">Нет аккаунта?</span> <a href="#" onclick="showScreen('screen-register')" id="l-reg-link">Зарегистрироваться</a></div>
-    <div class="auth-link" style="margin-top:.5rem"><a href="#" onclick="showScreen('screen-forgot')" id="l-forgot-link" style="font-size:12px;color:var(--dark60)">Забыли пароль?</a></div>
+    <div class="auth-link"><span id="l-no-acc">ÐÐµÑ Ð°ÐºÐºÐ°ÑÐ½ÑÐ°?</span> <a href="#" onclick="showScreen('screen-register')" id="l-reg-link">ÐÐ°ÑÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ¾Ð²Ð°ÑÑÑÑ</a></div>
+    <div class="auth-link" style="margin-top:.5rem"><a href="#" onclick="showScreen('screen-forgot')" id="l-forgot-link" style="font-size:12px;color:var(--dark60)">ÐÐ°Ð±ÑÐ»Ð¸ Ð¿Ð°ÑÐ¾Ð»Ñ?</a></div>
   </div>
 </div>
 </div>
 
-<!-- ═══════════════ SCREEN: REGISTER ═══════════════ -->
+<!-- âââââââââââââââ SCREEN: REGISTER âââââââââââââââ -->
 <div class="screen" id="screen-register">
 <div class="auth-wrap">
   <div class="auth-logo">
@@ -296,35 +296,35 @@ tr:hover td{background:rgba(27,77,62,0.02)}
   <div class="auth-card">
     <div class="auth-error" id="reg-error"></div>
     <div class="auth-success" id="reg-success"></div>
-    <div class="auth-title" id="r-title">Создать аккаунт</div>
+    <div class="auth-title" id="r-title">Ð¡Ð¾Ð·Ð´Ð°ÑÑ Ð°ÐºÐºÐ°ÑÐ½Ñ</div>
     <div class="form-group">
-      <label class="form-label" id="r-name-l">Имя и фамилия</label>
-      <input class="form-input" type="text" id="inp-name" placeholder="Иван Иванов">
+      <label class="form-label" id="r-name-l">ÐÐ¼Ñ Ð¸ ÑÐ°Ð¼Ð¸Ð»Ð¸Ñ</label>
+      <input class="form-input" type="text" id="inp-name" placeholder="ÐÐ²Ð°Ð½ ÐÐ²Ð°Ð½Ð¾Ð²">
     </div>
     <div class="form-group">
       <label class="form-label">Email</label>
       <input class="form-input" type="email" id="inp-reg-email" placeholder="your@email.com">
     </div>
     <div class="form-group">
-      <label class="form-label" id="r-phone-l">Телефон</label>
+      <label class="form-label" id="r-phone-l">Ð¢ÐµÐ»ÐµÑÐ¾Ð½</label>
       <input class="form-input" type="tel" id="inp-phone" placeholder="+7 / +359 ...">
     </div>
     <div class="form-group">
-      <label class="form-label" id="r-pass-l">Пароль</label>
-      <input class="form-input" type="password" id="inp-reg-pass" placeholder="Минимум 8 символов">
+      <label class="form-label" id="r-pass-l">ÐÐ°ÑÐ¾Ð»Ñ</label>
+      <input class="form-input" type="password" id="inp-reg-pass" placeholder="ÐÐ¸Ð½Ð¸Ð¼ÑÐ¼ 8 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð¾Ð²">
     </div>
-    <button class="btn-main" onclick="doRegisterSupabase()" id="r-btn">Зарегистрироваться</button>
-    <div class="auth-divider" id="r-or">или</div>
+    <button class="btn-main" onclick="doRegisterSupabase()" id="r-btn">ÐÐ°ÑÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ¾Ð²Ð°ÑÑÑÑ</button>
+    <div class="auth-divider" id="r-or">Ð¸Ð»Ð¸</div>
     <button class="btn-google" onclick="doGoogleLogin()">
       <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-      <span id="r-google">Войти через Google</span>
+      <span id="r-google">ÐÐ¾Ð¹ÑÐ¸ ÑÐµÑÐµÐ· Google</span>
     </button>
-    <div class="auth-link"><span id="r-have-acc">Уже есть аккаунт?</span> <a href="#" onclick="showScreen('screen-login')" id="r-login-link">Войти</a></div>
+    <div class="auth-link"><span id="r-have-acc">Ð£Ð¶Ðµ ÐµÑÑÑ Ð°ÐºÐºÐ°ÑÐ½Ñ?</span> <a href="#" onclick="showScreen('screen-login')" id="r-login-link">ÐÐ¾Ð¹ÑÐ¸</a></div>
   </div>
 </div>
 </div>
 
-<!-- ═══════════════ SCREEN: FORGOT ═══════════════ -->
+<!-- âââââââââââââââ SCREEN: FORGOT âââââââââââââââ -->
 <div class="screen" id="screen-forgot">
 <div class="auth-wrap">
   <div class="auth-logo">
@@ -333,19 +333,19 @@ tr:hover td{background:rgba(27,77,62,0.02)}
   </div>
   <div class="auth-card">
     <div class="auth-success" id="forgot-success"></div>
-    <div class="auth-title" id="f-title">Восстановление пароля</div>
-    <p style="font-size:13px;color:var(--dark60);margin-bottom:1.25rem" id="f-desc">Введите ваш email — мы отправим ссылку для восстановления.</p>
+    <div class="auth-title" id="f-title">ÐÐ¾ÑÑÑÐ°Ð½Ð¾Ð²Ð»ÐµÐ½Ð¸Ðµ Ð¿Ð°ÑÐ¾Ð»Ñ</div>
+    <p style="font-size:13px;color:var(--dark60);margin-bottom:1.25rem" id="f-desc">ÐÐ²ÐµÐ´Ð¸ÑÐµ Ð²Ð°Ñ email â Ð¼Ñ Ð¾ÑÐ¿ÑÐ°Ð²Ð¸Ð¼ ÑÑÑÐ»ÐºÑ Ð´Ð»Ñ Ð²Ð¾ÑÑÑÐ°Ð½Ð¾Ð²Ð»ÐµÐ½Ð¸Ñ.</p>
     <div class="form-group">
       <label class="form-label">Email</label>
       <input class="form-input" type="email" id="inp-forgot-email" placeholder="your@email.com">
     </div>
-    <button class="btn-main" onclick="doForgot()" id="f-btn">Отправить ссылку</button>
-    <div class="auth-link" style="margin-top:1rem"><a href="#" onclick="showScreen('screen-login')" id="f-back">← Вернуться к входу</a></div>
+    <button class="btn-main" onclick="doForgot()" id="f-btn">ÐÑÐ¿ÑÐ°Ð²Ð¸ÑÑ ÑÑÑÐ»ÐºÑ</button>
+    <div class="auth-link" style="margin-top:1rem"><a href="#" onclick="showScreen('screen-login')" id="f-back">â ÐÐµÑÐ½ÑÑÑÑÑ Ðº Ð²ÑÐ¾Ð´Ñ</a></div>
   </div>
 </div>
 </div>
 
-<!-- ═══════════════ SCREEN: APP ═══════════════ -->
+<!-- âââââââââââââââ SCREEN: APP âââââââââââââââ -->
 <div class="screen" id="screen-app">
 <div class="app-layout">
 
@@ -369,11 +369,11 @@ tr:hover td{background:rgba(27,77,62,0.02)}
       <div class="user-chip">
         <div class="user-av" id="sb-av">?</div>
         <div>
-          <div class="user-name" id="sb-uname">—</div>
-          <div class="user-role" id="sb-urole">—</div>
+          <div class="user-name" id="sb-uname">â</div>
+          <div class="user-role" id="sb-urole">â</div>
         </div>
       </div>
-      <button class="btn-logout" onclick="doLogout()"><span class="t" data-ru="← Выйти" data-en="← Log out" data-bg="← Изход">← Выйти</span></button>
+      <button class="btn-logout" onclick="doLogout()"><span class="t" data-ru="â ÐÑÐ¹ÑÐ¸" data-en="â Log out" data-bg="â ÐÐ·ÑÐ¾Ð´">â ÐÑÐ¹ÑÐ¸</span></button>
     </div>
   </div>
   <div class="sb-overlay" id="sb-overlay" onclick="closeSidebar()"></div>
@@ -381,8 +381,8 @@ tr:hover td{background:rgba(27,77,62,0.02)}
   <!-- MAIN -->
   <div class="main-area">
     <div class="top-bar">
-      <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-      <div class="top-title" id="top-title">Обзор</div>
+      <button class="menu-toggle" onclick="toggleSidebar()">â°</button>
+      <div class="top-title" id="top-title">ÐÐ±Ð·Ð¾Ñ</div>
       <div class="top-actions">
         <select class="prop-selector" id="prop-selector" onchange="onPropChange()" style="display:none">
         </select>
@@ -393,36 +393,36 @@ tr:hover td{background:rgba(27,77,62,0.02)}
       <!-- PAGE: DASHBOARD CLIENT -->
       <div class="page on" id="page-dashboard">
         <div class="alert alert-w" id="dash-alert" style="display:none">
-          ⚠ <span id="dash-alert-text"></span>
+          â  <span id="dash-alert-text"></span>
         </div>
         <div class="g4" id="dash-stats">
-          <div class="stat"><div class="slabel t" data-ru="Аренда / месяц" data-en="Rent / month" data-bg="Наем / месец">Аренда / месяц</div><div class="sval s-em" id="ds-rent">—</div><div class="ssub" id="ds-rent-sub"></div></div>
-          <div class="stat"><div class="slabel t" data-ru="К оплате" data-en="Bills due" data-bg="За плащане">К оплате</div><div class="sval s-red" id="ds-due">—</div><div class="ssub" id="ds-due-sub"></div></div>
-          <div class="stat"><div class="slabel t" data-ru="Чистый доход" data-en="Net income" data-bg="Нетен доход">Чистый доход</div><div class="sval s-mid" id="ds-net">—</div></div>
-          <div class="stat"><div class="slabel t" data-ru="Статус" data-en="Status" data-bg="Статус">Статус</div><div class="sval" style="font-size:18px" id="ds-status">—</div><div class="ssub s-em" id="ds-status-sub"></div></div>
+          <div class="stat"><div class="slabel t" data-ru="ÐÑÐµÐ½Ð´Ð° / Ð¼ÐµÑÑÑ" data-en="Rent / month" data-bg="ÐÐ°ÐµÐ¼ / Ð¼ÐµÑÐµÑ">ÐÑÐµÐ½Ð´Ð° / Ð¼ÐµÑÑÑ</div><div class="sval s-em" id="ds-rent">â</div><div class="ssub" id="ds-rent-sub"></div></div>
+          <div class="stat"><div class="slabel t" data-ru="Ð Ð¾Ð¿Ð»Ð°ÑÐµ" data-en="Bills due" data-bg="ÐÐ° Ð¿Ð»Ð°ÑÐ°Ð½Ðµ">Ð Ð¾Ð¿Ð»Ð°ÑÐµ</div><div class="sval s-red" id="ds-due">â</div><div class="ssub" id="ds-due-sub"></div></div>
+          <div class="stat"><div class="slabel t" data-ru="Ð§Ð¸ÑÑÑÐ¹ Ð´Ð¾ÑÐ¾Ð´" data-en="Net income" data-bg="ÐÐµÑÐµÐ½ Ð´Ð¾ÑÐ¾Ð´">Ð§Ð¸ÑÑÑÐ¹ Ð´Ð¾ÑÐ¾Ð´</div><div class="sval s-mid" id="ds-net">â</div></div>
+          <div class="stat"><div class="slabel t" data-ru="Ð¡ÑÐ°ÑÑÑ" data-en="Status" data-bg="Ð¡ÑÐ°ÑÑÑ">Ð¡ÑÐ°ÑÑÑ</div><div class="sval" style="font-size:18px" id="ds-status">â</div><div class="ssub s-em" id="ds-status-sub"></div></div>
         </div>
         <div class="g2">
           <div class="card">
-            <div class="sec-head"><div class="sec-title t" data-ru="Ближайшие задачи" data-en="Upcoming tasks" data-bg="Предстоящи задачи">Ближайшие задачи</div></div>
+            <div class="sec-head"><div class="sec-title t" data-ru="ÐÐ»Ð¸Ð¶Ð°Ð¹ÑÐ¸Ðµ Ð·Ð°Ð´Ð°ÑÐ¸" data-en="Upcoming tasks" data-bg="ÐÑÐµÐ´ÑÑÐ¾ÑÑÐ¸ Ð·Ð°Ð´Ð°ÑÐ¸">ÐÐ»Ð¸Ð¶Ð°Ð¹ÑÐ¸Ðµ Ð·Ð°Ð´Ð°ÑÐ¸</div></div>
             <div id="dash-tasks"></div>
           </div>
           <div class="card">
-            <div class="sec-head"><div class="sec-title t" data-ru="Персональный менеджер" data-en="Personal manager" data-bg="Персонален мениджър">Персональный менеджер</div></div>
+            <div class="sec-head"><div class="sec-title t" data-ru="ÐÐµÑÑÐ¾Ð½Ð°Ð»ÑÐ½ÑÐ¹ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ" data-en="Personal manager" data-bg="ÐÐµÑÑÐ¾Ð½Ð°Ð»ÐµÐ½ Ð¼ÐµÐ½Ð¸Ð´Ð¶ÑÑ">ÐÐµÑÑÐ¾Ð½Ð°Ð»ÑÐ½ÑÐ¹ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ</div></div>
             <div style="display:flex;align-items:center;gap:14px;margin-bottom:1rem">
-              <div style="width:48px;height:48px;border-radius:50%;background:var(--eml);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;color:var(--em);border:2px solid var(--borderem)">К</div>
+              <div style="width:48px;height:48px;border-radius:50%;background:var(--eml);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;color:var(--em);border:2px solid var(--borderem)">Ð</div>
               <div>
-                <div style="font-weight:500;font-size:15px">Катерина</div>
-                <div style="font-size:12px;color:var(--dark60)" class="t" data-ru="Персональный менеджер" data-en="Personal manager" data-bg="Персонален мениджър">Персональный менеджер</div>
+                <div style="font-weight:500;font-size:15px">ÐÐ°ÑÐµÑÐ¸Ð½Ð°</div>
+                <div style="font-size:12px;color:var(--dark60)" class="t" data-ru="ÐÐµÑÑÐ¾Ð½Ð°Ð»ÑÐ½ÑÐ¹ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ" data-en="Personal manager" data-bg="ÐÐµÑÑÐ¾Ð½Ð°Ð»ÐµÐ½ Ð¼ÐµÐ½Ð¸Ð´Ð¶ÑÑ">ÐÐµÑÑÐ¾Ð½Ð°Ð»ÑÐ½ÑÐ¹ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ</div>
               </div>
             </div>
             <div style="display:flex;gap:8px;flex-wrap:wrap">
               <a href="https://wa.me/359884390322" target="_blank" class="chat-wa">
-                <span style="font-size:16px">💬</span> WhatsApp
+                <span style="font-size:16px">ð¬</span> WhatsApp
               </a>
               <a href="https://t.me/katerina_propertycontrol" target="_blank" class="chat-tg">
-                <span style="font-size:16px">✈</span> Telegram
+                <span style="font-size:16px">â</span> Telegram
               </a>
-              <button class="btn btn-sm t" data-ru="Написать" data-en="Message" data-bg="Напиши" onclick="goToPage('page-chat')">Написать</button>
+              <button class="btn btn-sm t" data-ru="ÐÐ°Ð¿Ð¸ÑÐ°ÑÑ" data-en="Message" data-bg="ÐÐ°Ð¿Ð¸ÑÐ¸" onclick="goToPage('page-chat')">ÐÐ°Ð¿Ð¸ÑÐ°ÑÑ</button>
             </div>
           </div>
         </div>
@@ -431,25 +431,25 @@ tr:hover td{background:rgba(27,77,62,0.02)}
       <!-- PAGE: BILLS -->
       <div class="page" id="page-bills">
         <div class="g3">
-          <div class="stat"><div class="slabel t" data-ru="К оплате сейчас" data-en="Due now" data-bg="За плащане">К оплате сейчас</div><div class="sval s-red" id="bills-due-total">—</div></div>
-          <div class="stat"><div class="slabel t" data-ru="Оплачено в 2025" data-en="Paid in 2025" data-bg="Платено 2025">Оплачено в 2025</div><div class="sval s-em" id="bills-paid-total">—</div></div>
-          <div class="stat"><div class="slabel t" data-ru="Следующий налог" data-en="Next tax" data-bg="Следващ данък">Следующий налог</div><div class="sval">€380</div><div class="ssub">31.10.2025</div></div>
+          <div class="stat"><div class="slabel t" data-ru="Ð Ð¾Ð¿Ð»Ð°ÑÐµ ÑÐµÐ¹ÑÐ°Ñ" data-en="Due now" data-bg="ÐÐ° Ð¿Ð»Ð°ÑÐ°Ð½Ðµ">Ð Ð¾Ð¿Ð»Ð°ÑÐµ ÑÐµÐ¹ÑÐ°Ñ</div><div class="sval s-red" id="bills-due-total">â</div></div>
+          <div class="stat"><div class="slabel t" data-ru="ÐÐ¿Ð»Ð°ÑÐµÐ½Ð¾ Ð² 2025" data-en="Paid in 2025" data-bg="ÐÐ»Ð°ÑÐµÐ½Ð¾ 2025">ÐÐ¿Ð»Ð°ÑÐµÐ½Ð¾ Ð² 2025</div><div class="sval s-em" id="bills-paid-total">â</div></div>
+          <div class="stat"><div class="slabel t" data-ru="Ð¡Ð»ÐµÐ´ÑÑÑÐ¸Ð¹ Ð½Ð°Ð»Ð¾Ð³" data-en="Next tax" data-bg="Ð¡Ð»ÐµÐ´Ð²Ð°Ñ Ð´Ð°Ð½ÑÐº">Ð¡Ð»ÐµÐ´ÑÑÑÐ¸Ð¹ Ð½Ð°Ð»Ð¾Ð³</div><div class="sval">â¬380</div><div class="ssub">31.10.2025</div></div>
         </div>
         <div class="card">
           <div class="sec-head">
-            <div class="sec-title t" data-ru="Счета" data-en="Bills" data-bg="Сметки">Счета</div>
+            <div class="sec-title t" data-ru="Ð¡ÑÐµÑÐ°" data-en="Bills" data-bg="Ð¡Ð¼ÐµÑÐºÐ¸">Ð¡ÑÐµÑÐ°</div>
           </div>
           <div class="tbl-wrap">
             <table>
               <thead><tr>
-                <th class="t" data-ru="Провайдер" data-en="Provider" data-bg="Доставчик">Провайдер</th>
-                <th class="t" data-ru="Сумма" data-en="Amount" data-bg="Сума">Сумма</th>
-                <th class="t" data-ru="Срок" data-en="Due" data-bg="Срок">Срок</th>
-                <th class="t" data-ru="Статус" data-en="Status" data-bg="Статус">Статус</th>
+                <th class="t" data-ru="ÐÑÐ¾Ð²Ð°Ð¹Ð´ÐµÑ" data-en="Provider" data-bg="ÐÐ¾ÑÑÐ°Ð²ÑÐ¸Ðº">ÐÑÐ¾Ð²Ð°Ð¹Ð´ÐµÑ</th>
+                <th class="t" data-ru="Ð¡ÑÐ¼Ð¼Ð°" data-en="Amount" data-bg="Ð¡ÑÐ¼Ð°">Ð¡ÑÐ¼Ð¼Ð°</th>
+                <th class="t" data-ru="Ð¡ÑÐ¾Ðº" data-en="Due" data-bg="Ð¡ÑÐ¾Ðº">Ð¡ÑÐ¾Ðº</th>
+                <th class="t" data-ru="Ð¡ÑÐ°ÑÑÑ" data-en="Status" data-bg="Ð¡ÑÐ°ÑÑÑ">Ð¡ÑÐ°ÑÑÑ</th>
                 <th></th>
               </tr></thead>
               <tbody id="bills-tbody">
-                <tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--dark60)" class="t" data-ru="Загрузка..." data-en="Loading..." data-bg="Зареждане...">Загрузка...</td></tr>
+                <tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--dark60)" class="t" data-ru="ÐÐ°Ð³ÑÑÐ·ÐºÐ°..." data-en="Loading..." data-bg="ÐÐ°ÑÐµÐ¶Ð´Ð°Ð½Ðµ...">ÐÐ°Ð³ÑÑÐ·ÐºÐ°...</td></tr>
               </tbody>
             </table>
           </div>
@@ -459,39 +459,39 @@ tr:hover td{background:rgba(27,77,62,0.02)}
       <!-- PAGE: RENT -->
       <div class="page" id="page-rent">
         <div class="g4">
-          <div class="stat"><div class="slabel t" data-ru="Аренда / месяц" data-en="Rent / month" data-bg="Наем / месец">Аренда / месяц</div><div class="sval s-em">€850</div></div>
-          <div class="stat"><div class="slabel t" data-ru="Получено в 2025" data-en="Received 2025" data-bg="Получено 2025">Получено в 2025</div><div class="sval">€2 550</div><div class="ssub t" data-ru="3 платежа" data-en="3 payments" data-bg="3 плащания">3 платежа</div></div>
-          <div class="stat"><div class="slabel t" data-ru="Депозит" data-en="Deposit" data-bg="Депозит">Депозит</div><div class="sval">€1 700</div></div>
-          <div class="stat"><div class="slabel t" data-ru="Договор до" data-en="Contract until" data-bg="Договор до">Договор до</div><div class="sval" style="font-size:20px">01.11.25</div></div>
+          <div class="stat"><div class="slabel t" data-ru="ÐÑÐµÐ½Ð´Ð° / Ð¼ÐµÑÑÑ" data-en="Rent / month" data-bg="ÐÐ°ÐµÐ¼ / Ð¼ÐµÑÐµÑ">ÐÑÐµÐ½Ð´Ð° / Ð¼ÐµÑÑÑ</div><div class="sval s-em">â¬850</div></div>
+          <div class="stat"><div class="slabel t" data-ru="ÐÐ¾Ð»ÑÑÐµÐ½Ð¾ Ð² 2025" data-en="Received 2025" data-bg="ÐÐ¾Ð»ÑÑÐµÐ½Ð¾ 2025">ÐÐ¾Ð»ÑÑÐµÐ½Ð¾ Ð² 2025</div><div class="sval">â¬2 550</div><div class="ssub t" data-ru="3 Ð¿Ð»Ð°ÑÐµÐ¶Ð°" data-en="3 payments" data-bg="3 Ð¿Ð»Ð°ÑÐ°Ð½Ð¸Ñ">3 Ð¿Ð»Ð°ÑÐµÐ¶Ð°</div></div>
+          <div class="stat"><div class="slabel t" data-ru="ÐÐµÐ¿Ð¾Ð·Ð¸Ñ" data-en="Deposit" data-bg="ÐÐµÐ¿Ð¾Ð·Ð¸Ñ">ÐÐµÐ¿Ð¾Ð·Ð¸Ñ</div><div class="sval">â¬1 700</div></div>
+          <div class="stat"><div class="slabel t" data-ru="ÐÐ¾Ð³Ð¾Ð²Ð¾Ñ Ð´Ð¾" data-en="Contract until" data-bg="ÐÐ¾Ð³Ð¾Ð²Ð¾Ñ Ð´Ð¾">ÐÐ¾Ð³Ð¾Ð²Ð¾Ñ Ð´Ð¾</div><div class="sval" style="font-size:20px">01.11.25</div></div>
         </div>
         <div class="card">
-          <div class="sec-head"><div class="sec-title t" data-ru="История платежей" data-en="Payment history" data-bg="История на плащанията">История платежей</div></div>
+          <div class="sec-head"><div class="sec-title t" data-ru="ÐÑÑÐ¾ÑÐ¸Ñ Ð¿Ð»Ð°ÑÐµÐ¶ÐµÐ¹" data-en="Payment history" data-bg="ÐÑÑÐ¾ÑÐ¸Ñ Ð½Ð° Ð¿Ð»Ð°ÑÐ°Ð½Ð¸ÑÑÐ°">ÐÑÑÐ¾ÑÐ¸Ñ Ð¿Ð»Ð°ÑÐµÐ¶ÐµÐ¹</div></div>
           <div class="tbl-wrap"><table>
-            <thead><tr><th class="t" data-ru="Период" data-en="Period" data-bg="Период">Период</th><th class="t" data-ru="Сумма" data-en="Amount" data-bg="Сума">Сумма</th><th class="t" data-ru="Дата" data-en="Date" data-bg="Дата">Дата</th><th class="t" data-ru="Статус" data-en="Status" data-bg="Статус">Статус</th></tr></thead>
+            <thead><tr><th class="t" data-ru="ÐÐµÑÐ¸Ð¾Ð´" data-en="Period" data-bg="ÐÐµÑÐ¸Ð¾Ð´">ÐÐµÑÐ¸Ð¾Ð´</th><th class="t" data-ru="Ð¡ÑÐ¼Ð¼Ð°" data-en="Amount" data-bg="Ð¡ÑÐ¼Ð°">Ð¡ÑÐ¼Ð¼Ð°</th><th class="t" data-ru="ÐÐ°ÑÐ°" data-en="Date" data-bg="ÐÐ°ÑÐ°">ÐÐ°ÑÐ°</th><th class="t" data-ru="Ð¡ÑÐ°ÑÑÑ" data-en="Status" data-bg="Ð¡ÑÐ°ÑÑÑ">Ð¡ÑÐ°ÑÑÑ</th></tr></thead>
             <tbody>
-              <tr><td class="t" data-ru="Апрель 2025" data-en="April 2025" data-bg="Април 2025">Апрель 2025</td><td>€850</td><td>01.04.25</td><td><span class="pill p-paid t" data-ru="Получен" data-en="Received" data-bg="Получено">Получен</span></td></tr>
-              <tr><td class="t" data-ru="Март 2025" data-en="March 2025" data-bg="Март 2025">Март 2025</td><td>€850</td><td>01.03.25</td><td><span class="pill p-paid t" data-ru="Получен" data-en="Received" data-bg="Получено">Получен</span></td></tr>
-              <tr><td class="t" data-ru="Февраль 2025" data-en="February 2025" data-bg="Февруари 2025">Февраль 2025</td><td>€850</td><td>01.02.25</td><td><span class="pill p-paid t" data-ru="Получен" data-en="Received" data-bg="Получено">Получен</span></td></tr>
+              <tr><td class="t" data-ru="ÐÐ¿ÑÐµÐ»Ñ 2025" data-en="April 2025" data-bg="ÐÐ¿ÑÐ¸Ð» 2025">ÐÐ¿ÑÐµÐ»Ñ 2025</td><td>â¬850</td><td>01.04.25</td><td><span class="pill p-paid t" data-ru="ÐÐ¾Ð»ÑÑÐµÐ½" data-en="Received" data-bg="ÐÐ¾Ð»ÑÑÐµÐ½Ð¾">ÐÐ¾Ð»ÑÑÐµÐ½</span></td></tr>
+              <tr><td class="t" data-ru="ÐÐ°ÑÑ 2025" data-en="March 2025" data-bg="ÐÐ°ÑÑ 2025">ÐÐ°ÑÑ 2025</td><td>â¬850</td><td>01.03.25</td><td><span class="pill p-paid t" data-ru="ÐÐ¾Ð»ÑÑÐµÐ½" data-en="Received" data-bg="ÐÐ¾Ð»ÑÑÐµÐ½Ð¾">ÐÐ¾Ð»ÑÑÐµÐ½</span></td></tr>
+              <tr><td class="t" data-ru="Ð¤ÐµÐ²ÑÐ°Ð»Ñ 2025" data-en="February 2025" data-bg="Ð¤ÐµÐ²ÑÑÐ°ÑÐ¸ 2025">Ð¤ÐµÐ²ÑÐ°Ð»Ñ 2025</td><td>â¬850</td><td>01.02.25</td><td><span class="pill p-paid t" data-ru="ÐÐ¾Ð»ÑÑÐµÐ½" data-en="Received" data-bg="ÐÐ¾Ð»ÑÑÐµÐ½Ð¾">ÐÐ¾Ð»ÑÑÐµÐ½</span></td></tr>
             </tbody>
           </table></div>
         </div>
-        <div class="alert alert-i t" data-ru="Следующий платёж ожидается 1 мая 2025. Ваш менеджер Катерина уведомит вас о поступлении." data-en="Next payment expected May 1, 2025. Your manager Katerina will notify you." data-bg="Следващото плащане се очаква на 1 май 2025. Вашият мениджър Катерина ще ви уведоми.">Следующий платёж ожидается 1 мая 2025. Ваш менеджер Катерина уведомит вас о поступлении.</div>
+        <div class="alert alert-i t" data-ru="Ð¡Ð»ÐµÐ´ÑÑÑÐ¸Ð¹ Ð¿Ð»Ð°ÑÑÐ¶ Ð¾Ð¶Ð¸Ð´Ð°ÐµÑÑÑ 1 Ð¼Ð°Ñ 2025. ÐÐ°Ñ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ ÐÐ°ÑÐµÑÐ¸Ð½Ð° ÑÐ²ÐµÐ´Ð¾Ð¼Ð¸Ñ Ð²Ð°Ñ Ð¾ Ð¿Ð¾ÑÑÑÐ¿Ð»ÐµÐ½Ð¸Ð¸." data-en="Next payment expected May 1, 2025. Your manager Katerina will notify you." data-bg="Ð¡Ð»ÐµÐ´Ð²Ð°ÑÐ¾ÑÐ¾ Ð¿Ð»Ð°ÑÐ°Ð½Ðµ ÑÐµ Ð¾ÑÐ°ÐºÐ²Ð° Ð½Ð° 1 Ð¼Ð°Ð¹ 2025. ÐÐ°ÑÐ¸ÑÑ Ð¼ÐµÐ½Ð¸Ð´Ð¶ÑÑ ÐÐ°ÑÐµÑÐ¸Ð½Ð° ÑÐµ Ð²Ð¸ ÑÐ²ÐµÐ´Ð¾Ð¼Ð¸.">Ð¡Ð»ÐµÐ´ÑÑÑÐ¸Ð¹ Ð¿Ð»Ð°ÑÑÐ¶ Ð¾Ð¶Ð¸Ð´Ð°ÐµÑÑÑ 1 Ð¼Ð°Ñ 2025. ÐÐ°Ñ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ ÐÐ°ÑÐµÑÐ¸Ð½Ð° ÑÐ²ÐµÐ´Ð¾Ð¼Ð¸Ñ Ð²Ð°Ñ Ð¾ Ð¿Ð¾ÑÑÑÐ¿Ð»ÐµÐ½Ð¸Ð¸.</div>
       </div>
 
       <!-- PAGE: DOCUMENTS -->
       <div class="page" id="page-docs">
         <div class="card">
           <div class="sec-head">
-            <div class="sec-title t" data-ru="Мои документы" data-en="My documents" data-bg="Моите документи">Мои документы</div>
+            <div class="sec-title t" data-ru="ÐÐ¾Ð¸ Ð´Ð¾ÐºÑÐ¼ÐµÐ½ÑÑ" data-en="My documents" data-bg="ÐÐ¾Ð¸ÑÐµ Ð´Ð¾ÐºÑÐ¼ÐµÐ½ÑÐ¸">ÐÐ¾Ð¸ Ð´Ð¾ÐºÑÐ¼ÐµÐ½ÑÑ</div>
             <label class="btn btn-em btn-sm" style="cursor:pointer">
-              <span class="t" data-ru="+ Загрузить" data-en="+ Upload" data-bg="+ Качи">+ Загрузить</span>
+              <span class="t" data-ru="+ ÐÐ°Ð³ÑÑÐ·Ð¸ÑÑ" data-en="+ Upload" data-bg="+ ÐÐ°ÑÐ¸">+ ÐÐ°Ð³ÑÑÐ·Ð¸ÑÑ</span>
               <input type="file" style="display:none" multiple onchange="handleFileUpload(this)">
             </label>
           </div>
           <div id="docs-list">
-            <div class="doc-item"><div class="doc-ic">📄</div><div><div class="doc-name t" data-ru="Договор аренды" data-en="Rental contract" data-bg="Договор за наем">Договор аренды</div><div class="doc-meta">01.11.2024</div></div><div class="doc-sz">PDF · 234 KB</div></div>
-            <div class="doc-item"><div class="doc-ic">📋</div><div><div class="doc-name t" data-ru="Доверенность на управление" data-en="Power of attorney" data-bg="Пълномощно">Доверенность на управление</div><div class="doc-meta">15.10.2024</div></div><div class="doc-sz">PDF · 89 KB</div></div>
-            <div class="doc-item"><div class="doc-ic">🧾</div><div><div class="doc-name t" data-ru="Квитанция ЧЕЗ март 2025" data-en="CEZ receipt March 2025" data-bg="Разписка ЧЕЗ март 2025">Квитанция ЧЕЗ март 2025</div><div class="doc-meta">25.03.2025</div></div><div class="doc-sz">PDF · 45 KB</div></div>
+            <div class="doc-item"><div class="doc-ic">ð</div><div><div class="doc-name t" data-ru="ÐÐ¾Ð³Ð¾Ð²Ð¾Ñ Ð°ÑÐµÐ½Ð´Ñ" data-en="Rental contract" data-bg="ÐÐ¾Ð³Ð¾Ð²Ð¾Ñ Ð·Ð° Ð½Ð°ÐµÐ¼">ÐÐ¾Ð³Ð¾Ð²Ð¾Ñ Ð°ÑÐµÐ½Ð´Ñ</div><div class="doc-meta">01.11.2024</div></div><div class="doc-sz">PDF Â· 234 KB</div></div>
+            <div class="doc-item"><div class="doc-ic">ð</div><div><div class="doc-name t" data-ru="ÐÐ¾Ð²ÐµÑÐµÐ½Ð½Ð¾ÑÑÑ Ð½Ð° ÑÐ¿ÑÐ°Ð²Ð»ÐµÐ½Ð¸Ðµ" data-en="Power of attorney" data-bg="ÐÑÐ»Ð½Ð¾Ð¼Ð¾ÑÐ½Ð¾">ÐÐ¾Ð²ÐµÑÐµÐ½Ð½Ð¾ÑÑÑ Ð½Ð° ÑÐ¿ÑÐ°Ð²Ð»ÐµÐ½Ð¸Ðµ</div><div class="doc-meta">15.10.2024</div></div><div class="doc-sz">PDF Â· 89 KB</div></div>
+            <div class="doc-item"><div class="doc-ic">ð§¾</div><div><div class="doc-name t" data-ru="ÐÐ²Ð¸ÑÐ°Ð½ÑÐ¸Ñ Ð§ÐÐ Ð¼Ð°ÑÑ 2025" data-en="CEZ receipt March 2025" data-bg="Ð Ð°Ð·Ð¿Ð¸ÑÐºÐ° Ð§ÐÐ Ð¼Ð°ÑÑ 2025">ÐÐ²Ð¸ÑÐ°Ð½ÑÐ¸Ñ Ð§ÐÐ Ð¼Ð°ÑÑ 2025</div><div class="doc-meta">25.03.2025</div></div><div class="doc-sz">PDF Â· 45 KB</div></div>
           </div>
         </div>
       </div>
@@ -501,25 +501,25 @@ tr:hover td{background:rgba(27,77,62,0.02)}
         <div class="card" style="height:calc(100vh - 180px);display:flex;flex-direction:column;padding:1.25rem">
           <div class="sec-head" style="margin-bottom:.75rem;flex-shrink:0">
             <div style="display:flex;align-items:center;gap:10px">
-              <div style="width:36px;height:36px;border-radius:50%;background:var(--eml);display:flex;align-items:center;justify-content:center;font-weight:600;color:var(--em)">К</div>
-              <div><div style="font-weight:500;font-size:14px">Катерина</div><div style="font-size:11px;color:var(--em)" class="t" data-ru="Персональный менеджер · Онлайн" data-en="Personal manager · Online" data-bg="Персонален мениджър · Онлайн">Персональный менеджер · Онлайн</div></div>
+              <div style="width:36px;height:36px;border-radius:50%;background:var(--eml);display:flex;align-items:center;justify-content:center;font-weight:600;color:var(--em)">Ð</div>
+              <div><div style="font-weight:500;font-size:14px">ÐÐ°ÑÐµÑÐ¸Ð½Ð°</div><div style="font-size:11px;color:var(--em)" class="t" data-ru="ÐÐµÑÑÐ¾Ð½Ð°Ð»ÑÐ½ÑÐ¹ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ Â· ÐÐ½Ð»Ð°Ð¹Ð½" data-en="Personal manager Â· Online" data-bg="ÐÐµÑÑÐ¾Ð½Ð°Ð»ÐµÐ½ Ð¼ÐµÐ½Ð¸Ð´Ð¶ÑÑ Â· ÐÐ½Ð»Ð°Ð¹Ð½">ÐÐµÑÑÐ¾Ð½Ð°Ð»ÑÐ½ÑÐ¹ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ Â· ÐÐ½Ð»Ð°Ð¹Ð½</div></div>
             </div>
             <div style="display:flex;gap:8px">
-              <a href="https://wa.me/359884390322" target="_blank" class="btn-icon" title="WhatsApp">💬</a>
-              <a href="https://t.me/katerina_propertycontrol" target="_blank" class="btn-icon" title="Telegram">✈</a>
+              <a href="https://wa.me/359884390322" target="_blank" class="btn-icon" title="WhatsApp">ð¬</a>
+              <a href="https://t.me/katerina_propertycontrol" target="_blank" class="btn-icon" title="Telegram">â</a>
             </div>
           </div>
           <div class="chat-msgs" id="chat-msgs">
             <div class="chat-msg theirs">
-              <div class="chat-sender">Катерина</div>
-              <div class="chat-bubble t" data-ru="Здравствуйте! Я ваш персональный менеджер Катерина. Готова помочь с любыми вопросами по вашей недвижимости в Sofia. Чем могу помочь?" data-en="Hello! I'm your personal manager Katerina. I'm here to help with any questions about your property in Sofia. How can I help you?" data-bg="Здравейте! Аз съм вашият персонален мениджър Катерина. Готова съм да помогна с всякакви въпроси относно вашия имот в София. Как мога да помогна?">Здравствуйте! Я ваш персональный менеджер Катерина. Готова помочь с любыми вопросами по вашей недвижимости в Sofia. Чем могу помочь?</div>
-              <div class="chat-time">Сейчас</div>
+              <div class="chat-sender">ÐÐ°ÑÐµÑÐ¸Ð½Ð°</div>
+              <div class="chat-bubble t" data-ru="ÐÐ´ÑÐ°Ð²ÑÑÐ²ÑÐ¹ÑÐµ! Ð¯ Ð²Ð°Ñ Ð¿ÐµÑÑÐ¾Ð½Ð°Ð»ÑÐ½ÑÐ¹ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ ÐÐ°ÑÐµÑÐ¸Ð½Ð°. ÐÐ¾ÑÐ¾Ð²Ð° Ð¿Ð¾Ð¼Ð¾ÑÑ Ñ Ð»ÑÐ±ÑÐ¼Ð¸ Ð²Ð¾Ð¿ÑÐ¾ÑÐ°Ð¼Ð¸ Ð¿Ð¾ Ð²Ð°ÑÐµÐ¹ Ð½ÐµÐ´Ð²Ð¸Ð¶Ð¸Ð¼Ð¾ÑÑÐ¸ Ð² Sofia. Ð§ÐµÐ¼ Ð¼Ð¾Ð³Ñ Ð¿Ð¾Ð¼Ð¾ÑÑ?" data-en="Hello! I'm your personal manager Katerina. I'm here to help with any questions about your property in Sofia. How can I help you?" data-bg="ÐÐ´ÑÐ°Ð²ÐµÐ¹ÑÐµ! ÐÐ· ÑÑÐ¼ Ð²Ð°ÑÐ¸ÑÑ Ð¿ÐµÑÑÐ¾Ð½Ð°Ð»ÐµÐ½ Ð¼ÐµÐ½Ð¸Ð´Ð¶ÑÑ ÐÐ°ÑÐµÑÐ¸Ð½Ð°. ÐÐ¾ÑÐ¾Ð²Ð° ÑÑÐ¼ Ð´Ð° Ð¿Ð¾Ð¼Ð¾Ð³Ð½Ð° Ñ Ð²ÑÑÐºÐ°ÐºÐ²Ð¸ Ð²ÑÐ¿ÑÐ¾ÑÐ¸ Ð¾ÑÐ½Ð¾ÑÐ½Ð¾ Ð²Ð°ÑÐ¸Ñ Ð¸Ð¼Ð¾Ñ Ð² Ð¡Ð¾ÑÐ¸Ñ. ÐÐ°Ðº Ð¼Ð¾Ð³Ð° Ð´Ð° Ð¿Ð¾Ð¼Ð¾Ð³Ð½Ð°?">ÐÐ´ÑÐ°Ð²ÑÑÐ²ÑÐ¹ÑÐµ! Ð¯ Ð²Ð°Ñ Ð¿ÐµÑÑÐ¾Ð½Ð°Ð»ÑÐ½ÑÐ¹ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ ÐÐ°ÑÐµÑÐ¸Ð½Ð°. ÐÐ¾ÑÐ¾Ð²Ð° Ð¿Ð¾Ð¼Ð¾ÑÑ Ñ Ð»ÑÐ±ÑÐ¼Ð¸ Ð²Ð¾Ð¿ÑÐ¾ÑÐ°Ð¼Ð¸ Ð¿Ð¾ Ð²Ð°ÑÐµÐ¹ Ð½ÐµÐ´Ð²Ð¸Ð¶Ð¸Ð¼Ð¾ÑÑÐ¸ Ð² Sofia. Ð§ÐµÐ¼ Ð¼Ð¾Ð³Ñ Ð¿Ð¾Ð¼Ð¾ÑÑ?</div>
+              <div class="chat-time">Ð¡ÐµÐ¹ÑÐ°Ñ</div>
             </div>
           </div>
           <div style="flex-shrink:0;border-top:1px solid var(--border);padding-top:1rem">
             <div class="chat-row">
               <textarea class="chat-inp" id="chat-inp" rows="1" placeholder="..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChatMsg()}"></textarea>
-              <button class="chat-send" onclick="sendChatMsg()">↑</button>
+              <button class="chat-send" onclick="sendChatMsg()">â</button>
             </div>
           </div>
         </div>
@@ -528,16 +528,16 @@ tr:hover td{background:rgba(27,77,62,0.02)}
       <!-- PAGE: MY PROPERTIES (client) -->
       <div class="page" id="page-my-props">
         <div class="sec-head" style="margin-bottom:1rem">
-          <div class="sec-title t" data-ru="Мои объекты" data-en="My properties" data-bg="Моите имоти">Мои объекты</div>
-          <button class="btn btn-em btn-sm" onclick="openModal('modal-add-prop')" id="btn-add-prop"><span class="t" data-ru="+ Добавить объект" data-en="+ Add property" data-bg="+ Добави имот">+ Добавить объект</span></button>
+          <div class="sec-title t" data-ru="ÐÐ¾Ð¸ Ð¾Ð±ÑÐµÐºÑÑ" data-en="My properties" data-bg="ÐÐ¾Ð¸ÑÐµ Ð¸Ð¼Ð¾ÑÐ¸">ÐÐ¾Ð¸ Ð¾Ð±ÑÐµÐºÑÑ</div>
+          <button class="btn btn-em btn-sm" onclick="openModal('modal-add-prop')" id="btn-add-prop"><span class="t" data-ru="+ ÐÐ¾Ð±Ð°Ð²Ð¸ÑÑ Ð¾Ð±ÑÐµÐºÑ" data-en="+ Add property" data-bg="+ ÐÐ¾Ð±Ð°Ð²Ð¸ Ð¸Ð¼Ð¾Ñ">+ ÐÐ¾Ð±Ð°Ð²Ð¸ÑÑ Ð¾Ð±ÑÐµÐºÑ</span></button>
         </div>
         <div class="prop-grid" id="client-props-grid">
           <div class="prop-card">
-            <div class="prop-img">🏢<span class="prop-status ps-rented t" data-ru="Сдан" data-en="Rented" data-bg="Отдаден">Сдан</span></div>
+            <div class="prop-img">ð¢<span class="prop-status ps-rented t" data-ru="Ð¡Ð´Ð°Ð½" data-en="Rented" data-bg="ÐÑÐ´Ð°Ð´ÐµÐ½">Ð¡Ð´Ð°Ð½</span></div>
             <div class="prop-body">
-              <div class="prop-name">ул. Раковски 42</div>
-              <div class="prop-addr t" data-ru="Центр · 3-стаен · 85 м²" data-en="Centre · 3-room · 85 m²" data-bg="Център · 3-стаен · 85 кв.м">Центр · 3-стаен · 85 м²</div>
-              <div class="prop-meta"><span>€850/<span class="t" data-ru="мес" data-en="mo" data-bg="мес">мес</span></span></div>
+              <div class="prop-name">ÑÐ». Ð Ð°ÐºÐ¾Ð²ÑÐºÐ¸ 42</div>
+              <div class="prop-addr t" data-ru="Ð¦ÐµÐ½ÑÑ Â· 3-ÑÑÐ°ÐµÐ½ Â· 85 Ð¼Â²" data-en="Centre Â· 3-room Â· 85 mÂ²" data-bg="Ð¦ÐµÐ½ÑÑÑ Â· 3-ÑÑÐ°ÐµÐ½ Â· 85 ÐºÐ².Ð¼">Ð¦ÐµÐ½ÑÑ Â· 3-ÑÑÐ°ÐµÐ½ Â· 85 Ð¼Â²</div>
+              <div class="prop-meta"><span>â¬850/<span class="t" data-ru="Ð¼ÐµÑ" data-en="mo" data-bg="Ð¼ÐµÑ">Ð¼ÐµÑ</span></span></div>
             </div>
           </div>
         </div>
@@ -546,31 +546,31 @@ tr:hover td{background:rgba(27,77,62,0.02)}
       <!-- PAGE: MANAGER DASHBOARD -->
       <div class="page" id="page-mgr-dashboard">
         <div class="g4">
-          <div class="stat"><div class="slabel t" data-ru="Клиентов" data-en="Clients" data-bg="Клиенти">Клиентов</div><div class="sval s-em" id="mgr-clients-count">0</div></div>
-          <div class="stat"><div class="slabel t" data-ru="Объектов" data-en="Properties" data-bg="Имоти">Объектов</div><div class="sval">3</div></div>
-          <div class="stat"><div class="slabel t" data-ru="Доход / месяц" data-en="Income / month" data-bg="Доход / месец">Доход / месяц</div><div class="sval s-em">€1 500</div></div>
-          <div class="stat"><div class="slabel t" data-ru="Счетов к оплате" data-en="Bills pending" data-bg="Сметки">Счетов к оплате</div><div class="sval s-red">4</div></div>
+          <div class="stat"><div class="slabel t" data-ru="ÐÐ»Ð¸ÐµÐ½ÑÐ¾Ð²" data-en="Clients" data-bg="ÐÐ»Ð¸ÐµÐ½ÑÐ¸">ÐÐ»Ð¸ÐµÐ½ÑÐ¾Ð²</div><div class="sval s-em" id="mgr-clients-count">0</div></div>
+          <div class="stat"><div class="slabel t" data-ru="ÐÐ±ÑÐµÐºÑÐ¾Ð²" data-en="Properties" data-bg="ÐÐ¼Ð¾ÑÐ¸">ÐÐ±ÑÐµÐºÑÐ¾Ð²</div><div class="sval">3</div></div>
+          <div class="stat"><div class="slabel t" data-ru="ÐÐ¾ÑÐ¾Ð´ / Ð¼ÐµÑÑÑ" data-en="Income / month" data-bg="ÐÐ¾ÑÐ¾Ð´ / Ð¼ÐµÑÐµÑ">ÐÐ¾ÑÐ¾Ð´ / Ð¼ÐµÑÑÑ</div><div class="sval s-em">â¬1 500</div></div>
+          <div class="stat"><div class="slabel t" data-ru="Ð¡ÑÐµÑÐ¾Ð² Ðº Ð¾Ð¿Ð»Ð°ÑÐµ" data-en="Bills pending" data-bg="Ð¡Ð¼ÐµÑÐºÐ¸">Ð¡ÑÐµÑÐ¾Ð² Ðº Ð¾Ð¿Ð»Ð°ÑÐµ</div><div class="sval s-red">4</div></div>
         </div>
         <div class="g2">
           <div class="card">
-            <div class="sec-head"><div class="sec-title t" data-ru="Новые клиенты" data-en="New clients" data-bg="Нови клиенти">Новые клиенты</div></div>
+            <div class="sec-head"><div class="sec-title t" data-ru="ÐÐ¾Ð²ÑÐµ ÐºÐ»Ð¸ÐµÐ½ÑÑ" data-en="New clients" data-bg="ÐÐ¾Ð²Ð¸ ÐºÐ»Ð¸ÐµÐ½ÑÐ¸">ÐÐ¾Ð²ÑÐµ ÐºÐ»Ð¸ÐµÐ½ÑÑ</div></div>
             <div id="mgr-new-clients">
               <div class="client-row">
-                <div class="client-av">АВ</div>
-                <div class="client-info"><div class="client-name">Александр Воронов</div><div class="client-meta"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9af9f6f3fff4eedafff7fbf3f6b4f9f5f7">[email&#160;protected]</a> · +7 999 123 45 67</div></div>
-                <span class="pill p-new t" data-ru="Новый" data-en="New" data-bg="Нов">Новый</span>
+                <div class="client-av">ÐÐ</div>
+                <div class="client-info"><div class="client-name">ÐÐ»ÐµÐºÑÐ°Ð½Ð´Ñ ÐÐ¾ÑÐ¾Ð½Ð¾Ð²</div><div class="client-meta"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9af9f6f3fff4eedafff7fbf3f6b4f9f5f7">[email&#160;protected]</a> Â· +7 999 123 45 67</div></div>
+                <span class="pill p-new t" data-ru="ÐÐ¾Ð²ÑÐ¹" data-en="New" data-bg="ÐÐ¾Ð²">ÐÐ¾Ð²ÑÐ¹</span>
               </div>
               <div class="client-row">
-                <div class="client-av">ЕС</div>
-                <div class="client-info"><div class="client-name">Елена Соколова</div><div class="client-meta"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9efdf2f7fbf0eadefbf3fff7f2b0fdf1f3">[email&#160;protected]</a> · +7 912 555 00 11</div></div>
-                <span class="pill p-paid t" data-ru="Активен" data-en="Active" data-bg="Активен">Активен</span>
+                <div class="client-av">ÐÐ¡</div>
+                <div class="client-info"><div class="client-name">ÐÐ»ÐµÐ½Ð° Ð¡Ð¾ÐºÐ¾Ð»Ð¾Ð²Ð°</div><div class="client-meta"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9efdf2f7fbf0eadefbf3fff7f2b0fdf1f3">[email&#160;protected]</a> Â· +7 912 555 00 11</div></div>
+                <span class="pill p-paid t" data-ru="ÐÐºÑÐ¸Ð²ÐµÐ½" data-en="Active" data-bg="ÐÐºÑÐ¸Ð²ÐµÐ½">ÐÐºÑÐ¸Ð²ÐµÐ½</span>
               </div>
             </div>
           </div>
           <div class="card">
-            <div class="sec-head"><div class="sec-title t" data-ru="Срочные задачи" data-en="Urgent tasks" data-bg="Спешни задачи">Срочные задачи</div></div>
-            <div class="task-item"><div class="task-check"></div><div><div class="task-txt">ЧЕЗ — Воронов (€67)</div><div class="task-meta t" data-ru="До 10 апреля" data-en="By April 10" data-bg="До 10 април">До 10 апреля</div></div></div>
-            <div class="task-item"><div class="task-check"></div><div><div class="task-txt t" data-ru="Декларация об аренде — Соколова" data-en="Rental declaration — Sokolova" data-bg="Декларация за наем — Соколова">Декларация об аренде — Соколова</div><div class="task-meta t" data-ru="До 30 апреля" data-en="By April 30" data-bg="До 30 април">До 30 апреля</div></div></div>
+            <div class="sec-head"><div class="sec-title t" data-ru="Ð¡ÑÐ¾ÑÐ½ÑÐµ Ð·Ð°Ð´Ð°ÑÐ¸" data-en="Urgent tasks" data-bg="Ð¡Ð¿ÐµÑÐ½Ð¸ Ð·Ð°Ð´Ð°ÑÐ¸">Ð¡ÑÐ¾ÑÐ½ÑÐµ Ð·Ð°Ð´Ð°ÑÐ¸</div></div>
+            <div class="task-item"><div class="task-check"></div><div><div class="task-txt">Ð§ÐÐ â ÐÐ¾ÑÐ¾Ð½Ð¾Ð² (â¬67)</div><div class="task-meta t" data-ru="ÐÐ¾ 10 Ð°Ð¿ÑÐµÐ»Ñ" data-en="By April 10" data-bg="ÐÐ¾ 10 Ð°Ð¿ÑÐ¸Ð»">ÐÐ¾ 10 Ð°Ð¿ÑÐµÐ»Ñ</div></div></div>
+            <div class="task-item"><div class="task-check"></div><div><div class="task-txt t" data-ru="ÐÐµÐºÐ»Ð°ÑÐ°ÑÐ¸Ñ Ð¾Ð± Ð°ÑÐµÐ½Ð´Ðµ â Ð¡Ð¾ÐºÐ¾Ð»Ð¾Ð²Ð°" data-en="Rental declaration â Sokolova" data-bg="ÐÐµÐºÐ»Ð°ÑÐ°ÑÐ¸Ñ Ð·Ð° Ð½Ð°ÐµÐ¼ â Ð¡Ð¾ÐºÐ¾Ð»Ð¾Ð²Ð°">ÐÐµÐºÐ»Ð°ÑÐ°ÑÐ¸Ñ Ð¾Ð± Ð°ÑÐµÐ½Ð´Ðµ â Ð¡Ð¾ÐºÐ¾Ð»Ð¾Ð²Ð°</div><div class="task-meta t" data-ru="ÐÐ¾ 30 Ð°Ð¿ÑÐµÐ»Ñ" data-en="By April 30" data-bg="ÐÐ¾ 30 Ð°Ð¿ÑÐ¸Ð»">ÐÐ¾ 30 Ð°Ð¿ÑÐµÐ»Ñ</div></div></div>
           </div>
         </div>
       </div>
@@ -578,26 +578,26 @@ tr:hover td{background:rgba(27,77,62,0.02)}
       <!-- PAGE: ALL PROPERTIES (manager) -->
       <div class="page" id="page-all-props">
         <div class="prop-grid">
-          <div class="prop-card"><div class="prop-img">🏢<span class="prop-status ps-rented t" data-ru="Сдан" data-en="Rented" data-bg="Отдаден">Сдан</span></div><div class="prop-body"><div class="prop-name">ул. Раковски 42</div><div class="prop-addr">Воронов · Центр · 85 м²</div><div class="prop-meta"><span>€850/мес</span></div></div></div>
-          <div class="prop-card"><div class="prop-img" style="background:linear-gradient(135deg,#C5D5CF,#7FA89A)">🏠<span class="prop-status ps-rented t" data-ru="Сдан" data-en="Rented" data-bg="Отдаден">Сдан</span></div><div class="prop-body"><div class="prop-name">Лозенец, Жолио-Кюри</div><div class="prop-addr">Соколова · 64 м²</div><div class="prop-meta"><span>€650/мес</span></div></div></div>
-          <div class="prop-card"><div class="prop-img" style="background:linear-gradient(135deg,#C5C8D5,#9098B0)">🏗<span class="prop-status ps-vacant t" data-ru="Свободен" data-en="Vacant" data-bg="Свободен">Свободен</span></div><div class="prop-body"><div class="prop-name">Студентски, бл. 33</div><div class="prop-addr">Чернов · 42 м²</div><div class="prop-meta"><span class="t" data-ru="Поиск арендатора" data-en="Seeking tenant" data-bg="Търсим наемател">Поиск арендатора</span></div></div></div>
+          <div class="prop-card"><div class="prop-img">ð¢<span class="prop-status ps-rented t" data-ru="Ð¡Ð´Ð°Ð½" data-en="Rented" data-bg="ÐÑÐ´Ð°Ð´ÐµÐ½">Ð¡Ð´Ð°Ð½</span></div><div class="prop-body"><div class="prop-name">ÑÐ». Ð Ð°ÐºÐ¾Ð²ÑÐºÐ¸ 42</div><div class="prop-addr">ÐÐ¾ÑÐ¾Ð½Ð¾Ð² Â· Ð¦ÐµÐ½ÑÑ Â· 85 Ð¼Â²</div><div class="prop-meta"><span>â¬850/Ð¼ÐµÑ</span></div></div></div>
+          <div class="prop-card"><div class="prop-img" style="background:linear-gradient(135deg,#C5D5CF,#7FA89A)">ð <span class="prop-status ps-rented t" data-ru="Ð¡Ð´Ð°Ð½" data-en="Rented" data-bg="ÐÑÐ´Ð°Ð´ÐµÐ½">Ð¡Ð´Ð°Ð½</span></div><div class="prop-body"><div class="prop-name">ÐÐ¾Ð·ÐµÐ½ÐµÑ, ÐÐ¾Ð»Ð¸Ð¾-ÐÑÑÐ¸</div><div class="prop-addr">Ð¡Ð¾ÐºÐ¾Ð»Ð¾Ð²Ð° Â· 64 Ð¼Â²</div><div class="prop-meta"><span>â¬650/Ð¼ÐµÑ</span></div></div></div>
+          <div class="prop-card"><div class="prop-img" style="background:linear-gradient(135deg,#C5C8D5,#9098B0)">ð<span class="prop-status ps-vacant t" data-ru="Ð¡Ð²Ð¾Ð±Ð¾Ð´ÐµÐ½" data-en="Vacant" data-bg="Ð¡Ð²Ð¾Ð±Ð¾Ð´ÐµÐ½">Ð¡Ð²Ð¾Ð±Ð¾Ð´ÐµÐ½</span></div><div class="prop-body"><div class="prop-name">Ð¡ÑÑÐ´ÐµÐ½ÑÑÐºÐ¸, Ð±Ð». 33</div><div class="prop-addr">Ð§ÐµÑÐ½Ð¾Ð² Â· 42 Ð¼Â²</div><div class="prop-meta"><span class="t" data-ru="ÐÐ¾Ð¸ÑÐº Ð°ÑÐµÐ½Ð´Ð°ÑÐ¾ÑÐ°" data-en="Seeking tenant" data-bg="Ð¢ÑÑÑÐ¸Ð¼ Ð½Ð°ÐµÐ¼Ð°ÑÐµÐ»">ÐÐ¾Ð¸ÑÐº Ð°ÑÐµÐ½Ð´Ð°ÑÐ¾ÑÐ°</span></div></div></div>
         </div>
       </div>
 
       <!-- PAGE: ALL BILLS (manager) -->
       <div class="page" id="page-all-bills">
         <div class="sec-head" style="margin-bottom:1rem">
-          <div class="sec-title t" data-ru="Все счета" data-en="All bills" data-bg="Всички сметки">Все счета</div>
-          <button class="btn btn-em btn-sm" onclick="openModal('modal-add-bill')"><span class="t" data-ru="+ Добавить счёт" data-en="+ Add bill" data-bg="+ Добави сметка">+ Добавить счёт</span></button>
+          <div class="sec-title t" data-ru="ÐÑÐµ ÑÑÐµÑÐ°" data-en="All bills" data-bg="ÐÑÐ¸ÑÐºÐ¸ ÑÐ¼ÐµÑÐºÐ¸">ÐÑÐµ ÑÑÐµÑÐ°</div>
+          <button class="btn btn-em btn-sm" onclick="openModal('modal-add-bill')"><span class="t" data-ru="+ ÐÐ¾Ð±Ð°Ð²Ð¸ÑÑ ÑÑÑÑ" data-en="+ Add bill" data-bg="+ ÐÐ¾Ð±Ð°Ð²Ð¸ ÑÐ¼ÐµÑÐºÐ°">+ ÐÐ¾Ð±Ð°Ð²Ð¸ÑÑ ÑÑÑÑ</span></button>
         </div>
         <div class="card">
           <div class="tbl-wrap"><table>
-            <thead><tr><th class="t" data-ru="Клиент" data-en="Client" data-bg="Клиент">Клиент</th><th class="t" data-ru="Провайдер" data-en="Provider" data-bg="Доставчик">Провайдер</th><th class="t" data-ru="Сумма" data-en="Amount" data-bg="Сума">Сумма</th><th class="t" data-ru="Срок" data-en="Due" data-bg="Срок">Срок</th><th class="t" data-ru="Статус" data-en="Status" data-bg="Статус">Статус</th><th></th></tr></thead>
+            <thead><tr><th class="t" data-ru="ÐÐ»Ð¸ÐµÐ½Ñ" data-en="Client" data-bg="ÐÐ»Ð¸ÐµÐ½Ñ">ÐÐ»Ð¸ÐµÐ½Ñ</th><th class="t" data-ru="ÐÑÐ¾Ð²Ð°Ð¹Ð´ÐµÑ" data-en="Provider" data-bg="ÐÐ¾ÑÑÐ°Ð²ÑÐ¸Ðº">ÐÑÐ¾Ð²Ð°Ð¹Ð´ÐµÑ</th><th class="t" data-ru="Ð¡ÑÐ¼Ð¼Ð°" data-en="Amount" data-bg="Ð¡ÑÐ¼Ð°">Ð¡ÑÐ¼Ð¼Ð°</th><th class="t" data-ru="Ð¡ÑÐ¾Ðº" data-en="Due" data-bg="Ð¡ÑÐ¾Ðº">Ð¡ÑÐ¾Ðº</th><th class="t" data-ru="Ð¡ÑÐ°ÑÑÑ" data-en="Status" data-bg="Ð¡ÑÐ°ÑÑÑ">Ð¡ÑÐ°ÑÑÑ</th><th></th></tr></thead>
             <tbody>
-              <tr><td>Воронов</td><td>ЧЕЗ</td><td>€67</td><td>10.04</td><td><span class="pill p-due t" data-ru="К оплате" data-en="Due" data-bg="За плащане">К оплате</span></td><td><button class="btn btn-sm t" data-ru="Изменить" data-en="Edit" data-bg="Редактирай">Изменить</button></td></tr>
-              <tr><td>Воронов</td><td>Виваком</td><td>€76</td><td>15.04</td><td><span class="pill p-due t" data-ru="К оплате" data-en="Due" data-bg="За плащане">К оплате</span></td><td><button class="btn btn-sm t" data-ru="Изменить" data-en="Edit" data-bg="Редактирай">Изменить</button></td></tr>
-              <tr><td>Соколова</td><td>ЧЕЗ</td><td>€54</td><td>10.04</td><td><span class="pill p-paid t" data-ru="Оплачен" data-en="Paid" data-bg="Платено">Оплачен</span></td><td><button class="btn btn-sm t" data-ru="Изменить" data-en="Edit" data-bg="Редактирай">Изменить</button></td></tr>
-              <tr><td>Чернов</td><td>Топлофикация</td><td>€120</td><td>01.05</td><td><span class="pill p-soon t" data-ru="Предстоит" data-en="Upcoming" data-bg="Предстои">Предстоит</span></td><td><button class="btn btn-sm t" data-ru="Изменить" data-en="Edit" data-bg="Редактирай">Изменить</button></td></tr>
+              <tr><td>ÐÐ¾ÑÐ¾Ð½Ð¾Ð²</td><td>Ð§ÐÐ</td><td>â¬67</td><td>10.04</td><td><span class="pill p-due t" data-ru="Ð Ð¾Ð¿Ð»Ð°ÑÐµ" data-en="Due" data-bg="ÐÐ° Ð¿Ð»Ð°ÑÐ°Ð½Ðµ">Ð Ð¾Ð¿Ð»Ð°ÑÐµ</span></td><td><button class="btn btn-sm t" data-ru="ÐÐ·Ð¼ÐµÐ½Ð¸ÑÑ" data-en="Edit" data-bg="Ð ÐµÐ´Ð°ÐºÑÐ¸ÑÐ°Ð¹">ÐÐ·Ð¼ÐµÐ½Ð¸ÑÑ</button></td></tr>
+              <tr><td>ÐÐ¾ÑÐ¾Ð½Ð¾Ð²</td><td>ÐÐ¸Ð²Ð°ÐºÐ¾Ð¼</td><td>â¬76</td><td>15.04</td><td><span class="pill p-due t" data-ru="Ð Ð¾Ð¿Ð»Ð°ÑÐµ" data-en="Due" data-bg="ÐÐ° Ð¿Ð»Ð°ÑÐ°Ð½Ðµ">Ð Ð¾Ð¿Ð»Ð°ÑÐµ</span></td><td><button class="btn btn-sm t" data-ru="ÐÐ·Ð¼ÐµÐ½Ð¸ÑÑ" data-en="Edit" data-bg="Ð ÐµÐ´Ð°ÐºÑÐ¸ÑÐ°Ð¹">ÐÐ·Ð¼ÐµÐ½Ð¸ÑÑ</button></td></tr>
+              <tr><td>Ð¡Ð¾ÐºÐ¾Ð»Ð¾Ð²Ð°</td><td>Ð§ÐÐ</td><td>â¬54</td><td>10.04</td><td><span class="pill p-paid t" data-ru="ÐÐ¿Ð»Ð°ÑÐµÐ½" data-en="Paid" data-bg="ÐÐ»Ð°ÑÐµÐ½Ð¾">ÐÐ¿Ð»Ð°ÑÐµÐ½</span></td><td><button class="btn btn-sm t" data-ru="ÐÐ·Ð¼ÐµÐ½Ð¸ÑÑ" data-en="Edit" data-bg="Ð ÐµÐ´Ð°ÐºÑÐ¸ÑÐ°Ð¹">ÐÐ·Ð¼ÐµÐ½Ð¸ÑÑ</button></td></tr>
+              <tr><td>Ð§ÐµÑÐ½Ð¾Ð²</td><td>Ð¢Ð¾Ð¿Ð»Ð¾ÑÐ¸ÐºÐ°ÑÐ¸Ñ</td><td>â¬120</td><td>01.05</td><td><span class="pill p-soon t" data-ru="ÐÑÐµÐ´ÑÑÐ¾Ð¸Ñ" data-en="Upcoming" data-bg="ÐÑÐµÐ´ÑÑÐ¾Ð¸">ÐÑÐµÐ´ÑÑÐ¾Ð¸Ñ</span></td><td><button class="btn btn-sm t" data-ru="ÐÐ·Ð¼ÐµÐ½Ð¸ÑÑ" data-en="Edit" data-bg="Ð ÐµÐ´Ð°ÐºÑÐ¸ÑÐ°Ð¹">ÐÐ·Ð¼ÐµÐ½Ð¸ÑÑ</button></td></tr>
             </tbody>
           </table></div>
         </div>
@@ -606,11 +606,11 @@ tr:hover td{background:rgba(27,77,62,0.02)}
       <!-- PAGE: CLIENTS (manager) -->
       <div class="page" id="page-clients">
         <div class="card">
-          <div class="sec-head"><div class="sec-title t" data-ru="Все клиенты" data-en="All clients" data-bg="Всички клиенти">Все клиенты</div></div>
+          <div class="sec-head"><div class="sec-title t" data-ru="ÐÑÐµ ÐºÐ»Ð¸ÐµÐ½ÑÑ" data-en="All clients" data-bg="ÐÑÐ¸ÑÐºÐ¸ ÐºÐ»Ð¸ÐµÐ½ÑÐ¸">ÐÑÐµ ÐºÐ»Ð¸ÐµÐ½ÑÑ</div></div>
           <div id="all-clients-list">
-            <div class="client-row"><div class="client-av">АВ</div><div class="client-info"><div class="client-name">Александр Воронов</div><div class="client-meta"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="63000f0a060d1723060e020a0f4d000c0e">[email&#160;protected]</a> · +7 999 123 45 67 · <span class="t" data-ru="1 объект" data-en="1 property" data-bg="1 имот">1 объект</span></div></div><span class="pill p-paid t" data-ru="Активен" data-en="Active" data-bg="Активен">Активен</span></div>
-            <div class="client-row"><div class="client-av">ЕС</div><div class="client-info"><div class="client-name">Елена Соколова</div><div class="client-meta"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f1929d98949f85b1949c90989ddf929e9c">[email&#160;protected]</a> · +7 912 555 00 11 · <span class="t" data-ru="1 объект" data-en="1 property" data-bg="1 имот">1 объект</span></div></div><span class="pill p-paid t" data-ru="Активен" data-en="Active" data-bg="Активен">Активен</span></div>
-            <div class="client-row"><div class="client-av">ДЧ</div><div class="client-info"><div class="client-name">Дмитрий Чернов</div><div class="client-meta"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="94f7f8fdf1fae0d4f1f9f5fdf8baf7fbf9">[email&#160;protected]</a> · +7 916 777 88 99 · <span class="t" data-ru="1 объект" data-en="1 property" data-bg="1 имот">1 объект</span></div></div><span class="pill p-new t" data-ru="Новый" data-en="New" data-bg="Нов">Новый</span></div>
+            <div class="client-row"><div class="client-av">ÐÐ</div><div class="client-info"><div class="client-name">ÐÐ»ÐµÐºÑÐ°Ð½Ð´Ñ ÐÐ¾ÑÐ¾Ð½Ð¾Ð²</div><div class="client-meta"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="63000f0a060d1723060e020a0f4d000c0e">[email&#160;protected]</a> Â· +7 999 123 45 67 Â· <span class="t" data-ru="1 Ð¾Ð±ÑÐµÐºÑ" data-en="1 property" data-bg="1 Ð¸Ð¼Ð¾Ñ">1 Ð¾Ð±ÑÐµÐºÑ</span></div></div><span class="pill p-paid t" data-ru="ÐÐºÑÐ¸Ð²ÐµÐ½" data-en="Active" data-bg="ÐÐºÑÐ¸Ð²ÐµÐ½">ÐÐºÑÐ¸Ð²ÐµÐ½</span></div>
+            <div class="client-row"><div class="client-av">ÐÐ¡</div><div class="client-info"><div class="client-name">ÐÐ»ÐµÐ½Ð° Ð¡Ð¾ÐºÐ¾Ð»Ð¾Ð²Ð°</div><div class="client-meta"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f1929d98949f85b1949c90989ddf929e9c">[email&#160;protected]</a> Â· +7 912 555 00 11 Â· <span class="t" data-ru="1 Ð¾Ð±ÑÐµÐºÑ" data-en="1 property" data-bg="1 Ð¸Ð¼Ð¾Ñ">1 Ð¾Ð±ÑÐµÐºÑ</span></div></div><span class="pill p-paid t" data-ru="ÐÐºÑÐ¸Ð²ÐµÐ½" data-en="Active" data-bg="ÐÐºÑÐ¸Ð²ÐµÐ½">ÐÐºÑÐ¸Ð²ÐµÐ½</span></div>
+            <div class="client-row"><div class="client-av">ÐÐ§</div><div class="client-info"><div class="client-name">ÐÐ¼Ð¸ÑÑÐ¸Ð¹ Ð§ÐµÑÐ½Ð¾Ð²</div><div class="client-meta"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="94f7f8fdf1fae0d4f1f9f5fdf8baf7fbf9">[email&#160;protected]</a> Â· +7 916 777 88 99 Â· <span class="t" data-ru="1 Ð¾Ð±ÑÐµÐºÑ" data-en="1 property" data-bg="1 Ð¸Ð¼Ð¾Ñ">1 Ð¾Ð±ÑÐµÐºÑ</span></div></div><span class="pill p-new t" data-ru="ÐÐ¾Ð²ÑÐ¹" data-en="New" data-bg="ÐÐ¾Ð²">ÐÐ¾Ð²ÑÐ¹</span></div>
           </div>
         </div>
       </div>
@@ -620,23 +620,25 @@ tr:hover td{background:rgba(27,77,62,0.02)}
 </div>
 </div>
 
-<!-- ═══════════════ MODALS ═══════════════ -->
+<!-- âââââââââââââââ MODALS âââââââââââââââ -->
 
 <!-- PAYMENT SECURITY MODAL -->
+<div class="modal-overlay" id="modal-edit-bill"><div class="modal" style="max-width:400px"><div class="modal-title" id="ebt">Изменить счёт</div><input type="hidden" id="ebi"><div style="font-size:14px;font-weight:500;padding:0 0 1rem;color:var(--em)" id="ebp"></div><div class="form-group"><label class="form-label">Сумма / Amount (€)</label><input class="form-input" type="number" id="eba"></div><div class="form-group"><label class="form-label">Срок / Due date</label><input class="form-input" type="date" id="ebd"></div><div class="form-group"><label class="form-label">Статус / Status</label><select class="form-select" id="ebs"><option value="due">К оплате / Due</option><option value="paid">Оплачен / Paid</option><option value="soon">Предстоит / Upcoming</option><option value="overdue">Просрочен / Overdue</option></select></div><div class="modal-actions" style="margin-top:1rem"><button class="modal-cancel" onclick="closeModal('modal-edit-bill')">Отмена</button><button class="modal-confirm" onclick="saveEB()">Сохранить</button></div></div></div>
+
 <div class="modal-overlay" id="modal-payment">
   <div class="modal">
     <div class="security-badge">
-      <div class="security-icon">🔒</div>
+      <div class="security-icon">ð</div>
       <div class="security-text">
-        <div class="security-title t" data-ru="Ваша безопасность — наш приоритет" data-en="Your security is our priority" data-bg="Вашата сигурност е наш приоритет">Ваша безопасность — наш приоритет</div>
-        <div class="security-desc t" data-ru="Property Control никогда не хранит и не имеет доступа к вашим паролям или платёжным данным. Оплата производится напрямую на защищённом сайте провайдера." data-en="Property Control never stores or has access to your passwords or payment details. Payment is made directly on the provider's secure website." data-bg="Property Control никога не съхранява и няма достъп до вашите пароли или платежни данни. Плащането се извършва директно на защитения сайт на доставчика.">Property Control никогда не хранит и не имеет доступа к вашим паролям или платёжным данным. Оплата производится напрямую на защищённом сайте провайдера.</div>
+        <div class="security-title t" data-ru="ÐÐ°ÑÐ° Ð±ÐµÐ·Ð¾Ð¿Ð°ÑÐ½Ð¾ÑÑÑ â Ð½Ð°Ñ Ð¿ÑÐ¸Ð¾ÑÐ¸ÑÐµÑ" data-en="Your security is our priority" data-bg="ÐÐ°ÑÐ°ÑÐ° ÑÐ¸Ð³ÑÑÐ½Ð¾ÑÑ Ðµ Ð½Ð°Ñ Ð¿ÑÐ¸Ð¾ÑÐ¸ÑÐµÑ">ÐÐ°ÑÐ° Ð±ÐµÐ·Ð¾Ð¿Ð°ÑÐ½Ð¾ÑÑÑ â Ð½Ð°Ñ Ð¿ÑÐ¸Ð¾ÑÐ¸ÑÐµÑ</div>
+        <div class="security-desc t" data-ru="Property Control Ð½Ð¸ÐºÐ¾Ð³Ð´Ð° Ð½Ðµ ÑÑÐ°Ð½Ð¸Ñ Ð¸ Ð½Ðµ Ð¸Ð¼ÐµÐµÑ Ð´Ð¾ÑÑÑÐ¿Ð° Ðº Ð²Ð°ÑÐ¸Ð¼ Ð¿Ð°ÑÐ¾Ð»ÑÐ¼ Ð¸Ð»Ð¸ Ð¿Ð»Ð°ÑÑÐ¶Ð½ÑÐ¼ Ð´Ð°Ð½Ð½ÑÐ¼. ÐÐ¿Ð»Ð°ÑÐ° Ð¿ÑÐ¾Ð¸Ð·Ð²Ð¾Ð´Ð¸ÑÑÑ Ð½Ð°Ð¿ÑÑÐ¼ÑÑ Ð½Ð° Ð·Ð°ÑÐ¸ÑÑÐ½Ð½Ð¾Ð¼ ÑÐ°Ð¹ÑÐµ Ð¿ÑÐ¾Ð²Ð°Ð¹Ð´ÐµÑÐ°." data-en="Property Control never stores or has access to your passwords or payment details. Payment is made directly on the provider's secure website." data-bg="Property Control Ð½Ð¸ÐºÐ¾Ð³Ð° Ð½Ðµ ÑÑÑÑÐ°Ð½ÑÐ²Ð° Ð¸ Ð½ÑÐ¼Ð° Ð´Ð¾ÑÑÑÐ¿ Ð´Ð¾ Ð²Ð°ÑÐ¸ÑÐµ Ð¿Ð°ÑÐ¾Ð»Ð¸ Ð¸Ð»Ð¸ Ð¿Ð»Ð°ÑÐµÐ¶Ð½Ð¸ Ð´Ð°Ð½Ð½Ð¸. ÐÐ»Ð°ÑÐ°Ð½ÐµÑÐ¾ ÑÐµ Ð¸Ð·Ð²ÑÑÑÐ²Ð° Ð´Ð¸ÑÐµÐºÑÐ½Ð¾ Ð½Ð° Ð·Ð°ÑÐ¸ÑÐµÐ½Ð¸Ñ ÑÐ°Ð¹Ñ Ð½Ð° Ð´Ð¾ÑÑÐ°Ð²ÑÐ¸ÐºÐ°.">Property Control Ð½Ð¸ÐºÐ¾Ð³Ð´Ð° Ð½Ðµ ÑÑÐ°Ð½Ð¸Ñ Ð¸ Ð½Ðµ Ð¸Ð¼ÐµÐµÑ Ð´Ð¾ÑÑÑÐ¿Ð° Ðº Ð²Ð°ÑÐ¸Ð¼ Ð¿Ð°ÑÐ¾Ð»ÑÐ¼ Ð¸Ð»Ð¸ Ð¿Ð»Ð°ÑÑÐ¶Ð½ÑÐ¼ Ð´Ð°Ð½Ð½ÑÐ¼. ÐÐ¿Ð»Ð°ÑÐ° Ð¿ÑÐ¾Ð¸Ð·Ð²Ð¾Ð´Ð¸ÑÑÑ Ð½Ð°Ð¿ÑÑÐ¼ÑÑ Ð½Ð° Ð·Ð°ÑÐ¸ÑÑÐ½Ð½Ð¾Ð¼ ÑÐ°Ð¹ÑÐµ Ð¿ÑÐ¾Ð²Ð°Ð¹Ð´ÐµÑÐ°.</div>
       </div>
     </div>
-    <div class="modal-title" id="pay-modal-name">ЧЕЗ</div>
-    <div class="modal-body t" data-ru="Вы перейдёте на официальный сайт для оплаты. Рекомендуем использовать встроенный менеджер паролей вашего браузера — он безопасно запомнит данные для следующего раза." data-en="You will be redirected to the official website for payment. We recommend using your browser's built-in password manager — it will securely remember your credentials for next time." data-bg="Ще бъдете пренасочени към официалния уебсайт за плащане. Препоръчваме да използвате вградения мениджър на пароли на браузъра ви — той ще запомни данните ви сигурно за следващия път.">Вы перейдёте на официальный сайт для оплаты. Рекомендуем использовать встроенный менеджер паролей вашего браузера — он безопасно запомнит данные для следующего раза.</div>
+    <div class="modal-title" id="pay-modal-name">Ð§ÐÐ</div>
+    <div class="modal-body t" data-ru="ÐÑ Ð¿ÐµÑÐµÐ¹Ð´ÑÑÐµ Ð½Ð° Ð¾ÑÐ¸ÑÐ¸Ð°Ð»ÑÐ½ÑÐ¹ ÑÐ°Ð¹Ñ Ð´Ð»Ñ Ð¾Ð¿Ð»Ð°ÑÑ. Ð ÐµÐºÐ¾Ð¼ÐµÐ½Ð´ÑÐµÐ¼ Ð¸ÑÐ¿Ð¾Ð»ÑÐ·Ð¾Ð²Ð°ÑÑ Ð²ÑÑÑÐ¾ÐµÐ½Ð½ÑÐ¹ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ Ð¿Ð°ÑÐ¾Ð»ÐµÐ¹ Ð²Ð°ÑÐµÐ³Ð¾ Ð±ÑÐ°ÑÐ·ÐµÑÐ° â Ð¾Ð½ Ð±ÐµÐ·Ð¾Ð¿Ð°ÑÐ½Ð¾ Ð·Ð°Ð¿Ð¾Ð¼Ð½Ð¸Ñ Ð´Ð°Ð½Ð½ÑÐµ Ð´Ð»Ñ ÑÐ»ÐµÐ´ÑÑÑÐµÐ³Ð¾ ÑÐ°Ð·Ð°." data-en="You will be redirected to the official website for payment. We recommend using your browser's built-in password manager â it will securely remember your credentials for next time." data-bg="Ð©Ðµ Ð±ÑÐ´ÐµÑÐµ Ð¿ÑÐµÐ½Ð°ÑÐ¾ÑÐµÐ½Ð¸ ÐºÑÐ¼ Ð¾ÑÐ¸ÑÐ¸Ð°Ð»Ð½Ð¸Ñ ÑÐµÐ±ÑÐ°Ð¹Ñ Ð·Ð° Ð¿Ð»Ð°ÑÐ°Ð½Ðµ. ÐÑÐµÐ¿Ð¾ÑÑÑÐ²Ð°Ð¼Ðµ Ð´Ð° Ð¸Ð·Ð¿Ð¾Ð»Ð·Ð²Ð°ÑÐµ Ð²Ð³ÑÐ°Ð´ÐµÐ½Ð¸Ñ Ð¼ÐµÐ½Ð¸Ð´Ð¶ÑÑ Ð½Ð° Ð¿Ð°ÑÐ¾Ð»Ð¸ Ð½Ð° Ð±ÑÐ°ÑÐ·ÑÑÐ° Ð²Ð¸ â ÑÐ¾Ð¹ ÑÐµ Ð·Ð°Ð¿Ð¾Ð¼Ð½Ð¸ Ð´Ð°Ð½Ð½Ð¸ÑÐµ Ð²Ð¸ ÑÐ¸Ð³ÑÑÐ½Ð¾ Ð·Ð° ÑÐ»ÐµÐ´Ð²Ð°ÑÐ¸Ñ Ð¿ÑÑ.">ÐÑ Ð¿ÐµÑÐµÐ¹Ð´ÑÑÐµ Ð½Ð° Ð¾ÑÐ¸ÑÐ¸Ð°Ð»ÑÐ½ÑÐ¹ ÑÐ°Ð¹Ñ Ð´Ð»Ñ Ð¾Ð¿Ð»Ð°ÑÑ. Ð ÐµÐºÐ¾Ð¼ÐµÐ½Ð´ÑÐµÐ¼ Ð¸ÑÐ¿Ð¾Ð»ÑÐ·Ð¾Ð²Ð°ÑÑ Ð²ÑÑÑÐ¾ÐµÐ½Ð½ÑÐ¹ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ Ð¿Ð°ÑÐ¾Ð»ÐµÐ¹ Ð²Ð°ÑÐµÐ³Ð¾ Ð±ÑÐ°ÑÐ·ÐµÑÐ° â Ð¾Ð½ Ð±ÐµÐ·Ð¾Ð¿Ð°ÑÐ½Ð¾ Ð·Ð°Ð¿Ð¾Ð¼Ð½Ð¸Ñ Ð´Ð°Ð½Ð½ÑÐµ Ð´Ð»Ñ ÑÐ»ÐµÐ´ÑÑÑÐµÐ³Ð¾ ÑÐ°Ð·Ð°.</div>
     <div class="modal-actions">
-      <button class="modal-cancel t" data-ru="Отмена" data-en="Cancel" data-bg="Отказ" onclick="closeModal('modal-payment')">Отмена</button>
-      <button class="modal-confirm t" data-ru="Перейти к оплате →" data-en="Go to payment →" data-bg="Към плащане →" id="pay-modal-btn">Перейти к оплате →</button>
+      <button class="modal-cancel t" data-ru="ÐÑÐ¼ÐµÐ½Ð°" data-en="Cancel" data-bg="ÐÑÐºÐ°Ð·" onclick="closeModal('modal-payment')">ÐÑÐ¼ÐµÐ½Ð°</button>
+      <button class="modal-confirm t" data-ru="ÐÐµÑÐµÐ¹ÑÐ¸ Ðº Ð¾Ð¿Ð»Ð°ÑÐµ â" data-en="Go to payment â" data-bg="ÐÑÐ¼ Ð¿Ð»Ð°ÑÐ°Ð½Ðµ â" id="pay-modal-btn">ÐÐµÑÐµÐ¹ÑÐ¸ Ðº Ð¾Ð¿Ð»Ð°ÑÐµ â</button>
     </div>
   </div>
 </div>
@@ -644,31 +646,31 @@ tr:hover td{background:rgba(27,77,62,0.02)}
 <!-- ADD PROPERTY MODAL -->
 <div class="modal-overlay" id="modal-add-prop">
   <div class="modal" style="max-width:500px">
-    <div class="modal-title t" data-ru="Добавить объект" data-en="Add property" data-bg="Добави имот">Добавить объект</div>
-    <div class="form-group"><label class="form-label t" data-ru="Адрес" data-en="Address" data-bg="Адрес">Адрес</label><input class="form-input" type="text" id="prop-addr-inp" placeholder="ул. Раковски 42, Sofia"></div>
+    <div class="modal-title t" data-ru="ÐÐ¾Ð±Ð°Ð²Ð¸ÑÑ Ð¾Ð±ÑÐµÐºÑ" data-en="Add property" data-bg="ÐÐ¾Ð±Ð°Ð²Ð¸ Ð¸Ð¼Ð¾Ñ">ÐÐ¾Ð±Ð°Ð²Ð¸ÑÑ Ð¾Ð±ÑÐµÐºÑ</div>
+    <div class="form-group"><label class="form-label t" data-ru="ÐÐ´ÑÐµÑ" data-en="Address" data-bg="ÐÐ´ÑÐµÑ">ÐÐ´ÑÐµÑ</label><input class="form-input" type="text" id="prop-addr-inp" placeholder="ÑÐ». Ð Ð°ÐºÐ¾Ð²ÑÐºÐ¸ 42, Sofia"></div>
     <div class="form-row">
-      <div class="form-group"><label class="form-label t" data-ru="Тип" data-en="Type" data-bg="Тип">Тип</label>
+      <div class="form-group"><label class="form-label t" data-ru="Ð¢Ð¸Ð¿" data-en="Type" data-bg="Ð¢Ð¸Ð¿">Ð¢Ð¸Ð¿</label>
         <select class="form-select" id="prop-type">
-          <option class="t" data-ru="Квартира" data-en="Apartment" data-bg="Апартамент">Квартира</option>
-          <option class="t" data-ru="Дом" data-en="House" data-bg="Къща">Дом</option>
-          <option class="t" data-ru="Студия" data-en="Studio" data-bg="Студио">Студия</option>
-          <option class="t" data-ru="Коммерческая" data-en="Commercial" data-bg="Търговски">Коммерческая</option>
+          <option class="t" data-ru="ÐÐ²Ð°ÑÑÐ¸ÑÐ°" data-en="Apartment" data-bg="ÐÐ¿Ð°ÑÑÐ°Ð¼ÐµÐ½Ñ">ÐÐ²Ð°ÑÑÐ¸ÑÐ°</option>
+          <option class="t" data-ru="ÐÐ¾Ð¼" data-en="House" data-bg="ÐÑÑÐ°">ÐÐ¾Ð¼</option>
+          <option class="t" data-ru="Ð¡ÑÑÐ´Ð¸Ñ" data-en="Studio" data-bg="Ð¡ÑÑÐ´Ð¸Ð¾">Ð¡ÑÑÐ´Ð¸Ñ</option>
+          <option class="t" data-ru="ÐÐ¾Ð¼Ð¼ÐµÑÑÐµÑÐºÐ°Ñ" data-en="Commercial" data-bg="Ð¢ÑÑÐ³Ð¾Ð²ÑÐºÐ¸">ÐÐ¾Ð¼Ð¼ÐµÑÑÐµÑÐºÐ°Ñ</option>
         </select>
       </div>
-      <div class="form-group"><label class="form-label">м²</label><input class="form-input" type="number" id="prop-sqm" placeholder="85"></div>
+      <div class="form-group"><label class="form-label">Ð¼Â²</label><input class="form-input" type="number" id="prop-sqm" placeholder="85"></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label class="form-label t" data-ru="Район" data-en="District" data-bg="Квартал">Район</label><input class="form-input" type="text" id="prop-district" placeholder="Центр"></div>
-      <div class="form-group"><label class="form-label t" data-ru="Статус" data-en="Status" data-bg="Статус">Статус</label>
+      <div class="form-group"><label class="form-label t" data-ru="Ð Ð°Ð¹Ð¾Ð½" data-en="District" data-bg="ÐÐ²Ð°ÑÑÐ°Ð»">Ð Ð°Ð¹Ð¾Ð½</label><input class="form-input" type="text" id="prop-district" placeholder="Ð¦ÐµÐ½ÑÑ"></div>
+      <div class="form-group"><label class="form-label t" data-ru="Ð¡ÑÐ°ÑÑÑ" data-en="Status" data-bg="Ð¡ÑÐ°ÑÑÑ">Ð¡ÑÐ°ÑÑÑ</label>
         <select class="form-select" id="prop-status-sel">
-          <option value="rented" class="t" data-ru="Сдан" data-en="Rented" data-bg="Отдаден">Сдан</option>
-          <option value="vacant" class="t" data-ru="Свободен" data-en="Vacant" data-bg="Свободен">Свободен</option>
+          <option value="rented" class="t" data-ru="Ð¡Ð´Ð°Ð½" data-en="Rented" data-bg="ÐÑÐ´Ð°Ð´ÐµÐ½">Ð¡Ð´Ð°Ð½</option>
+          <option value="vacant" class="t" data-ru="Ð¡Ð²Ð¾Ð±Ð¾Ð´ÐµÐ½" data-en="Vacant" data-bg="Ð¡Ð²Ð¾Ð±Ð¾Ð´ÐµÐ½">Ð¡Ð²Ð¾Ð±Ð¾Ð´ÐµÐ½</option>
         </select>
       </div>
     </div>
     <div class="modal-actions" style="margin-top:1rem">
-      <button class="modal-cancel t" data-ru="Отмена" data-en="Cancel" data-bg="Отказ" onclick="closeModal('modal-add-prop')">Отмена</button>
-      <button class="modal-confirm t" data-ru="Добавить" data-en="Add" data-bg="Добави" onclick="addProperty()">Добавить</button>
+      <button class="modal-cancel t" data-ru="ÐÑÐ¼ÐµÐ½Ð°" data-en="Cancel" data-bg="ÐÑÐºÐ°Ð·" onclick="closeModal('modal-add-prop')">ÐÑÐ¼ÐµÐ½Ð°</button>
+      <button class="modal-confirm t" data-ru="ÐÐ¾Ð±Ð°Ð²Ð¸ÑÑ" data-en="Add" data-bg="ÐÐ¾Ð±Ð°Ð²Ð¸" onclick="addProperty()">ÐÐ¾Ð±Ð°Ð²Ð¸ÑÑ</button>
     </div>
   </div>
 </div>
@@ -676,44 +678,44 @@ tr:hover td{background:rgba(27,77,62,0.02)}
 <!-- ADD BILL MODAL (manager) -->
 <div class="modal-overlay" id="modal-add-bill">
   <div class="modal" style="max-width:480px">
-    <div class="modal-title t" data-ru="Добавить счёт" data-en="Add bill" data-bg="Добави сметка">Добавить счёт</div>
-    <div class="form-group"><label class="form-label t" data-ru="Клиент" data-en="Client" data-bg="Клиент">Клиент</label>
+    <div class="modal-title t" data-ru="ÐÐ¾Ð±Ð°Ð²Ð¸ÑÑ ÑÑÑÑ" data-en="Add bill" data-bg="ÐÐ¾Ð±Ð°Ð²Ð¸ ÑÐ¼ÐµÑÐºÐ°">ÐÐ¾Ð±Ð°Ð²Ð¸ÑÑ ÑÑÑÑ</div>
+    <div class="form-group"><label class="form-label t" data-ru="ÐÐ»Ð¸ÐµÐ½Ñ" data-en="Client" data-bg="ÐÐ»Ð¸ÐµÐ½Ñ">ÐÐ»Ð¸ÐµÐ½Ñ</label>
       <select class="form-select" id="bill-client">
-        <option>Воронов Александр</option><option>Соколова Елена</option><option>Чернов Дмитрий</option>
+        <option>ÐÐ¾ÑÐ¾Ð½Ð¾Ð² ÐÐ»ÐµÐºÑÐ°Ð½Ð´Ñ</option><option>Ð¡Ð¾ÐºÐ¾Ð»Ð¾Ð²Ð° ÐÐ»ÐµÐ½Ð°</option><option>Ð§ÐµÑÐ½Ð¾Ð² ÐÐ¼Ð¸ÑÑÐ¸Ð¹</option>
       </select>
     </div>
     <div class="form-row">
-      <div class="form-group"><label class="form-label t" data-ru="Провайдер" data-en="Provider" data-bg="Доставчик">Провайдер</label>
+      <div class="form-group"><label class="form-label t" data-ru="ÐÑÐ¾Ð²Ð°Ð¹Ð´ÐµÑ" data-en="Provider" data-bg="ÐÐ¾ÑÑÐ°Ð²ÑÐ¸Ðº">ÐÑÐ¾Ð²Ð°Ð¹Ð´ÐµÑ</label>
         <select class="form-select" id="bill-provider">
-          <option>ЧЕЗ</option><option>Топлофикация</option><option>Sofiyska Voda</option><option>Виваком</option><option>НАП</option><option>Страховка</option>
+          <option>Ð§ÐÐ</option><option>Ð¢Ð¾Ð¿Ð»Ð¾ÑÐ¸ÐºÐ°ÑÐ¸Ñ</option><option>Sofiyska Voda</option><option>ÐÐ¸Ð²Ð°ÐºÐ¾Ð¼</option><option>ÐÐÐ</option><option>Ð¡ÑÑÐ°ÑÐ¾Ð²ÐºÐ°</option>
         </select>
       </div>
-      <div class="form-group"><label class="form-label t" data-ru="Сумма (€)" data-en="Amount (€)" data-bg="Сума (€)">Сумма (€)</label><input class="form-input" type="number" id="bill-amount" placeholder="67"></div>
+      <div class="form-group"><label class="form-label t" data-ru="Ð¡ÑÐ¼Ð¼Ð° (â¬)" data-en="Amount (â¬)" data-bg="Ð¡ÑÐ¼Ð° (â¬)">Ð¡ÑÐ¼Ð¼Ð° (â¬)</label><input class="form-input" type="number" id="bill-amount" placeholder="67"></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label class="form-label t" data-ru="Срок оплаты" data-en="Due date" data-bg="Краен срок">Срок оплаты</label><input class="form-input" type="date" id="bill-due"></div>
-      <div class="form-group"><label class="form-label t" data-ru="Статус" data-en="Status" data-bg="Статус">Статус</label>
+      <div class="form-group"><label class="form-label t" data-ru="Ð¡ÑÐ¾Ðº Ð¾Ð¿Ð»Ð°ÑÑ" data-en="Due date" data-bg="ÐÑÐ°ÐµÐ½ ÑÑÐ¾Ðº">Ð¡ÑÐ¾Ðº Ð¾Ð¿Ð»Ð°ÑÑ</label><input class="form-input" type="date" id="bill-due"></div>
+      <div class="form-group"><label class="form-label t" data-ru="Ð¡ÑÐ°ÑÑÑ" data-en="Status" data-bg="Ð¡ÑÐ°ÑÑÑ">Ð¡ÑÐ°ÑÑÑ</label>
         <select class="form-select" id="bill-status">
-          <option value="due" class="t" data-ru="К оплате" data-en="Due" data-bg="За плащане">К оплате</option>
-          <option value="paid" class="t" data-ru="Оплачен" data-en="Paid" data-bg="Платено">Оплачен</option>
-          <option value="soon" class="t" data-ru="Предстоит" data-en="Upcoming" data-bg="Предстои">Предстоит</option>
+          <option value="due" class="t" data-ru="Ð Ð¾Ð¿Ð»Ð°ÑÐµ" data-en="Due" data-bg="ÐÐ° Ð¿Ð»Ð°ÑÐ°Ð½Ðµ">Ð Ð¾Ð¿Ð»Ð°ÑÐµ</option>
+          <option value="paid" class="t" data-ru="ÐÐ¿Ð»Ð°ÑÐµÐ½" data-en="Paid" data-bg="ÐÐ»Ð°ÑÐµÐ½Ð¾">ÐÐ¿Ð»Ð°ÑÐµÐ½</option>
+          <option value="soon" class="t" data-ru="ÐÑÐµÐ´ÑÑÐ¾Ð¸Ñ" data-en="Upcoming" data-bg="ÐÑÐµÐ´ÑÑÐ¾Ð¸">ÐÑÐµÐ´ÑÑÐ¾Ð¸Ñ</option>
         </select>
       </div>
     </div>
     <div class="modal-actions" style="margin-top:1rem">
-      <button class="modal-cancel t" data-ru="Отмена" data-en="Cancel" data-bg="Отказ" onclick="closeModal('modal-add-bill')">Отмена</button>
-      <button class="modal-confirm t" data-ru="Сохранить" data-en="Save" data-bg="Запази" onclick="closeModal('modal-add-bill')">Сохранить</button>
+      <button class="modal-cancel t" data-ru="ÐÑÐ¼ÐµÐ½Ð°" data-en="Cancel" data-bg="ÐÑÐºÐ°Ð·" onclick="closeModal('modal-add-bill')">ÐÑÐ¼ÐµÐ½Ð°</button>
+      <button class="modal-confirm t" data-ru="Ð¡Ð¾ÑÑÐ°Ð½Ð¸ÑÑ" data-en="Save" data-bg="ÐÐ°Ð¿Ð°Ð·Ð¸" onclick="closeModal('modal-add-bill')">Ð¡Ð¾ÑÑÐ°Ð½Ð¸ÑÑ</button>
     </div>
   </div>
 </div>
 
 
 <script>
-// ═══════ SUPABASE REST API ═══════
-// Используем REST API напрямую — не нужен SDK
+// âââââââ SUPABASE REST API âââââââ
+// ÐÑÐ¿Ð¾Ð»ÑÐ·ÑÐµÐ¼ REST API Ð½Ð°Ð¿ÑÑÐ¼ÑÑ â Ð½Ðµ Ð½ÑÐ¶ÐµÐ½ SDK
 var SB_URL = 'https://cnmaghjwwakoxpijyisf.supabase.co';
 var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNubWFnaGp3d2Frb3hwaWp5aXNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5OTY0NzEsImV4cCI6MjA5MDU3MjQ3MX0.KKv6LsoMcK75szq6F3oo10p7lKEBsgEVZZcmyvF7zQ0';
-var sbToken = null; // JWT после логина
+var sbToken = null; // JWT Ð¿Ð¾ÑÐ»Ðµ Ð»Ð¾Ð³Ð¸Ð½Ð°
 
 function sbHeaders(extra){
   var h = {
@@ -741,7 +743,7 @@ async function sbSignUp(email, password, meta){
     catch(e) { return {error: 'Bad response: ' + text.substring(0,100)}; }
   } catch(e) {
     clearTimeout(timeout);
-    if(e.name === 'AbortError') return {error: 'Timeout — проверьте интернет-соединение'};
+    if(e.name === 'AbortError') return {error: 'Timeout â Ð¿ÑÐ¾Ð²ÐµÑÑÑÐµ Ð¸Ð½ÑÐµÑÐ½ÐµÑ-ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ðµ'};
     return {error: e.message};
   }
 }
@@ -765,7 +767,7 @@ async function sbSignIn(email, password){
     return data;
   } catch(e) {
     clearTimeout(timeout);
-    if(e.name === 'AbortError') return {error: 'Timeout — проверьте интернет-соединение'};
+    if(e.name === 'AbortError') return {error: 'Timeout â Ð¿ÑÐ¾Ð²ÐµÑÑÑÐµ Ð¸Ð½ÑÐµÑÐ½ÐµÑ-ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ðµ'};
     return {error: e.message};
   }
 }
@@ -786,7 +788,7 @@ async function sbGetBills(ownerId){
 }
 
 function initSupabase(){
-  console.log('✅ Supabase REST ready:', SB_URL);
+  console.log('â Supabase REST ready:', SB_URL);
 }
 
 async function doLoginSupabase(){
@@ -795,7 +797,7 @@ async function doLoginSupabase(){
   var err = document.getElementById('login-error');
   err.style.display='none';
   if(!email||!pass){
-    err.textContent={ru:'Заполните все поля',en:'Fill in all fields',bg:'Попълнете всички полета'}[lang];
+    err.textContent={ru:'ÐÐ°Ð¿Ð¾Ð»Ð½Ð¸ÑÐµ Ð²ÑÐµ Ð¿Ð¾Ð»Ñ',en:'Fill in all fields',bg:'ÐÐ¾Ð¿ÑÐ»Ð½ÐµÑÐµ Ð²ÑÐ¸ÑÐºÐ¸ Ð¿Ð¾Ð»ÐµÑÐ°'}[lang];
     err.style.display='block'; return;
   }
   var btn = document.getElementById('l-btn');
@@ -805,9 +807,9 @@ async function doLoginSupabase(){
 
   try {
     var res = await sbSignIn(email, pass);
-    btn.disabled=false; btn.textContent={ru:'Войти',en:'Sign In',bg:'Влез'}[lang];
+    btn.disabled=false; btn.textContent={ru:'ÐÐ¾Ð¹ÑÐ¸',en:'Sign In',bg:'ÐÐ»ÐµÐ·'}[lang];
     if(res.error || res.error_description){
-      err.textContent = res.error_description || res.error || 'Неверный email или пароль';
+      err.textContent = res.error_description || res.error || 'ÐÐµÐ²ÐµÑÐ½ÑÐ¹ email Ð¸Ð»Ð¸ Ð¿Ð°ÑÐ¾Ð»Ñ';
       err.style.display='block'; return;
     }
     var user = res.user;
@@ -820,8 +822,8 @@ async function doLoginSupabase(){
     };
     initApp();
   } catch(e){
-    btn.disabled=false; btn.textContent={ru:'Войти',en:'Sign In',bg:'Влез'}[lang];
-    err.textContent = 'Ошибка соединения: ' + e.message;
+    btn.disabled=false; btn.textContent={ru:'ÐÐ¾Ð¹ÑÐ¸',en:'Sign In',bg:'ÐÐ»ÐµÐ·'}[lang];
+    err.textContent = 'ÐÑÐ¸Ð±ÐºÐ° ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ñ: ' + e.message;
     err.style.display='block';
   }
 }
@@ -836,10 +838,10 @@ async function doRegisterSupabase(){
   err.style.display='none'; suc.style.display='none';
 
   // Validation
-  if(!name){ err.textContent={ru:'Введите имя',en:'Enter your name',bg:'Въведете името си'}[lang]; err.style.display='block'; return; }
-  if(!email||!email.includes('@')){ err.textContent={ru:'Введите корректный email',en:'Enter a valid email',bg:'Въведете валиден имейл'}[lang]; err.style.display='block'; return; }
-  if(!phone){ err.textContent={ru:'Введите телефон',en:'Enter your phone',bg:'Въведете телефон'}[lang]; err.style.display='block'; return; }
-  if(pass.length < 8){ err.textContent={ru:'Пароль минимум 8 символов',en:'Password min 8 characters',bg:'Паролата е минимум 8 символа'}[lang]; err.style.display='block'; return; }
+  if(!name){ err.textContent={ru:'ÐÐ²ÐµÐ´Ð¸ÑÐµ Ð¸Ð¼Ñ',en:'Enter your name',bg:'ÐÑÐ²ÐµÐ´ÐµÑÐµ Ð¸Ð¼ÐµÑÐ¾ ÑÐ¸'}[lang]; err.style.display='block'; return; }
+  if(!email||!email.includes('@')){ err.textContent={ru:'ÐÐ²ÐµÐ´Ð¸ÑÐµ ÐºÐ¾ÑÑÐµÐºÑÐ½ÑÐ¹ email',en:'Enter a valid email',bg:'ÐÑÐ²ÐµÐ´ÐµÑÐµ Ð²Ð°Ð»Ð¸Ð´ÐµÐ½ Ð¸Ð¼ÐµÐ¹Ð»'}[lang]; err.style.display='block'; return; }
+  if(!phone){ err.textContent={ru:'ÐÐ²ÐµÐ´Ð¸ÑÐµ ÑÐµÐ»ÐµÑÐ¾Ð½',en:'Enter your phone',bg:'ÐÑÐ²ÐµÐ´ÐµÑÐµ ÑÐµÐ»ÐµÑÐ¾Ð½'}[lang]; err.style.display='block'; return; }
+  if(pass.length < 8){ err.textContent={ru:'ÐÐ°ÑÐ¾Ð»Ñ Ð¼Ð¸Ð½Ð¸Ð¼ÑÐ¼ 8 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð¾Ð²',en:'Password min 8 characters',bg:'ÐÐ°ÑÐ¾Ð»Ð°ÑÐ° Ðµ Ð¼Ð¸Ð½Ð¸Ð¼ÑÐ¼ 8 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°'}[lang]; err.style.display='block'; return; }
 
   var btn = document.getElementById('r-btn');
   btn.textContent='...'; btn.disabled=true;
@@ -849,51 +851,51 @@ async function doRegisterSupabase(){
   try {
     var res = await sbSignUp(email, pass, {full_name: name, phone: phone, role: 'client'});
     btn.disabled=false;
-    btn.textContent={ru:'Зарегистрироваться',en:'Create account',bg:'Регистрирай се'}[lang];
+    btn.textContent={ru:'ÐÐ°ÑÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ¾Ð²Ð°ÑÑÑÑ',en:'Create account',bg:'Ð ÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ°Ð¹ ÑÐµ'}[lang];
     console.log('Signup response:', JSON.stringify(res));
     if(res.error || res.error_description || res.msg){
-      var errMsg = res.error_description || res.error || res.msg || 'Ошибка регистрации';
+      var errMsg = res.error_description || res.error || res.msg || 'ÐÑÐ¸Ð±ÐºÐ° ÑÐµÐ³Ð¸ÑÑÑÐ°ÑÐ¸Ð¸';
       // Common Supabase errors in Russian
-      if(errMsg.includes('already registered')) errMsg = 'Этот email уже зарегистрирован. Войдите или восстановите пароль.';
-      if(errMsg.includes('invalid')) errMsg = 'Некорректный email или пароль';
-      if(errMsg.includes('weak')) errMsg = 'Пароль слишком простой — используйте буквы и цифры';
+      if(errMsg.includes('already registered')) errMsg = 'Ð­ÑÐ¾Ñ email ÑÐ¶Ðµ Ð·Ð°ÑÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ¾Ð²Ð°Ð½. ÐÐ¾Ð¹Ð´Ð¸ÑÐµ Ð¸Ð»Ð¸ Ð²Ð¾ÑÑÑÐ°Ð½Ð¾Ð²Ð¸ÑÐµ Ð¿Ð°ÑÐ¾Ð»Ñ.';
+      if(errMsg.includes('invalid')) errMsg = 'ÐÐµÐºÐ¾ÑÑÐµÐºÑÐ½ÑÐ¹ email Ð¸Ð»Ð¸ Ð¿Ð°ÑÐ¾Ð»Ñ';
+      if(errMsg.includes('weak')) errMsg = 'ÐÐ°ÑÐ¾Ð»Ñ ÑÐ»Ð¸ÑÐºÐ¾Ð¼ Ð¿ÑÐ¾ÑÑÐ¾Ð¹ â Ð¸ÑÐ¿Ð¾Ð»ÑÐ·ÑÐ¹ÑÐµ Ð±ÑÐºÐ²Ñ Ð¸ ÑÐ¸ÑÑÑ';
       err.textContent = errMsg;
       err.style.display='block'; return;
     }
     // Success
     suc.innerHTML = {
-      ru: '✓ Аккаунт создан! Проверьте почту <b>'+email+'</b> — там письмо для подтверждения. После подтверждения вы сможете войти.',
-      en: '✓ Account created! Check <b>'+email+'</b> for a confirmation email.',
-      bg: '✓ Акаунтът е създаден! Проверете <b>'+email+'</b> за потвърждение.'
+      ru: 'â ÐÐºÐºÐ°ÑÐ½Ñ ÑÐ¾Ð·Ð´Ð°Ð½! ÐÑÐ¾Ð²ÐµÑÑÑÐµ Ð¿Ð¾ÑÑÑ <b>'+email+'</b> â ÑÐ°Ð¼ Ð¿Ð¸ÑÑÐ¼Ð¾ Ð´Ð»Ñ Ð¿Ð¾Ð´ÑÐ²ÐµÑÐ¶Ð´ÐµÐ½Ð¸Ñ. ÐÐ¾ÑÐ»Ðµ Ð¿Ð¾Ð´ÑÐ²ÐµÑÐ¶Ð´ÐµÐ½Ð¸Ñ Ð²Ñ ÑÐ¼Ð¾Ð¶ÐµÑÐµ Ð²Ð¾Ð¹ÑÐ¸.',
+      en: 'â Account created! Check <b>'+email+'</b> for a confirmation email.',
+      bg: 'â ÐÐºÐ°ÑÐ½ÑÑÑ Ðµ ÑÑÐ·Ð´Ð°Ð´ÐµÐ½! ÐÑÐ¾Ð²ÐµÑÐµÑÐµ <b>'+email+'</b> Ð·Ð° Ð¿Ð¾ÑÐ²ÑÑÐ¶Ð´ÐµÐ½Ð¸Ðµ.'
     }[lang];
     suc.style.display='block';
-    console.log('✅ Registered:', email);
+    console.log('â Registered:', email);
   } catch(e){
     btn.disabled=false;
-    btn.textContent={ru:'Зарегистрироваться',en:'Create account',bg:'Регистрирай се'}[lang];
-    err.textContent = 'Ошибка: ' + e.message;
+    btn.textContent={ru:'ÐÐ°ÑÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ¾Ð²Ð°ÑÑÑÑ',en:'Create account',bg:'Ð ÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ°Ð¹ ÑÐµ'}[lang];
+    err.textContent = 'ÐÑÐ¸Ð±ÐºÐ°: ' + e.message;
     err.style.display='block';
   }
 }
 
 async function loadBillsSupabase(ownerId){
   var tbody = document.getElementById('bills-tbody');
-  tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:1.5rem;color:var(--dark60)">Загрузка...</td></tr>';
+  tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:1.5rem;color:var(--dark60)">ÐÐ°Ð³ÑÑÐ·ÐºÐ°...</td></tr>';
   var billsData = await sbGetBills(ownerId);
   if(!billsData || !Array.isArray(billsData) || !billsData.length){ loadBills(); return; }
   var data = billsData;
   var dueTotal = data.filter(b=>b.status==='due'||b.status==='overdue').reduce((s,b)=>s+Number(b.amount),0);
   var paidTotal = data.filter(b=>b.status==='paid').reduce((s,b)=>s+Number(b.amount),0);
-  var dEl = document.getElementById('bills-due-total'); if(dEl) dEl.textContent='€'+dueTotal;
-  var pEl = document.getElementById('bills-paid-total'); if(pEl) pEl.textContent='€'+paidTotal;
+  var dEl = document.getElementById('bills-due-total'); if(dEl) dEl.textContent='â¬'+dueTotal;
+  var pEl = document.getElementById('bills-paid-total'); if(pEl) pEl.textContent='â¬'+paidTotal;
   tbody.innerHTML='';
   data.forEach(b=>{
     var s = statusMap[b.status]||statusMap.soon;
     var isPayable = b.status==='due'||b.status==='overdue';
     var url = b.provider_url || providerUrls[b.provider] || 'https://epay.bg';
-    var btnHtml = `<button class="btn ${isPayable?'btn-em':''} btn-sm" onclick="openPayModal('${b.provider}','${url}')">${isPayable?{ru:'Оплатить',en:'Pay',bg:'Плати'}[lang]:{ru:'Сайт',en:'Site',bg:'Сайт'}[lang]}</button>`;
+    var btnHtml = `<button class="btn ${isPayable?'btn-em':''} btn-sm" onclick="openPayModal('${b.provider}','${url}')">${isPayable?{ru:'ÐÐ¿Ð»Ð°ÑÐ¸ÑÑ',en:'Pay',bg:'ÐÐ»Ð°ÑÐ¸'}[lang]:{ru:'Ð¡Ð°Ð¹Ñ',en:'Site',bg:'Ð¡Ð°Ð¹Ñ'}[lang]}</button>`;
     var tr = document.createElement('tr');
-    tr.innerHTML = `<td><b>${b.provider}</b>${b.service?' — '+b.service:''}</td><td>€${b.amount}</td><td>${b.due_date||''}</td><td><span class="pill ${s.cls}">${s[lang]}</span></td><td>${btnHtml}</td>`;
+    tr.innerHTML = `<td><b>${b.provider}</b>${b.service?' â '+b.service:''}</td><td>â¬${b.amount}</td><td>${b.due_date||''}</td><td><span class="pill ${s.cls}">${s[lang]}</span></td><td>${btnHtml}</td>`;
     tbody.appendChild(tr);
   });
 }
@@ -901,7 +903,7 @@ async function loadBillsSupabase(ownerId){
 window.addEventListener('load', function(){
   initSupabase();
 
-  // Handle Google OAuth redirect — token comes in URL hash
+  // Handle Google OAuth redirect â token comes in URL hash
   var hash = window.location.hash;
   if(hash && hash.includes('access_token')){
     var params = {};
@@ -971,30 +973,30 @@ var currentRole='client';
 var currentUser=null;
 
 var T={
-  ru:{dashboard:'Обзор',bills:'Счета и налоги',rent:'Аренда',docs:'Документы',chat:'Сообщения',myprops:'Мои объекты',allprops:'Все объекты',allbills:'Все счета',clients:'Клиенты',mgrdb:'Управление',owner:'Собственник',manager:'Менеджер · Катерина',welcome:'Добрый день',rented:'Сдан',vacant:'Свободен'},
-  en:{dashboard:'Dashboard',bills:'Bills & Taxes',rent:'Rent',docs:'Documents',chat:'Messages',myprops:'My Properties',allprops:'All Properties',allbills:'All Bills',clients:'Clients',mgrdb:'Overview',owner:'Owner',manager:'Manager · Katerina',welcome:'Good afternoon',rented:'Rented',vacant:'Vacant'},
-  bg:{dashboard:'Преглед',bills:'Сметки и данъци',rent:'Наем',docs:'Документи',chat:'Съобщения',myprops:'Моите имоти',allprops:'Всички имоти',allbills:'Всички сметки',clients:'Клиенти',mgrdb:'Управление',owner:'Собственик',manager:'Мениджър · Катерина',welcome:'Добър ден',rented:'Отдаден',vacant:'Свободен'}
+  ru:{dashboard:'ÐÐ±Ð·Ð¾Ñ',bills:'Ð¡ÑÐµÑÐ° Ð¸ Ð½Ð°Ð»Ð¾Ð³Ð¸',rent:'ÐÑÐµÐ½Ð´Ð°',docs:'ÐÐ¾ÐºÑÐ¼ÐµÐ½ÑÑ',chat:'Ð¡Ð¾Ð¾Ð±ÑÐµÐ½Ð¸Ñ',myprops:'ÐÐ¾Ð¸ Ð¾Ð±ÑÐµÐºÑÑ',allprops:'ÐÑÐµ Ð¾Ð±ÑÐµÐºÑÑ',allbills:'ÐÑÐµ ÑÑÐµÑÐ°',clients:'ÐÐ»Ð¸ÐµÐ½ÑÑ',mgrdb:'Ð£Ð¿ÑÐ°Ð²Ð»ÐµÐ½Ð¸Ðµ',owner:'Ð¡Ð¾Ð±ÑÑÐ²ÐµÐ½Ð½Ð¸Ðº',manager:'ÐÐµÐ½ÐµÐ´Ð¶ÐµÑ Â· ÐÐ°ÑÐµÑÐ¸Ð½Ð°',welcome:'ÐÐ¾Ð±ÑÑÐ¹ Ð´ÐµÐ½Ñ',rented:'Ð¡Ð´Ð°Ð½',vacant:'Ð¡Ð²Ð¾Ð±Ð¾Ð´ÐµÐ½'},
+  en:{dashboard:'Dashboard',bills:'Bills & Taxes',rent:'Rent',docs:'Documents',chat:'Messages',myprops:'My Properties',allprops:'All Properties',allbills:'All Bills',clients:'Clients',mgrdb:'Overview',owner:'Owner',manager:'Manager Â· Katerina',welcome:'Good afternoon',rented:'Rented',vacant:'Vacant'},
+  bg:{dashboard:'ÐÑÐµÐ³Ð»ÐµÐ´',bills:'Ð¡Ð¼ÐµÑÐºÐ¸ Ð¸ Ð´Ð°Ð½ÑÑÐ¸',rent:'ÐÐ°ÐµÐ¼',docs:'ÐÐ¾ÐºÑÐ¼ÐµÐ½ÑÐ¸',chat:'Ð¡ÑÐ¾Ð±ÑÐµÐ½Ð¸Ñ',myprops:'ÐÐ¾Ð¸ÑÐµ Ð¸Ð¼Ð¾ÑÐ¸',allprops:'ÐÑÐ¸ÑÐºÐ¸ Ð¸Ð¼Ð¾ÑÐ¸',allbills:'ÐÑÐ¸ÑÐºÐ¸ ÑÐ¼ÐµÑÐºÐ¸',clients:'ÐÐ»Ð¸ÐµÐ½ÑÐ¸',mgrdb:'Ð£Ð¿ÑÐ°Ð²Ð»ÐµÐ½Ð¸Ðµ',owner:'Ð¡Ð¾Ð±ÑÑÐ²ÐµÐ½Ð¸Ðº',manager:'ÐÐµÐ½Ð¸Ð´Ð¶ÑÑ Â· ÐÐ°ÑÐµÑÐ¸Ð½Ð°',welcome:'ÐÐ¾Ð±ÑÑ Ð´ÐµÐ½',rented:'ÐÑÐ´Ð°Ð´ÐµÐ½',vacant:'Ð¡Ð²Ð¾Ð±Ð¾Ð´ÐµÐ½'}
 };
 
 var providerUrls={
-  'ЧЕЗ':'https://www.epay.bg','Виваком':'https://www.epay.bg',
-  'Топлофикация':'https://www.epay.bg','Sofiyska Voda':'https://www.epay.bg',
-  'НАП':'https://inetdec.nra.bg','Страховка':'https://www.epay.bg'
+  'Ð§ÐÐ':'https://www.epay.bg','ÐÐ¸Ð²Ð°ÐºÐ¾Ð¼':'https://www.epay.bg',
+  'Ð¢Ð¾Ð¿Ð»Ð¾ÑÐ¸ÐºÐ°ÑÐ¸Ñ':'https://www.epay.bg','Sofiyska Voda':'https://www.epay.bg',
+  'ÐÐÐ':'https://inetdec.nra.bg','Ð¡ÑÑÐ°ÑÐ¾Ð²ÐºÐ°':'https://www.epay.bg'
 };
 
 var bills=[
-  {client:'o1',provider:'ЧЕЗ',service:'Електроэнергия',amount:67,due:'10.04.2025',status:'due'},
-  {client:'o1',provider:'Виваком',service:'Интернет',amount:76,due:'15.04.2025',status:'due'},
-  {client:'o1',provider:'Топлофикация',service:'Отопление',amount:189,due:'31.03.2025',status:'paid'},
-  {client:'o1',provider:'Sofiyska Voda',service:'Вода',amount:34,due:'28.03.2025',status:'paid'},
-  {client:'o1',provider:'НАП',service:'Налог на имущество',amount:380,due:'31.10.2025',status:'soon'},
+  {client:'o1',provider:'Ð§ÐÐ',service:'ÐÐ»ÐµÐºÑÑÐ¾ÑÐ½ÐµÑÐ³Ð¸Ñ',amount:67,due:'10.04.2025',status:'due'},
+  {client:'o1',provider:'ÐÐ¸Ð²Ð°ÐºÐ¾Ð¼',service:'ÐÐ½ÑÐµÑÐ½ÐµÑ',amount:76,due:'15.04.2025',status:'due'},
+  {client:'o1',provider:'Ð¢Ð¾Ð¿Ð»Ð¾ÑÐ¸ÐºÐ°ÑÐ¸Ñ',service:'ÐÑÐ¾Ð¿Ð»ÐµÐ½Ð¸Ðµ',amount:189,due:'31.03.2025',status:'paid'},
+  {client:'o1',provider:'Sofiyska Voda',service:'ÐÐ¾Ð´Ð°',amount:34,due:'28.03.2025',status:'paid'},
+  {client:'o1',provider:'ÐÐÐ',service:'ÐÐ°Ð»Ð¾Ð³ Ð½Ð° Ð¸Ð¼ÑÑÐµÑÑÐ²Ð¾',amount:380,due:'31.10.2025',status:'soon'},
 ];
 
 var statusMap={
-  paid:{ru:'Оплачен',en:'Paid',bg:'Платено',cls:'p-paid'},
-  due:{ru:'К оплате',en:'Due',bg:'За плащане',cls:'p-due'},
-  soon:{ru:'Предстоит',en:'Upcoming',bg:'Предстои',cls:'p-soon'},
-  overdue:{ru:'Просрочен',en:'Overdue',bg:'Просрочено',cls:'p-over'}
+  paid:{ru:'ÐÐ¿Ð»Ð°ÑÐµÐ½',en:'Paid',bg:'ÐÐ»Ð°ÑÐµÐ½Ð¾',cls:'p-paid'},
+  due:{ru:'Ð Ð¾Ð¿Ð»Ð°ÑÐµ',en:'Due',bg:'ÐÐ° Ð¿Ð»Ð°ÑÐ°Ð½Ðµ',cls:'p-due'},
+  soon:{ru:'ÐÑÐµÐ´ÑÑÐ¾Ð¸Ñ',en:'Upcoming',bg:'ÐÑÐµÐ´ÑÑÐ¾Ð¸',cls:'p-soon'},
+  overdue:{ru:'ÐÑÐ¾ÑÑÐ¾ÑÐµÐ½',en:'Overdue',bg:'ÐÑÐ¾ÑÑÐ¾ÑÐµÐ½Ð¾',cls:'p-over'}
 };
 
 function showScreen(id){
@@ -1006,7 +1008,7 @@ function doLogin(){
   var email=document.getElementById('inp-email').value.trim();
   var pass=document.getElementById('inp-pass').value;
   var err=document.getElementById('login-error');
-  if(!email||!pass){err.textContent={ru:'Заполните все поля',en:'Fill in all fields',bg:'Попълнете всички полета'}[lang];err.style.display='block';return;}
+  if(!email||!pass){err.textContent={ru:'ÐÐ°Ð¿Ð¾Ð»Ð½Ð¸ÑÐµ Ð²ÑÐµ Ð¿Ð¾Ð»Ñ',en:'Fill in all fields',bg:'ÐÐ¾Ð¿ÑÐ»Ð½ÐµÑÐµ Ð²ÑÐ¸ÑÐºÐ¸ Ð¿Ð¾Ð»ÐµÑÐ°'}[lang];err.style.display='block';return;}
   err.style.display='none';
   if(email==='beekai4130@gmail.com'||email==='admin'){
     currentRole='manager';currentUser={name:'Katerina',initials:'KK',role:'manager'};
@@ -1017,12 +1019,10 @@ function doLogin(){
 }
 
 async function doGoogleLogin(){
-  // Demo fallback - just go to login
-  if(!SB_URL){ showScreen('screen-login'); return; }
   try {
-    // Google OAuth через Supabase redirect
-    window.location.href = SB_URL + '/auth/v1/authorize?provider=google&redirect_to=' + encodeURIComponent(window.location.href);
-  } catch(e){ alert('Ошибка: ' + e.message); }
+    var r=window.location.origin+window.location.pathname;
+    window.location.href=SB_URL+'/auth/v1/authorize?provider=google&redirect_to='+encodeURIComponent(r);
+  } catch(e){ alert('Error: '+e.message); }
 }
 
 function doRegister(){
@@ -1032,10 +1032,10 @@ function doRegister(){
   var pass=document.getElementById('inp-reg-pass').value;
   var err=document.getElementById('reg-error');
   var suc=document.getElementById('reg-success');
-  if(!name||!email||!phone||!pass){err.textContent={ru:'Заполните все поля',en:'Fill in all fields',bg:'Попълнете всички полета'}[lang];err.style.display='block';return;}
-  if(pass.length<8){err.textContent={ru:'Пароль минимум 8 символов',en:'Password min 8 characters',bg:'Паролата е минимум 8 символа'}[lang];err.style.display='block';return;}
+  if(!name||!email||!phone||!pass){err.textContent={ru:'ÐÐ°Ð¿Ð¾Ð»Ð½Ð¸ÑÐµ Ð²ÑÐµ Ð¿Ð¾Ð»Ñ',en:'Fill in all fields',bg:'ÐÐ¾Ð¿ÑÐ»Ð½ÐµÑÐµ Ð²ÑÐ¸ÑÐºÐ¸ Ð¿Ð¾Ð»ÐµÑÐ°'}[lang];err.style.display='block';return;}
+  if(pass.length<8){err.textContent={ru:'ÐÐ°ÑÐ¾Ð»Ñ Ð¼Ð¸Ð½Ð¸Ð¼ÑÐ¼ 8 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð¾Ð²',en:'Password min 8 characters',bg:'ÐÐ°ÑÐ¾Ð»Ð°ÑÐ° Ðµ Ð¼Ð¸Ð½Ð¸Ð¼ÑÐ¼ 8 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°'}[lang];err.style.display='block';return;}
   err.style.display='none';
-  suc.textContent={ru:'Аккаунт создан! Вы можете войти.',en:'Account created! You can now sign in.',bg:'Акаунтът е създаден! Можете да влезете.'}[lang];
+  suc.textContent={ru:'ÐÐºÐºÐ°ÑÐ½Ñ ÑÐ¾Ð·Ð´Ð°Ð½! ÐÑ Ð¼Ð¾Ð¶ÐµÑÐµ Ð²Ð¾Ð¹ÑÐ¸.',en:'Account created! You can now sign in.',bg:'ÐÐºÐ°ÑÐ½ÑÑÑ Ðµ ÑÑÐ·Ð´Ð°Ð´ÐµÐ½! ÐÐ¾Ð¶ÐµÑÐµ Ð´Ð° Ð²Ð»ÐµÐ·ÐµÑÐµ.'}[lang];
   suc.style.display='block';
   notifyManagerNewUser(name,email,phone);
   setTimeout(()=>showScreen('screen-login'),2000);
@@ -1049,7 +1049,7 @@ function doForgot(){
   var email=document.getElementById('inp-forgot-email').value.trim();
   var suc=document.getElementById('forgot-success');
   if(!email)return;
-  suc.textContent={ru:'Ссылка отправлена на '+email,en:'Link sent to '+email,bg:'Линкът е изпратен на '+email}[lang];
+  suc.textContent={ru:'Ð¡ÑÑÐ»ÐºÐ° Ð¾ÑÐ¿ÑÐ°Ð²Ð»ÐµÐ½Ð° Ð½Ð° '+email,en:'Link sent to '+email,bg:'ÐÐ¸Ð½ÐºÑÑ Ðµ Ð¸Ð·Ð¿ÑÐ°ÑÐµÐ½ Ð½Ð° '+email}[lang];
   suc.style.display='block';
 }
 
@@ -1077,22 +1077,22 @@ function buildNav(){
   var nav=document.getElementById('sb-nav');
   if(currentRole==='manager'){
     nav.innerHTML=`
-      <button class="nav-item" onclick="goToPage('page-mgr-dashboard',this)"><span class="nav-ic">⌂</span><span class="t" data-ru="Управление" data-en="Overview" data-bg="Управление">Управление</span></button>
-      <div class="nav-sec t" data-ru="Объекты" data-en="Properties" data-bg="Имоти">Объекты</div>
-      <button class="nav-item" onclick="goToPage('page-all-props',this)"><span class="nav-ic">⊞</span><span class="t" data-ru="Все объекты" data-en="All Properties" data-bg="Всички имоти">Все объекты</span></button>
-      <button class="nav-item" onclick="goToPage('page-clients',this)"><span class="nav-ic">◉</span><span class="t" data-ru="Клиенты" data-en="Clients" data-bg="Клиенти">Клиенты</span><span class="nav-badge">3</span></button>
-      <div class="nav-sec t" data-ru="Финансы" data-en="Finance" data-bg="Финанси">Финансы</div>
-      <button class="nav-item" onclick="goToPage('page-all-bills',this)"><span class="nav-ic">◎</span><span class="t" data-ru="Все счета" data-en="All Bills" data-bg="Всички сметки">Все счета</span><span class="nav-badge">2</span></button>`;
+      <button class="nav-item" onclick="goToPage('page-mgr-dashboard',this)"><span class="nav-ic">â</span><span class="t" data-ru="Ð£Ð¿ÑÐ°Ð²Ð»ÐµÐ½Ð¸Ðµ" data-en="Overview" data-bg="Ð£Ð¿ÑÐ°Ð²Ð»ÐµÐ½Ð¸Ðµ">Ð£Ð¿ÑÐ°Ð²Ð»ÐµÐ½Ð¸Ðµ</span></button>
+      <div class="nav-sec t" data-ru="ÐÐ±ÑÐµÐºÑÑ" data-en="Properties" data-bg="ÐÐ¼Ð¾ÑÐ¸">ÐÐ±ÑÐµÐºÑÑ</div>
+      <button class="nav-item" onclick="goToPage('page-all-props',this)"><span class="nav-ic">â</span><span class="t" data-ru="ÐÑÐµ Ð¾Ð±ÑÐµÐºÑÑ" data-en="All Properties" data-bg="ÐÑÐ¸ÑÐºÐ¸ Ð¸Ð¼Ð¾ÑÐ¸">ÐÑÐµ Ð¾Ð±ÑÐµÐºÑÑ</span></button>
+      <button class="nav-item" onclick="goToPage('page-clients',this)"><span class="nav-ic">â</span><span class="t" data-ru="ÐÐ»Ð¸ÐµÐ½ÑÑ" data-en="Clients" data-bg="ÐÐ»Ð¸ÐµÐ½ÑÐ¸">ÐÐ»Ð¸ÐµÐ½ÑÑ</span><span class="nav-badge">3</span></button>
+      <div class="nav-sec t" data-ru="Ð¤Ð¸Ð½Ð°Ð½ÑÑ" data-en="Finance" data-bg="Ð¤Ð¸Ð½Ð°Ð½ÑÐ¸">Ð¤Ð¸Ð½Ð°Ð½ÑÑ</div>
+      <button class="nav-item" onclick="goToPage('page-all-bills',this)"><span class="nav-ic">â</span><span class="t" data-ru="ÐÑÐµ ÑÑÐµÑÐ°" data-en="All Bills" data-bg="ÐÑÐ¸ÑÐºÐ¸ ÑÐ¼ÐµÑÐºÐ¸">ÐÑÐµ ÑÑÐµÑÐ°</span><span class="nav-badge">2</span></button>`;
   } else {
     nav.innerHTML=`
-      <button class="nav-item" onclick="goToPage('page-dashboard',this)"><span class="nav-ic">⌂</span><span class="t" data-ru="Обзор" data-en="Dashboard" data-bg="Преглед">Обзор</span></button>
-      <button class="nav-item" onclick="goToPage('page-my-props',this)"><span class="nav-ic">⊞</span><span class="t" data-ru="Мои объекты" data-en="My Properties" data-bg="Моите имоти">Мои объекты</span></button>
-      <div class="nav-sec t" data-ru="Финансы" data-en="Finance" data-bg="Финанси">Финансы</div>
-      <button class="nav-item" onclick="goToPage('page-bills',this)"><span class="nav-ic">◎</span><span class="t" data-ru="Счета" data-en="Bills" data-bg="Сметки">Счета</span><span class="nav-badge" id="bills-badge">2</span></button>
-      <button class="nav-item" onclick="goToPage('page-rent',this)"><span class="nav-ic">€</span><span class="t" data-ru="Аренда" data-en="Rent" data-bg="Наем">Аренда</span></button>
-      <div class="nav-sec t" data-ru="Объект" data-en="Property" data-bg="Имот">Объект</div>
-      <button class="nav-item" onclick="goToPage('page-docs',this)"><span class="nav-ic">◫</span><span class="t" data-ru="Документы" data-en="Documents" data-bg="Документи">Документы</span></button>
-      <button class="nav-item" onclick="goToPage('page-chat',this)"><span class="nav-ic">✉</span><span class="t" data-ru="Сообщения" data-en="Messages" data-bg="Съобщения">Сообщения</span></button>`;
+      <button class="nav-item" onclick="goToPage('page-dashboard',this)"><span class="nav-ic">â</span><span class="t" data-ru="ÐÐ±Ð·Ð¾Ñ" data-en="Dashboard" data-bg="ÐÑÐµÐ³Ð»ÐµÐ´">ÐÐ±Ð·Ð¾Ñ</span></button>
+      <button class="nav-item" onclick="goToPage('page-my-props',this)"><span class="nav-ic">â</span><span class="t" data-ru="ÐÐ¾Ð¸ Ð¾Ð±ÑÐµÐºÑÑ" data-en="My Properties" data-bg="ÐÐ¾Ð¸ÑÐµ Ð¸Ð¼Ð¾ÑÐ¸">ÐÐ¾Ð¸ Ð¾Ð±ÑÐµÐºÑÑ</span></button>
+      <div class="nav-sec t" data-ru="Ð¤Ð¸Ð½Ð°Ð½ÑÑ" data-en="Finance" data-bg="Ð¤Ð¸Ð½Ð°Ð½ÑÐ¸">Ð¤Ð¸Ð½Ð°Ð½ÑÑ</div>
+      <button class="nav-item" onclick="goToPage('page-bills',this)"><span class="nav-ic">â</span><span class="t" data-ru="Ð¡ÑÐµÑÐ°" data-en="Bills" data-bg="Ð¡Ð¼ÐµÑÐºÐ¸">Ð¡ÑÐµÑÐ°</span><span class="nav-badge" id="bills-badge">2</span></button>
+      <button class="nav-item" onclick="goToPage('page-rent',this)"><span class="nav-ic">â¬</span><span class="t" data-ru="ÐÑÐµÐ½Ð´Ð°" data-en="Rent" data-bg="ÐÐ°ÐµÐ¼">ÐÑÐµÐ½Ð´Ð°</span></button>
+      <div class="nav-sec t" data-ru="ÐÐ±ÑÐµÐºÑ" data-en="Property" data-bg="ÐÐ¼Ð¾Ñ">ÐÐ±ÑÐµÐºÑ</div>
+      <button class="nav-item" onclick="goToPage('page-docs',this)"><span class="nav-ic">â«</span><span class="t" data-ru="ÐÐ¾ÐºÑÐ¼ÐµÐ½ÑÑ" data-en="Documents" data-bg="ÐÐ¾ÐºÑÐ¼ÐµÐ½ÑÐ¸">ÐÐ¾ÐºÑÐ¼ÐµÐ½ÑÑ</span></button>
+      <button class="nav-item" onclick="goToPage('page-chat',this)"><span class="nav-ic">â</span><span class="t" data-ru="Ð¡Ð¾Ð¾Ð±ÑÐµÐ½Ð¸Ñ" data-en="Messages" data-bg="Ð¡ÑÐ¾Ð±ÑÐµÐ½Ð¸Ñ">Ð¡Ð¾Ð¾Ð±ÑÐµÐ½Ð¸Ñ</span></button>`;
   }
 }
 
@@ -1126,21 +1126,21 @@ function loadBills(){
   var paidTotal=clientBills.filter(b=>b.status==='paid').reduce((s,b)=>s+b.amount,0);
   var dueEl=document.getElementById('bills-due-total');
   var paidEl=document.getElementById('bills-paid-total');
-  if(dueEl)dueEl.textContent='€'+dueTotal;
-  if(paidEl)paidEl.textContent='€'+paidTotal;
+  if(dueEl)dueEl.textContent='â¬'+dueTotal;
+  if(paidEl)paidEl.textContent='â¬'+paidTotal;
   var badge=document.getElementById('bills-badge');
   var dueCount=clientBills.filter(b=>b.status==='due'||b.status==='overdue').length;
   if(badge)badge.textContent=dueCount;
   if(!tbody)return;
   tbody.innerHTML='';
-  clientBills.forEach(b=>{
+  clientBills.forEach((b,billIdx)=>{
     var s=statusMap[b.status]||statusMap.soon;
     var isPayable=b.status==='due'||b.status==='overdue';
     var btnHtml=isPayable?
-      `<button class="btn btn-em btn-sm" onclick="openPayModal('${b.provider}','${providerUrls[b.provider]||'https://epay.bg'}')">${{ru:'Оплатить',en:'Pay',bg:'Плати'}[lang]}</button>`:
-      `<button class="btn btn-sm" onclick="openPayModal('${b.provider}','${providerUrls[b.provider]||'https://epay.bg'}')">${{ru:'Сайт',en:'Website',bg:'Сайт'}[lang]}</button>`;
+      `<button class="btn btn-em btn-sm" onclick="openPayModal('${b.provider}','${providerUrls[b.provider]||'https://epay.bg'}')">${{ru:'ÐÐ¿Ð»Ð°ÑÐ¸ÑÑ',en:'Pay',bg:'ÐÐ»Ð°ÑÐ¸'}[lang]}</button>`:
+      `<button class="btn btn-sm" onclick="openPayModal('${b.provider}','${providerUrls[b.provider]||'https://epay.bg'}')">${{ru:'Ð¡Ð°Ð¹Ñ',en:'Website',bg:'Ð¡Ð°Ð¹Ñ'}[lang]}</button>`;
     var tr=document.createElement('tr');
-    tr.innerHTML=`<td><b>${b.provider}</b> — ${b.service}</td><td>€${b.amount}</td><td>${b.due}</td><td><span class="pill ${s.cls}">${s[lang]}</span></td><td>${btnHtml}</td>`;
+    tr.innerHTML=`<td><b>${b.provider}</b> â ${b.service}</td><td>â¬${b.amount}</td><td>${b.due}</td><td><span class="pill ${s.cls}">${s[lang]}</span></td><td>${btnHtml}</td>`;
     tbody.appendChild(tr);
   });
 }
@@ -1148,16 +1148,16 @@ function loadBills(){
 function updateDashStats(){
   var dueItems=bills.filter(b=>b.client==='o1'&&(b.status==='due'||b.status==='overdue'));
   var dueTotal=dueItems.reduce((s,b)=>s+b.amount,0);
-  var el=document.getElementById('ds-rent');if(el)el.textContent='€850';
-  var el2=document.getElementById('ds-due');if(el2)el2.textContent='€'+dueTotal;
-  var el3=document.getElementById('ds-net');if(el3)el3.textContent='€'+(850-dueTotal>0?850-dueTotal:0);
+  var el=document.getElementById('ds-rent');if(el)el.textContent='â¬850';
+  var el2=document.getElementById('ds-due');if(el2)el2.textContent='â¬'+dueTotal;
+  var el3=document.getElementById('ds-net');if(el3)el3.textContent='â¬'+(850-dueTotal>0?850-dueTotal:0);
   var el4=document.getElementById('ds-status');if(el4)el4.textContent=T[lang].rented;
-  var el5=document.getElementById('ds-rent-sub');if(el5)el5.textContent={ru:'Получена 1 апреля',en:'Received April 1',bg:'Получена 1 април'}[lang];
-  var el6=document.getElementById('ds-due-sub');if(el6)el6.textContent=dueItems.length+' '+{ru:'счёта до 15 апр.',en:'bills by Apr 15',bg:'сметки до 15 апр.'}[lang];
+  var el5=document.getElementById('ds-rent-sub');if(el5)el5.textContent={ru:'ÐÐ¾Ð»ÑÑÐµÐ½Ð° 1 Ð°Ð¿ÑÐµÐ»Ñ',en:'Received April 1',bg:'ÐÐ¾Ð»ÑÑÐµÐ½Ð° 1 Ð°Ð¿ÑÐ¸Ð»'}[lang];
+  var el6=document.getElementById('ds-due-sub');if(el6)el6.textContent=dueItems.length+' '+{ru:'ÑÑÑÑÐ° Ð´Ð¾ 15 Ð°Ð¿Ñ.',en:'bills by Apr 15',bg:'ÑÐ¼ÐµÑÐºÐ¸ Ð´Ð¾ 15 Ð°Ð¿Ñ.'}[lang];
   var alert=document.getElementById('dash-alert');
   var alertTxt=document.getElementById('dash-alert-text');
   if(dueTotal>0&&alert&&alertTxt){
-    alertTxt.textContent={ru:`${dueItems.length} счёта ожидают оплаты — €${dueTotal}`,en:`${dueItems.length} bills pending — €${dueTotal}`,bg:`${dueItems.length} сметки чакат плащане — €${dueTotal}`}[lang];
+    alertTxt.textContent={ru:`${dueItems.length} ÑÑÑÑÐ° Ð¾Ð¶Ð¸Ð´Ð°ÑÑ Ð¾Ð¿Ð»Ð°ÑÑ â â¬${dueTotal}`,en:`${dueItems.length} bills pending â â¬${dueTotal}`,bg:`${dueItems.length} ÑÐ¼ÐµÑÐºÐ¸ ÑÐ°ÐºÐ°Ñ Ð¿Ð»Ð°ÑÐ°Ð½Ðµ â â¬${dueTotal}`}[lang];
     alert.style.display='flex';
   }
   var tasks=document.getElementById('dash-tasks');
@@ -1165,10 +1165,10 @@ function updateDashStats(){
     tasks.innerHTML='';
     dueItems.slice(0,3).forEach(b=>{
       var d=document.createElement('div');d.className='task-item';
-      d.innerHTML=`<div class="task-check"></div><div><div class="task-txt">${b.provider} — €${b.amount}</div><div class="task-meta">${{ru:'До',en:'By',bg:'До'}[lang]} ${b.due}</div></div>`;
+      d.innerHTML=`<div class="task-check"></div><div><div class="task-txt">${b.provider} â â¬${b.amount}</div><div class="task-meta">${{ru:'ÐÐ¾',en:'By',bg:'ÐÐ¾'}[lang]} ${b.due}</div></div>`;
       tasks.appendChild(d);
     });
-    if(!dueItems.length)tasks.innerHTML=`<div style="padding:1rem 0;font-size:13px;color:var(--dark60)">${{ru:'Нет срочных задач',en:'No urgent tasks',bg:'Няма спешни задачи'}[lang]}</div>`;
+    if(!dueItems.length)tasks.innerHTML=`<div style="padding:1rem 0;font-size:13px;color:var(--dark60)">${{ru:'ÐÐµÑ ÑÑÐ¾ÑÐ½ÑÑ Ð·Ð°Ð´Ð°Ñ',en:'No urgent tasks',bg:'ÐÑÐ¼Ð° ÑÐ¿ÐµÑÐ½Ð¸ Ð·Ð°Ð´Ð°ÑÐ¸'}[lang]}</div>`;
   }
 }
 
@@ -1192,7 +1192,7 @@ function addProperty(){
   var card=document.createElement('div');card.className='prop-card';
   var statusLabel=status==='rented'?T[lang].rented:T[lang].vacant;
   var statusCls=status==='rented'?'ps-rented':'ps-vacant';
-  card.innerHTML=`<div class="prop-img">🏠<span class="prop-status ${statusCls}">${statusLabel}</span></div><div class="prop-body"><div class="prop-name">${addr}</div><div class="prop-addr">${district||'Sofia'}${sqm?' · '+sqm+' м²':''}</div></div>`;
+  card.innerHTML=`<div class="prop-img">ð <span class="prop-status ${statusCls}">${statusLabel}</span></div><div class="prop-body"><div class="prop-name">${addr}</div><div class="prop-addr">${district||'Sofia'}${sqm?' Â· '+sqm+' Ð¼Â²':''}</div></div>`;
   grid.appendChild(card);
   closeModal('modal-add-prop');
   document.getElementById('prop-addr-inp').value='';
@@ -1203,7 +1203,7 @@ function handleFileUpload(input){
   var list=document.getElementById('docs-list');
   files.forEach(f=>{
     var item=document.createElement('div');item.className='doc-item';
-    var ic=f.name.endsWith('.pdf')?'📄':f.type.startsWith('image')?'🖼':'📎';
+    var ic=f.name.endsWith('.pdf')?'ð':f.type.startsWith('image')?'ð¼':'ð';
     var sz=(f.size/1024).toFixed(0)+' KB';
     item.innerHTML=`<div class="doc-ic">${ic}</div><div><div class="doc-name">${f.name}</div><div class="doc-meta">${new Date().toLocaleDateString('ru-RU')}</div></div><div class="doc-sz">${sz}</div>`;
     list.prepend(item);
@@ -1221,8 +1221,8 @@ function sendChatMsg(){
   msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;
   setTimeout(()=>{
     var r=document.createElement('div');r.className='chat-msg theirs';
-    var reply={ru:'Ваше сообщение получено. Катерина ответит вам в ближайшее время. Также вы можете написать в WhatsApp или Telegram.',en:'Your message has been received. Katerina will reply soon. You can also reach her on WhatsApp or Telegram.',bg:'Вашето съобщение е получено. Катерина ще отговори скоро. Можете да я намерите и в WhatsApp или Telegram.'}[lang];
-    r.innerHTML=`<div class="chat-sender">Катерина</div><div class="chat-bubble">${reply}</div><div class="chat-time">${t}</div>`;
+    var reply={ru:'ÐÐ°ÑÐµ ÑÐ¾Ð¾Ð±ÑÐµÐ½Ð¸Ðµ Ð¿Ð¾Ð»ÑÑÐµÐ½Ð¾. ÐÐ°ÑÐµÑÐ¸Ð½Ð° Ð¾ÑÐ²ÐµÑÐ¸Ñ Ð²Ð°Ð¼ Ð² Ð±Ð»Ð¸Ð¶Ð°Ð¹ÑÐµÐµ Ð²ÑÐµÐ¼Ñ. Ð¢Ð°ÐºÐ¶Ðµ Ð²Ñ Ð¼Ð¾Ð¶ÐµÑÐµ Ð½Ð°Ð¿Ð¸ÑÐ°ÑÑ Ð² WhatsApp Ð¸Ð»Ð¸ Telegram.',en:'Your message has been received. Katerina will reply soon. You can also reach her on WhatsApp or Telegram.',bg:'ÐÐ°ÑÐµÑÐ¾ ÑÑÐ¾Ð±ÑÐµÐ½Ð¸Ðµ Ðµ Ð¿Ð¾Ð»ÑÑÐµÐ½Ð¾. ÐÐ°ÑÐµÑÐ¸Ð½Ð° ÑÐµ Ð¾ÑÐ³Ð¾Ð²Ð¾ÑÐ¸ ÑÐºÐ¾ÑÐ¾. ÐÐ¾Ð¶ÐµÑÐµ Ð´Ð° Ñ Ð½Ð°Ð¼ÐµÑÐ¸ÑÐµ Ð¸ Ð² WhatsApp Ð¸Ð»Ð¸ Telegram.'}[lang];
+    r.innerHTML=`<div class="chat-sender">ÐÐ°ÑÐµÑÐ¸Ð½Ð°</div><div class="chat-bubble">${reply}</div><div class="chat-time">${t}</div>`;
     msgs.appendChild(r);msgs.scrollTop=msgs.scrollHeight;
   },1200);
 }
@@ -1240,9 +1240,9 @@ function setLang(l,btn){
 function applyLang(l){
   document.querySelectorAll('.t').forEach(el=>{if(el.dataset[l])el.textContent=el.dataset[l];});
   var authTexts={
-    ru:{title:'Добро пожаловать',email:'Email',pass:'Пароль',btn:'Войти',google:'Войти через Google',or:'или',noAcc:'Нет аккаунта?',regLink:'Зарегистрироваться',forgot:'Забыли пароль?',rTitle:'Создать аккаунт',rName:'Имя и фамилия',rPhone:'Телефон',rPass:'Пароль',rBtn:'Зарегистрироваться',rOr:'или',rHave:'Уже есть аккаунт?',rLogin:'Войти',fTitle:'Восстановление пароля',fDesc:'Введите ваш email — мы отправим ссылку для восстановления.',fBtn:'Отправить ссылку',fBack:'← Вернуться к входу',tagline:'Управление недвижимостью · Sofia, Bulgaria'},
-    en:{title:'Welcome back',email:'Email',pass:'Password',btn:'Sign In',google:'Sign in with Google',or:'or',noAcc:"Don't have an account?",regLink:'Sign up',forgot:'Forgot password?',rTitle:'Create account',rName:'Full name',rPhone:'Phone',rPass:'Password',rBtn:'Create account',rOr:'or',rHave:'Already have an account?',rLogin:'Sign in',fTitle:'Reset password',fDesc:"Enter your email and we'll send a reset link.",fBtn:'Send reset link',fBack:'← Back to login',tagline:'Property management · Sofia, Bulgaria'},
-    bg:{title:'Добре дошли',email:'Имейл',pass:'Парола',btn:'Влез',google:'Влез с Google',or:'или',noAcc:'Нямате акаунт?',regLink:'Регистрирай се',forgot:'Забравена парола?',rTitle:'Създай акаунт',rName:'Три имена',rPhone:'Телефон',rPass:'Парола',rBtn:'Регистрирай се',rOr:'или',rHave:'Вече имате акаунт?',rLogin:'Влез',fTitle:'Възстановяване на парола',fDesc:'Въведете имейла си — ще изпратим линк за възстановяване.',fBtn:'Изпрати линк',fBack:'← Обратно към входа',tagline:'Управление на имоти · Sofia, България'}
+    ru:{title:'ÐÐ¾Ð±ÑÐ¾ Ð¿Ð¾Ð¶Ð°Ð»Ð¾Ð²Ð°ÑÑ',email:'Email',pass:'ÐÐ°ÑÐ¾Ð»Ñ',btn:'ÐÐ¾Ð¹ÑÐ¸',google:'ÐÐ¾Ð¹ÑÐ¸ ÑÐµÑÐµÐ· Google',or:'Ð¸Ð»Ð¸',noAcc:'ÐÐµÑ Ð°ÐºÐºÐ°ÑÐ½ÑÐ°?',regLink:'ÐÐ°ÑÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ¾Ð²Ð°ÑÑÑÑ',forgot:'ÐÐ°Ð±ÑÐ»Ð¸ Ð¿Ð°ÑÐ¾Ð»Ñ?',rTitle:'Ð¡Ð¾Ð·Ð´Ð°ÑÑ Ð°ÐºÐºÐ°ÑÐ½Ñ',rName:'ÐÐ¼Ñ Ð¸ ÑÐ°Ð¼Ð¸Ð»Ð¸Ñ',rPhone:'Ð¢ÐµÐ»ÐµÑÐ¾Ð½',rPass:'ÐÐ°ÑÐ¾Ð»Ñ',rBtn:'ÐÐ°ÑÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ¾Ð²Ð°ÑÑÑÑ',rOr:'Ð¸Ð»Ð¸',rHave:'Ð£Ð¶Ðµ ÐµÑÑÑ Ð°ÐºÐºÐ°ÑÐ½Ñ?',rLogin:'ÐÐ¾Ð¹ÑÐ¸',fTitle:'ÐÐ¾ÑÑÑÐ°Ð½Ð¾Ð²Ð»ÐµÐ½Ð¸Ðµ Ð¿Ð°ÑÐ¾Ð»Ñ',fDesc:'ÐÐ²ÐµÐ´Ð¸ÑÐµ Ð²Ð°Ñ email â Ð¼Ñ Ð¾ÑÐ¿ÑÐ°Ð²Ð¸Ð¼ ÑÑÑÐ»ÐºÑ Ð´Ð»Ñ Ð²Ð¾ÑÑÑÐ°Ð½Ð¾Ð²Ð»ÐµÐ½Ð¸Ñ.',fBtn:'ÐÑÐ¿ÑÐ°Ð²Ð¸ÑÑ ÑÑÑÐ»ÐºÑ',fBack:'â ÐÐµÑÐ½ÑÑÑÑÑ Ðº Ð²ÑÐ¾Ð´Ñ',tagline:'Ð£Ð¿ÑÐ°Ð²Ð»ÐµÐ½Ð¸Ðµ Ð½ÐµÐ´Ð²Ð¸Ð¶Ð¸Ð¼Ð¾ÑÑÑÑ Â· Sofia, Bulgaria'},
+    en:{title:'Welcome back',email:'Email',pass:'Password',btn:'Sign In',google:'Sign in with Google',or:'or',noAcc:"Don't have an account?",regLink:'Sign up',forgot:'Forgot password?',rTitle:'Create account',rName:'Full name',rPhone:'Phone',rPass:'Password',rBtn:'Create account',rOr:'or',rHave:'Already have an account?',rLogin:'Sign in',fTitle:'Reset password',fDesc:"Enter your email and we'll send a reset link.",fBtn:'Send reset link',fBack:'â Back to login',tagline:'Property management Â· Sofia, Bulgaria'},
+    bg:{title:'ÐÐ¾Ð±ÑÐµ Ð´Ð¾ÑÐ»Ð¸',email:'ÐÐ¼ÐµÐ¹Ð»',pass:'ÐÐ°ÑÐ¾Ð»Ð°',btn:'ÐÐ»ÐµÐ·',google:'ÐÐ»ÐµÐ· Ñ Google',or:'Ð¸Ð»Ð¸',noAcc:'ÐÑÐ¼Ð°ÑÐµ Ð°ÐºÐ°ÑÐ½Ñ?',regLink:'Ð ÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ°Ð¹ ÑÐµ',forgot:'ÐÐ°Ð±ÑÐ°Ð²ÐµÐ½Ð° Ð¿Ð°ÑÐ¾Ð»Ð°?',rTitle:'Ð¡ÑÐ·Ð´Ð°Ð¹ Ð°ÐºÐ°ÑÐ½Ñ',rName:'Ð¢ÑÐ¸ Ð¸Ð¼ÐµÐ½Ð°',rPhone:'Ð¢ÐµÐ»ÐµÑÐ¾Ð½',rPass:'ÐÐ°ÑÐ¾Ð»Ð°',rBtn:'Ð ÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ°Ð¹ ÑÐµ',rOr:'Ð¸Ð»Ð¸',rHave:'ÐÐµÑÐµ Ð¸Ð¼Ð°ÑÐµ Ð°ÐºÐ°ÑÐ½Ñ?',rLogin:'ÐÐ»ÐµÐ·',fTitle:'ÐÑÐ·ÑÑÐ°Ð½Ð¾Ð²ÑÐ²Ð°Ð½Ðµ Ð½Ð° Ð¿Ð°ÑÐ¾Ð»Ð°',fDesc:'ÐÑÐ²ÐµÐ´ÐµÑÐµ Ð¸Ð¼ÐµÐ¹Ð»Ð° ÑÐ¸ â ÑÐµ Ð¸Ð·Ð¿ÑÐ°ÑÐ¸Ð¼ Ð»Ð¸Ð½Ðº Ð·Ð° Ð²ÑÐ·ÑÑÐ°Ð½Ð¾Ð²ÑÐ²Ð°Ð½Ðµ.',fBtn:'ÐÐ·Ð¿ÑÐ°ÑÐ¸ Ð»Ð¸Ð½Ðº',fBack:'â ÐÐ±ÑÐ°ÑÐ½Ð¾ ÐºÑÐ¼ Ð²ÑÐ¾Ð´Ð°',tagline:'Ð£Ð¿ÑÐ°Ð²Ð»ÐµÐ½Ð¸Ðµ Ð½Ð° Ð¸Ð¼Ð¾ÑÐ¸ Â· Sofia, ÐÑÐ»Ð³Ð°ÑÐ¸Ñ'}
   };
   var t=authTexts[l];
   var s=function(id,v){var e=document.getElementById(id);if(e)e.textContent=v;};
@@ -1252,7 +1252,7 @@ function applyLang(l){
   s('r-title',t.rTitle);s('r-name-l',t.rName);s('r-phone-l',t.rPhone);s('r-pass-l',t.rPass);
   s('r-btn',t.rBtn);s('r-or',t.rOr);s('r-have-acc',t.rHave);s('r-login-link',t.rLogin);
   s('r-google',t.google);s('f-title',t.fTitle);s('f-desc',t.fDesc);s('f-btn',t.fBtn);s('f-back',t.fBack);
-  var ph={ru:'your@email.com',en:'your@email.com',bg:'вашия@email.com'}[l];
+  var ph={ru:'your@email.com',en:'your@email.com',bg:'Ð²Ð°ÑÐ¸Ñ@email.com'}[l];
   document.querySelectorAll('.form-input[type=email]').forEach(function(i){i.placeholder=ph;});
 }
 
@@ -1264,6 +1264,10 @@ function closeSidebar(){
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('sb-overlay').classList.remove('open');
 }
+
+function setAuthLang(l,btn){lang=l;document.querySelectorAll('#auth-lang-row button').forEach(function(b){b.style.background='transparent';b.style.color='#1B4D3E';});if(btn){btn.style.background='#1B4D3E';btn.style.color='white';}applyLang(l);}
+function openEB(idx){var cb=bills.filter(function(x){return x.client==='o1';});var b=cb[idx];if(!b)return;document.getElementById('ebi').value=idx;document.getElementById('ebp').textContent=b.provider+(b.service?' — '+b.service:'');document.getElementById('eba').value=b.amount;if(b.due){var p=b.due.split('.');if(p.length===3)document.getElementById('ebd').value=p[2]+'-'+p[1]+'-'+p[0];}document.getElementById('ebs').value=b.status||'soon';openModal('modal-edit-bill');}
+function saveEB(){var idx=parseInt(document.getElementById('ebi').value);var cb=bills.filter(function(x){return x.client==='o1';});var b=cb[idx];if(!b)return;b.amount=parseFloat(document.getElementById('eba').value)||b.amount;var d=document.getElementById('ebd').value;if(d){var p=d.split('-');b.due=p[2]+'.'+p[1]+'.'+p[0];}b.status=document.getElementById('ebs').value;closeModal('modal-edit-bill');loadBills();updateDashStats();}
 
 applyLang('ru');
 </script>
