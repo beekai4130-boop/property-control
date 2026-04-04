@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Property Control">
+<meta name="theme-color" content="#1B4D3E">
+<title>Property Control</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --em:#1B4D3E;--emd:#0F2E25;--emm:#2A6B58;--eml:#E8F4F0;--emll:#F2FAF7;
+  --cream:#F4F7F5;--warm:#FAFCFB;--dark:#1C1C1A;--dark60:rgba(28,28,26,0.6);
+  --border:rgba(28,28,26,0.1);--borderem:rgba(27,77,62,0.2);
+  --red:#C0513A;--redl:#FBF0EE;--gold:#B8935A;--goldl:#F5EDD8;
+  --blue:#2A5A8C;--bluel:#EDF2FA;
+  --shadow:0 2px 20px rgba(27,77,62,0.08);--shadow-lg:0 8px 40px rgba(27,77,62,0.14);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);font-size:14px;line-height:1.5}
+
+/* ── SCREENS ── */
+.screen{position:fixed;inset:0;overflow-y:auto;display:none;background:var(--cream)}
+.screen.active{display:block}
+
+/* ── LANGUAGE SELECT ── */
+.lang-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;gap:2rem}
+.lang-logo{text-align:center}
+.lang-mark{width:72px;height:72px;background:var(--em);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;box-shadow:0 8px 32px rgba(27,77,62,0.3)}
+.lang-mark-inner{width:32px;height:32px;border:3px solid rgba(255,255,255,0.9);border-radius:7px;position:relative}
+.lang-mark-inner::after{content:'';position:absolute;inset:5px;background:rgba(255,255,255,0.4);border-radius:3px}
+.lang-app-name{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:500;color:var(--em)}
+.lang-tagline{font-size:13px;color:var(--dark60);margin-top:4px}
+.lang-cards{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;max-width:360px}
+.lang-card{flex:1;min-width:100px;padding:1.25rem;background:var(--warm);border:1.5px solid var(--border);border-radius:16px;cursor:pointer;text-align:center;transition:all .2s;font-family:'DM Sans',sans-serif}
+.lang-card:hover{border-color:var(--em);background:var(--eml);transform:translateY(-2px)}
+.lang-flag{font-size:28px;margin-bottom:6px}
+.lang-name{font-size:14px;font-weight:500;color:var(--dark)}
+
+/* ── AUTH ── */
+.auth-wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem}
+.auth-logo{text-align:center;margin-bottom:2rem}
+.auth-mark{width:52px;height:52px;background:var(--em);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto .875rem;box-shadow:0 4px 16px rgba(27,77,62,0.28)}
+.auth-mark-inner{width:22px;height:22px;border:2.5px solid rgba(255,255,255,0.9);border-radius:5px;position:relative}
+.auth-mark-inner::after{content:'';position:absolute;inset:4px;background:rgba(255,255,255,0.4);border-radius:2px}
+.auth-app-name{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;color:var(--em)}
+.auth-card{background:var(--warm);border:1px solid var(--borderem);border-radius:20px;padding:2rem;width:100%;max-width:400px;box-shadow:var(--shadow-lg)}
+.auth-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;margin-bottom:1.5rem}
+.form-group{margin-bottom:1rem}
+.form-label{font-size:11px;color:var(--dark60);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;display:block}
+.form-input{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;background:var(--cream);color:var(--dark);outline:none;transition:border-color .2s}
+.form-input:focus{border-color:var(--em)}
+.form-select{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;background:var(--cream);color:var(--dark);outline:none}
+.btn-main{width:100%;padding:12px;background:var(--em);color:white;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .2s;margin-top:.5rem}
+.btn-main:hover{background:var(--emd)}
+.btn-main:disabled{opacity:.6;cursor:not-allowed}
+.btn-google{width:100%;padding:11px;background:var(--warm);color:var(--dark);border:1px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:.75rem;transition:all .2s}
+.btn-google:hover{border-color:rgba(28,28,26,0.2)}
+.google-icon{width:18px;height:18px;flex-shrink:0}
+.auth-divider{display:flex;align-items:center;gap:12px;margin:.875rem 0;color:var(--dark60);font-size:12px}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.auth-link{text-align:center;font-size:13px;color:var(--dark60);margin-top:1rem}
+.auth-link a{color:var(--em);text-decoration:none;font-weight:500}
+.auth-err{background:var(--redl);color:var(--red);border:1px solid rgba(192,81,58,0.2);border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:1rem;display:none}
+.auth-ok{background:var(--eml);color:var(--em);border:1px solid var(--borderem);border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:1rem;display:none}
+.tier-select{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem}
+.tier-card{padding:12px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;text-align:center}
+.tier-card.selected{border-color:var(--em);background:var(--eml)}
+.tier-card-name{font-weight:500;font-size:13px}
+.tier-card-desc{font-size:11px;color:var(--dark60);margin-top:2px}
+.tier-pro-badge{display:inline-block;background:var(--goldl);color:#7A5200;font-size:10px;font-weight:600;padding:2px 6px;border-radius:10px;margin-top:4px}
+
+/* ── APP LAYOUT ── */
+.app-layout{display:flex;height:100vh;overflow:hidden}
+.sidebar{width:240px;background:var(--dark);display:flex;flex-direction:column;flex-shrink:0;transition:transform .3s ease;z-index:50}
+.sb-top{padding:1.375rem 1.25rem 1rem}
+.sb-logo{display:flex;align-items:center;gap:10px;margin-bottom:1.375rem}
+.sb-mark{width:30px;height:30px;background:var(--em);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;color:white;font-weight:700;flex-shrink:0}
+.sb-name{font-family:'Cormorant Garamond',serif;font-size:16px;color:white;font-weight:500}
+.sb-lang{display:flex;gap:3px;background:rgba(255,255,255,0.07);border-radius:7px;padding:3px}
+.sb-lang-btn{flex:1;padding:4px;border:none;border-radius:5px;background:transparent;color:rgba(255,255,255,0.35);font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;transition:all .15s}
+.sb-lang-btn.on{background:var(--em);color:white}
+.sb-nav{flex:1;padding:.5rem .75rem;overflow-y:auto}
+.nav-sec{font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:.1em;text-transform:uppercase;padding:0 .5rem;margin:1.125rem 0 .375rem}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;color:rgba(255,255,255,0.45);font-size:13px;transition:all .15s;margin-bottom:2px;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif}
+.nav-item:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.8)}
+.nav-item.on{background:rgba(27,77,62,.6);color:white}
+.nav-ic{width:16px;text-align:center;font-size:13px;flex-shrink:0}
+.nav-badge{margin-left:auto;background:var(--red);color:white;font-size:10px;font-weight:600;padding:2px 6px;border-radius:10px}
+.sb-bottom{padding:1rem 1.25rem;border-top:1px solid rgba(255,255,255,.08)}
+.user-chip{display:flex;align-items:center;gap:10px;margin-bottom:.625rem}
+.user-av{width:32px;height:32px;border-radius:50%;background:var(--em);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:white;flex-shrink:0;border:2px solid rgba(255,255,255,.12)}
+.user-info{flex:1;min-width:0}
+.user-name{font-size:12px;color:rgba(255,255,255,.8);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.user-role{font-size:11px;color:rgba(255,255,255,.32)}
+.btn-logout{background:none;border:none;color:rgba(255,255,255,.28);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;padding:3px 0;transition:color .15s}
+.btn-logout:hover{color:rgba(255,255,255,.55)}
+.sb-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:49;display:none}
+.sb-overlay.open{display:block}
+
+/* ── MAIN AREA ── */
+.main-area{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{background:var(--warm);border-bottom:1px solid var(--border);padding:.75rem 1.5rem;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.menu-toggle{display:none;background:none;border:none;font-size:20px;cursor:pointer;color:var(--dark);padding:2px}
+.topbar-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;flex:1}
+.topbar-actions{display:flex;gap:8px;align-items:center}
+.page-content{flex:1;overflow-y:auto;padding:1.5rem}
+
+/* ── PAGES ── */
+.page{display:none;animation:fadeIn .25s ease}
+.page.on{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── CARDS & GRID ── */
+.card{background:var(--warm);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1rem}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1rem}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.25rem}
+.stat{background:var(--warm);border:1px solid var(--border);border-radius:14px;padding:1.125rem 1.5rem}
+.stat-label{font-size:11px;color:var(--dark60);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.stat-val{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:500;line-height:1}
+.stat-sub{font-size:12px;color:var(--dark60);margin-top:4px}
+.c-em{color:var(--em)}.c-red{color:var(--red)}.c-mid{color:var(--emm)}.c-gold{color:var(--gold)}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.sec-title{font-size:14px;font-weight:500}
+
+/* ── BUTTONS ── */
+.btn{padding:7px 14px;border-radius:8px;border:1px solid var(--border);background:var(--warm);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;transition:all .15s;color:var(--dark)}
+.btn:hover{background:var(--cream)}
+.btn-em{background:var(--em);color:white;border-color:var(--em)}
+.btn-em:hover{background:var(--emd)}
+.btn-sm{padding:5px 11px;font-size:11px}
+.btn-danger{background:var(--redl);color:var(--red);border-color:rgba(192,81,58,.2)}
+
+/* ── PILLS ── */
+.pill{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:500}
+.p-paid{background:var(--eml);color:var(--em)}
+.p-due{background:#FEF3CD;color:#6B4E00}
+.p-over{background:var(--redl);color:var(--red)}
+.p-soon{background:var(--bluel);color:var(--blue)}
+.p-new{background:var(--goldl);color:#7A5200}
+.p-progress{background:#E8F0FE;color:#1A56DB}
+.p-done{background:var(--eml);color:var(--em)}
+.p-free{background:var(--eml);color:var(--em)}
+.p-pro{background:var(--goldl);color:#7A5200}
+
+/* ── TABLE ── */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:9px 14px;font-size:11px;color:var(--dark60);text-transform:uppercase;letter-spacing:.05em;font-weight:500;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(27,77,62,.02)}
+
+/* ── MODALS ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(28,28,26,.5);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex}
+.modal{background:var(--warm);border-radius:20px;padding:2rem;max-width:480px;width:100%;border:1px solid var(--borderem);box-shadow:var(--shadow-lg);animation:fadeIn .2s ease;max-height:90vh;overflow-y:auto}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;margin-bottom:1rem}
+.modal-body{font-size:13px;color:var(--dark60);line-height:1.7;margin-bottom:1.5rem}
+.modal-actions{display:flex;gap:10px;margin-top:1.5rem}
+.modal-cancel{flex:1;padding:10px;border:1px solid var(--border);border-radius:10px;background:transparent;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;color:var(--dark60)}
+.modal-confirm{flex:2;padding:10px;border:none;border-radius:10px;background:var(--em);color:white;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:background .15s}
+.modal-confirm:hover{background:var(--emd)}
+
+/* ── SECURITY BADGE ── */
+.sec-badge{display:flex;align-items:flex-start;gap:12px;background:linear-gradient(135deg,#F2FAF7,#E8F4F0);border:1px solid var(--borderem);border-radius:12px;padding:14px 16px;margin-bottom:1.25rem}
+.sec-badge-icon{width:34px;height:34px;background:var(--em);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px}
+.sec-badge-title{font-size:13px;font-weight:500;color:var(--em);margin-bottom:2px}
+.sec-badge-desc{font-size:12px;color:var(--emm);line-height:1.5}
+
+/* ── PROPERTY CARDS ── */
+.prop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-bottom:1rem}
+.prop-card{background:var(--warm);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:all .2s;cursor:pointer}
+.prop-card:hover{border-color:var(--borderem);box-shadow:var(--shadow)}
+.prop-img{height:110px;background:linear-gradient(135deg,#C5D5CF,#8FB5A8);display:flex;align-items:center;justify-content:center;font-size:26px;position:relative}
+.prop-status-badge{position:absolute;top:8px;right:8px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:500}
+.prop-body{padding:1.125rem}
+.prop-name{font-weight:500;font-size:14px;margin-bottom:2px}
+.prop-addr{font-size:12px;color:var(--dark60);margin-bottom:8px}
+.prop-meta{display:flex;gap:12px;font-size:12px;color:var(--dark60)}
+
+/* ── REQUESTS ── */
+.req-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+.req-item:last-child{border-bottom:none}
+.req-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;background:var(--eml)}
+.req-title{font-size:13px;font-weight:500;margin-bottom:3px}
+.req-meta{font-size:11px;color:var(--dark60)}
+.req-actions{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
+
+/* ── ALERT ── */
+.alert{padding:12px 16px;border-radius:10px;font-size:13px;margin-bottom:1rem;display:flex;align-items:flex-start;gap:10px;line-height:1.6}
+.alert-w{background:#FEF9E7;color:#5A3E00;border:1px solid #EED060}
+.alert-i{background:var(--eml);color:var(--emd);border:1px solid var(--borderem)}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  .sidebar{position:fixed;top:0;bottom:0;left:0;transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .menu-toggle{display:flex}
+  .g4{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:1fr 1fr}
+  .g2{grid-template-columns:1fr}
+  .page-content{padding:1rem}
+  .topbar{padding:.75rem 1rem}
+}
+@media(max-width:480px){
+  .g3,.g4{grid-template-columns:1fr}
+}
+
+/* ── FORM ROW ── */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:480px){.form-row{grid-template-columns:1fr}}
+.form-textarea{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;background:var(--cream);color:var(--dark);outline:none;resize:vertical;min-height:80px}
+.form-textarea:focus{border-color:var(--em)}
+
+/* ── PRO BANNER ── */
+.pro-banner{background:linear-gradient(135deg,#1B4D3E,#2A6B58);border-radius:16px;padding:1.5rem;color:white;margin-bottom:1rem;display:flex;align-items:center;gap:1rem}
+.pro-banner-icon{font-size:32px;flex-shrink:0}
+.pro-banner-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;margin-bottom:4px}
+.pro-banner-desc{font-size:13px;opacity:.8}
+.pro-banner-btn{margin-left:auto;flex-shrink:0;padding:10px 18px;background:white;color:var(--em);border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+
+/* ── EMPTY STATE ── */
+.empty{text-align:center;padding:3rem 1rem}
+.empty-icon{font-size:40px;margin-bottom:1rem;opacity:.35}
+.empty-text{font-size:14px;color:var(--dark60);margin-bottom:1rem}
+
+/* ── FINANCE ── */
+.finance-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.finance-row:last-child{border-bottom:none}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     SCREEN: LANGUAGE SELECT
+══════════════════════════════════════════ -->
+<div class="screen active" id="screen-lang">
+  <div class="lang-screen">
+    <div class="lang-logo">
+      <div class="lang-mark"><div class="lang-mark-inner"></div></div>
+      <div class="lang-app-name">Property Control</div>
+      <div class="lang-tagline">Property Management Platform</div>
+    </div>
+    <div class="lang-cards">
+      <div class="lang-card" onclick="chooseLang('en')">
+        <div class="lang-flag">🇬🇧</div>
+        <div class="lang-name">English</div>
+      </div>
+      <div class="lang-card" onclick="chooseLang('ru')">
+        <div class="lang-flag">🇷🇺</div>
+        <div class="lang-name">Русский</div>
+      </div>
+      <div class="lang-card" onclick="chooseLang('bg')">
+        <div class="lang-flag">🇧🇬</div>
+        <div class="lang-name">Български</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN: LOGIN
+══════════════════════════════════════════ -->
+<div class="screen" id="screen-login">
+  <div class="auth-wrap">
+    <div class="auth-logo">
+      <div class="auth-mark"><div class="auth-mark-inner"></div></div>
+      <div class="auth-app-name">Property Control</div>
+    </div>
+    <div class="auth-card">
+      <div class="auth-err" id="login-err"></div>
+      <div class="auth-title" id="login-title">Welcome back</div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" id="login-email" placeholder="your@email.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="lbl-password">Password</label>
+        <input class="form-input" type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <button class="btn-main" id="btn-login" onclick="doLogin()">Sign In</button>
+      <div class="auth-divider" id="lbl-or">or</div>
+      <button class="btn-google" onclick="doGoogleLogin()">
+        <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        <span id="lbl-google-signin">Continue with Google</span>
+      </button>
+      <div class="auth-link"><span id="lbl-no-account">Don't have an account?</span> <a href="#" onclick="showScreen('screen-register')" id="lbl-register-link">Register</a></div>
+      <div class="auth-link" style="margin-top:.5rem"><a href="#" onclick="showScreen('screen-forgot')" id="lbl-forgot" style="font-size:12px;color:var(--dark60)">Forgot password?</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN: REGISTER
+══════════════════════════════════════════ -->
+<div class="screen" id="screen-register">
+  <div class="auth-wrap">
+    <div class="auth-logo">
+      <div class="auth-mark"><div class="auth-mark-inner"></div></div>
+      <div class="auth-app-name">Property Control</div>
+    </div>
+    <div class="auth-card">
+      <div class="auth-err" id="reg-err"></div>
+      <div class="auth-ok" id="reg-ok"></div>
+      <div class="auth-title" id="lbl-create-account">Create Account</div>
+      <div class="form-group">
+        <label class="form-label" id="lbl-fullname">Full Name</label>
+        <input class="form-input" type="text" id="reg-name" placeholder="John Smith">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" id="reg-email" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="lbl-phone">Phone</label>
+        <input class="form-input" type="tel" id="reg-phone" placeholder="+359 / +7 ...">
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="lbl-iam">I am a...</label>
+        <select class="form-select" id="reg-role">
+          <option value="owner" id="opt-owner">Property Owner</option>
+          <option value="broker" id="opt-broker">Broker / Agent</option>
+          <option value="tenant" id="opt-tenant">Tenant</option>
+        </select>
+      </div>
+      <div class="form-group" id="tier-group">
+        <label class="form-label" id="lbl-plan">Select Plan</label>
+        <div class="tier-select">
+          <div class="tier-card selected" id="tier-free" onclick="selectTier('free')">
+            <div class="tier-card-name">Free</div>
+            <div class="tier-card-desc">Up to 3 properties</div>
+          </div>
+          <div class="tier-card" id="tier-pro" onclick="selectTier('pro')">
+            <div class="tier-card-name">Pro</div>
+            <div class="tier-card-desc">Up to 10 properties</div>
+            <div class="tier-pro-badge">€99/mo</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="lbl-pass-reg">Password</label>
+        <input class="form-input" type="password" id="reg-pass" placeholder="Min. 8 characters">
+      </div>
+      <button class="btn-main" id="btn-register" onclick="doRegister()">Create Account</button>
+      <div class="auth-divider">or</div>
+      <button class="btn-google" onclick="doGoogleLogin()">
+        <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        <span>Continue with Google</span>
+      </button>
+      <div class="auth-link"><span id="lbl-have-account">Already have an account?</span> <a href="#" onclick="showScreen('screen-login')" id="lbl-login-link">Sign In</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN: FORGOT PASSWORD
+══════════════════════════════════════════ -->
+<div class="screen" id="screen-forgot">
+  <div class="auth-wrap">
+    <div class="auth-logo">
+      <div class="auth-mark"><div class="auth-mark-inner"></div></div>
+      <div class="auth-app-name">Property Control</div>
+    </div>
+    <div class="auth-card">
+      <div class="auth-ok" id="forgot-ok"></div>
+      <div class="auth-title" id="lbl-reset-title">Reset Password</div>
+      <p style="font-size:13px;color:var(--dark60);margin-bottom:1.25rem" id="lbl-reset-desc">Enter your email and we'll send a reset link.</p>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" id="forgot-email" placeholder="your@email.com">
+      </div>
+      <button class="btn-main" onclick="doForgot()" id="btn-forgot">Send Reset Link</button>
+      <div class="auth-link" style="margin-top:1rem"><a href="#" onclick="showScreen('screen-login')" id="lbl-back-login">← Back to login</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN: APP
+══════════════════════════════════════════ -->
+<div class="screen" id="screen-app">
+  <div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="sb-logo">
+          <div class="sb-mark">P</div>
+          <div class="sb-name">Property Control</div>
+        </div>
+        <div class="sb-lang">
+          <button class="sb-lang-btn" onclick="setLang('en',this)">EN</button>
+          <button class="sb-lang-btn" onclick="setLang('ru',this)">RU</button>
+          <button class="sb-lang-btn" onclick="setLang('bg',this)">BG</button>
+        </div>
+      </div>
+      <div class="sb-nav" id="sb-nav"></div>
+      <div class="sb-bottom">
+        <div class="user-chip">
+          <div class="user-av" id="sb-av">?</div>
+          <div class="user-info">
+            <div class="user-name" id="sb-name">—</div>
+            <div class="user-role" id="sb-role">—</div>
+          </div>
+        </div>
+        <button class="btn-logout" onclick="doLogout()" id="lbl-logout">← Sign Out</button>
+      </div>
+    </div>
+    <div class="sb-overlay" id="sb-overlay" onclick="closeSidebar()"></div>
+
+    <!-- MAIN -->
+    <div class="main-area">
+      <div class="topbar">
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        <div class="topbar-title" id="topbar-title">Dashboard</div>
+        <div class="topbar-actions" id="topbar-actions"></div>
+      </div>
+      <div class="page-content" id="page-content">
+
+        <!-- PAGE: DASHBOARD -->
+        <div class="page on" id="page-dashboard"></div>
+
+        <!-- PAGE: PROPERTIES -->
+        <div class="page" id="page-properties"></div>
+
+        <!-- PAGE: BILLS -->
+        <div class="page" id="page-bills"></div>
+
+        <!-- PAGE: REQUESTS -->
+        <div class="page" id="page-requests"></div>
+
+        <!-- PAGE: FINANCES -->
+        <div class="page" id="page-finances"></div>
+
+        <!-- PAGE: CLIENTS (manager only) -->
+        <div class="page" id="page-clients"></div>
+
+        <!-- PAGE: REPORTS (manager only) -->
+        <div class="page" id="page-reports"></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     MODALS
+══════════════════════════════════════════ -->
+
+<!-- PAYMENT MODAL -->
+<div class="modal-overlay" id="modal-payment">
+  <div class="modal">
+    <div class="sec-badge">
+      <div class="sec-badge-icon">🔒</div>
+      <div>
+        <div class="sec-badge-title" id="lbl-security-title">Your security is our priority</div>
+        <div class="sec-badge-desc" id="lbl-security-desc">Property Control never stores or accesses your passwords or payment data. Payment is made directly on the provider's secure website.</div>
+      </div>
+    </div>
+    <div class="modal-title" id="pay-provider-name"></div>
+    <div class="modal-body" id="lbl-pay-body">You will be redirected to the official payment website. We recommend using your browser's password manager for secure credential storage.</div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal('modal-payment')" id="lbl-cancel">Cancel</button>
+      <button class="modal-confirm" id="btn-pay-go">Go to Payment →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD/EDIT PROPERTY MODAL -->
+<div class="modal-overlay" id="modal-property">
+  <div class="modal">
+    <div class="modal-title" id="prop-modal-title">Add Property</div>
+    <input type="hidden" id="prop-edit-id">
+    <div class="form-group">
+      <label class="form-label" id="lbl-address">Address</label>
+      <input class="form-input" type="text" id="prop-address" placeholder="e.g. ul. Rakovski 42, Sofia">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" id="lbl-type">Type</label>
+        <select class="form-select" id="prop-type">
+          <option value="apartment" id="opt-apt">Apartment</option>
+          <option value="house" id="opt-house">House</option>
+          <option value="studio" id="opt-studio">Studio</option>
+          <option value="commercial" id="opt-comm">Commercial</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Area (m²)</label>
+        <input class="form-input" type="number" id="prop-area" placeholder="75">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" id="lbl-meters">Meter Numbers</label>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">💧 Water</label>
+        <input class="form-input" type="text" id="prop-meter-water" placeholder="Meter #">
+      </div>
+      <div class="form-group">
+        <label class="form-label">⚡ Electricity</label>
+        <input class="form-input" type="text" id="prop-meter-elec" placeholder="Meter #">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">🔥 Gas</label>
+        <input class="form-input" type="text" id="prop-meter-gas" placeholder="Meter #">
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="lbl-hoa">HOA Fee</label>
+        <input class="form-input" type="text" id="prop-meter-hoa" placeholder="Account #">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" id="lbl-status">Rental Status</label>
+        <select class="form-select" id="prop-rental-status" onchange="toggleRentalFields()">
+          <option value="vacant" id="opt-vacant">Vacant</option>
+          <option value="rented" id="opt-rented">Rented</option>
+        </select>
+      </div>
+      <div class="form-group" id="prop-rent-amount-group">
+        <label class="form-label" id="lbl-monthly-rent">Monthly Rent (€)</label>
+        <input class="form-input" type="number" id="prop-rent-amount" placeholder="850">
+      </div>
+    </div>
+    <div class="form-group" id="prop-rent-since-group">
+      <label class="form-label" id="lbl-rented-since">Rented Since</label>
+      <input class="form-input" type="date" id="prop-rent-since">
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal('modal-property')" id="lbl-cancel2">Cancel</button>
+      <button class="modal-confirm" onclick="saveProp()" id="btn-save-prop">Add Property</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD BILL MODAL -->
+<div class="modal-overlay" id="modal-bill">
+  <div class="modal">
+    <div class="modal-title" id="bill-modal-title">Add Bill</div>
+    <input type="hidden" id="bill-edit-id">
+    <div class="form-group" id="bill-client-group" style="display:none">
+      <label class="form-label" id="lbl-client">Client</label>
+      <select class="form-select" id="bill-client-sel"></select>
+    </div>
+    <div class="form-group" id="bill-prop-group">
+      <label class="form-label" id="lbl-property">Property</label>
+      <select class="form-select" id="bill-prop-sel"></select>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" id="lbl-provider">Provider</label>
+        <select class="form-select" id="bill-provider">
+          <option value="cez">CEZ (Electricity)</option>
+          <option value="toplofikacia">Toplofikacia (Heating)</option>
+          <option value="sofwater">Sofiyska Voda (Water)</option>
+          <option value="vivacom">Vivacom (Internet)</option>
+          <option value="nap">NAP (Tax)</option>
+          <option value="hoa">HOA Fee</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="lbl-amount">Amount (€)</label>
+        <input class="form-input" type="number" id="bill-amount" placeholder="0.00">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" id="lbl-due-date">Due Date</label>
+        <input class="form-input" type="date" id="bill-due">
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="lbl-bill-status">Status</label>
+        <select class="form-select" id="bill-status">
+          <option value="due" id="opt-due">Due</option>
+          <option value="paid" id="opt-paid">Paid</option>
+          <option value="overdue" id="opt-overdue">Overdue</option>
+          <option value="soon" id="opt-soon">Upcoming</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal('modal-bill')">Cancel</button>
+      <button class="modal-confirm" onclick="saveBill()" id="btn-save-bill">Add Bill</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD REQUEST MODAL -->
+<div class="modal-overlay" id="modal-request">
+  <div class="modal">
+    <div class="modal-title" id="req-modal-title">New Request</div>
+    <input type="hidden" id="req-edit-id">
+    <div class="form-group" id="req-client-group" style="display:none">
+      <label class="form-label">Client</label>
+      <select class="form-select" id="req-client-sel"></select>
+    </div>
+    <div class="form-group">
+      <label class="form-label" id="lbl-req-type">Request Type</label>
+      <select class="form-select" id="req-type">
+        <option value="repair" id="opt-repair">🔧 Repair</option>
+        <option value="cleaning" id="opt-cleaning">🧹 Cleaning</option>
+        <option value="photo" id="opt-photo">📷 Photo Report</option>
+        <option value="tenant-check" id="opt-tenant-check">👤 Tenant Check</option>
+        <option value="emergency" id="opt-emergency">🚨 Emergency Visit</option>
+        <option value="other">📋 Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label" id="lbl-description">Description</label>
+      <textarea class="form-textarea" id="req-description" placeholder="Describe the issue or request..."></textarea>
+    </div>
+    <div class="form-group" id="req-status-group" style="display:none">
+      <label class="form-label" id="lbl-req-status">Status</label>
+      <select class="form-select" id="req-status">
+        <option value="new">🆕 New</option>
+        <option value="accepted">✅ Accepted</option>
+        <option value="progress">🔄 In Progress</option>
+        <option value="done">✔️ Done</option>
+      </select>
+    </div>
+    <div class="form-group" id="req-cost-group" style="display:none">
+      <label class="form-label" id="lbl-req-cost">Cost (€)</label>
+      <input class="form-input" type="number" id="req-cost" placeholder="0.00">
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal('modal-request')">Cancel</button>
+      <button class="modal-confirm" onclick="saveRequest()" id="btn-save-req">Submit Request</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// CONFIGURATION
+// ══════════════════════════════════════════
+var SB_URL = 'https://cnmaghjwwakoxpijyisf.supabase.co';
+var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNubWFnaGp3d2Frb3hwaWp5aXNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5OTY0NzEsImV4cCI6MjA5MDU3MjQ3MX0.KKv6LsoMcK75szq6F3oo10p7lKEBsgEVZZcmyvF7zQ0';
+var MANAGER_EMAIL = 'beekai4130@gmail.com';
+var WA_NUMBER = '359884390322';
+var TG_USER = 'katerina_propertycontrol';
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+var lang = 'en';
+var sbToken = null;
+var currentUser = null;
+var currentRole = null;
+var currentTier = 'free';
+var selectedTier = 'free';
+
+// LOCAL DATA (until Supabase tables are fully set up)
+var properties = [];
+var bills = [];
+var requests = [];
+var clients = [];
+
+// ══════════════════════════════════════════
+// TRANSLATIONS
+// ══════════════════════════════════════════
+var T = {
+  en: {
+    dashboard:'Dashboard', properties:'My Properties', bills:'Bills & Taxes',
+    requests:'Requests', finances:'Finances', clients:'Clients', reports:'Reports',
+    signout:'← Sign Out', welcome:'Welcome back', createAcc:'Create Account',
+    reset:'Reset Password', addProperty:'+ Add Property', addBill:'+ Add Bill',
+    newRequest:'+ New Request', noProps:'No properties yet',
+    noBills:'No bills yet', noReqs:'No requests yet',
+    rented:'Rented', vacant:'Vacant', paid:'Paid', due:'Due', overdue:'Overdue',
+    upcoming:'Upcoming', statusNew:'New', accepted:'Accepted', progress:'In Progress',
+    done:'Done', free:'Free', pro:'Pro', manager:'Manager',
+    owner:'Property Owner', broker:'Broker / Agent', tenant:'Tenant',
+    income:'Rental Income', expenses:'Bill Expenses', profit:'Net Profit',
+    totalProps:'Total Properties', activeBills:'Active Bills', openReqs:'Open Requests',
+    totalClients:'Total Clients'
+  },
+  ru: {
+    dashboard:'Обзор', properties:'Мои объекты', bills:'Счета и налоги',
+    requests:'Заявки', finances:'Финансы', clients:'Клиенты', reports:'Отчёты',
+    signout:'← Выйти', welcome:'Добро пожаловать', createAcc:'Создать аккаунт',
+    reset:'Восстановление пароля', addProperty:'+ Добавить объект', addBill:'+ Добавить счёт',
+    newRequest:'+ Новая заявка', noProps:'Объекты не добавлены',
+    noBills:'Счета не добавлены', noReqs:'Заявок нет',
+    rented:'Сдан', vacant:'Свободен', paid:'Оплачен', due:'К оплате', overdue:'Просрочен',
+    upcoming:'Предстоит', statusNew:'Новая', accepted:'Принята', progress:'В работе',
+    done:'Выполнена', free:'Бесплатно', pro:'Pro', manager:'Менеджер',
+    owner:'Собственник', broker:'Брокер / Агент', tenant:'Жилец',
+    income:'Доход от аренды', expenses:'Расходы на счета', profit:'Чистая прибыль',
+    totalProps:'Всего объектов', activeBills:'Активных счетов', openReqs:'Открытых заявок',
+    totalClients:'Всего клиентов'
+  },
+  bg: {
+    dashboard:'Преглед', properties:'Моите имоти', bills:'Сметки и данъци',
+    requests:'Заявки', finances:'Финанси', clients:'Клиенти', reports:'Отчети',
+    signout:'← Изход', welcome:'Добре дошли', createAcc:'Създай акаунт',
+    reset:'Възстановяване', addProperty:'+ Добави имот', addBill:'+ Добави сметка',
+    newRequest:'+ Нова заявка', noProps:'Няма добавени имоти',
+    noBills:'Няма добавени сметки', noReqs:'Няма заявки',
+    rented:'Отдаден', vacant:'Свободен', paid:'Платено', due:'За плащане', overdue:'Просрочено',
+    upcoming:'Предстои', statusNew:'Нова', accepted:'Приета', progress:'В процес',
+    done:'Изпълнена', free:'Безплатно', pro:'Pro', manager:'Мениджър',
+    owner:'Собственик', broker:'Брокер / Агент', tenant:'Наемател',
+    income:'Приход от наем', expenses:'Разходи за сметки', profit:'Нетна печалба',
+    totalProps:'Общо имоти', activeBills:'Активни сметки', openReqs:'Отворени заявки',
+    totalClients:'Общо клиенти'
+  }
+};
+function t(k){ return (T[lang] && T[lang][k]) || (T['en'] && T['en'][k]) || k; }
+
+// ══════════════════════════════════════════
+// SUPABASE REST API
+// ══════════════════════════════════════════
+function sbHeaders(extra) {
+  var h = {'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+(sbToken||SB_KEY)};
+  if(extra) Object.keys(extra).forEach(function(k){h[k]=extra[k];});
+  return h;
+}
+async function sbSignUp(email, password, meta) {
+  var ctrl = new AbortController();
+  var timer = setTimeout(function(){ctrl.abort();},12000);
+  try {
+    var r = await fetch(SB_URL+'/auth/v1/signup',{method:'POST',headers:sbHeaders(),body:JSON.stringify({email:email,password:password,data:meta}),signal:ctrl.signal});
+    clearTimeout(timer);
+    var txt = await r.text();
+    try{return JSON.parse(txt);}catch(e){return {error:'Server error'};}
+  } catch(e) { clearTimeout(timer); return {error: e.name==='AbortError'?'Connection timeout':e.message}; }
+}
+async function sbSignIn(email, password) {
+  var ctrl = new AbortController();
+  var timer = setTimeout(function(){ctrl.abort();},12000);
+  try {
+    var r = await fetch(SB_URL+'/auth/v1/token?grant_type=password',{method:'POST',headers:sbHeaders(),body:JSON.stringify({email:email,password:password}),signal:ctrl.signal});
+    clearTimeout(timer);
+    var txt = await r.text();
+    var d = JSON.parse(txt);
+    if(d.access_token) sbToken = d.access_token;
+    return d;
+  } catch(e) { clearTimeout(timer); return {error:e.name==='AbortError'?'Connection timeout':e.message}; }
+}
+async function sbGetUser() {
+  var r = await fetch(SB_URL+'/auth/v1/user',{headers:sbHeaders()});
+  return r.json();
+}
+async function sbRecover(email) {
+  var r = await fetch(SB_URL+'/auth/v1/recover',{method:'POST',headers:sbHeaders(),body:JSON.stringify({email:email,redirect_to:location.origin+location.pathname})});
+  return r.json();
+}
+async function sbQuery(table, filter) {
+  var url = SB_URL+'/rest/v1/'+table+'?'+(filter||'select=*');
+  var r = await fetch(url,{headers:sbHeaders({'Accept':'application/json'})});
+  return r.json();
+}
+async function sbInsert(table, data) {
+  var r = await fetch(SB_URL+'/rest/v1/'+table,{method:'POST',headers:sbHeaders({'Prefer':'return=representation'}),body:JSON.stringify(data)});
+  return r.json();
+}
+async function sbUpdate(table, id, data) {
+  var r = await fetch(SB_URL+'/rest/v1/'+table+'?id=eq.'+id,{method:'PATCH',headers:sbHeaders({'Prefer':'return=representation'}),body:JSON.stringify(data)});
+  return r.json();
+}
+async function sbDelete(table, id) {
+  await fetch(SB_URL+'/rest/v1/'+table+'?id=eq.'+id,{method:'DELETE',headers:sbHeaders()});
+}
+
+// ══════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+  var el = document.getElementById(id);
+  if(el) el.classList.add('active');
+}
+function goToPage(id, navEl) {
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('on');});
+  var pg = document.getElementById(id);
+  if(pg) pg.classList.add('on');
+  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('on');});
+  if(navEl) navEl.classList.add('on');
+  // Set topbar title
+  var titles = {
+    'page-dashboard':t('dashboard'),'page-properties':t('properties'),
+    'page-bills':t('bills'),'page-requests':t('requests'),
+    'page-finances':t('finances'),'page-clients':t('clients'),'page-reports':t('reports')
+  };
+  var tt = document.getElementById('topbar-title');
+  if(tt) tt.textContent = titles[id] || '';
+  // Render page content
+  renderPage(id);
+  closeSidebar();
+}
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sb-overlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sb-overlay').classList.remove('open');
+}
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+// ══════════════════════════════════════════
+// LANGUAGE
+// ══════════════════════════════════════════
+function chooseLang(l) {
+  lang = l;
+  localStorage.setItem('pc_lang', l);
+  applyLang();
+  showScreen('screen-login');
+}
+function setLang(l, btn) {
+  lang = l;
+  localStorage.setItem('pc_lang', l);
+  document.querySelectorAll('.sb-lang-btn').forEach(function(b){b.classList.remove('on');});
+  if(btn) btn.classList.add('on');
+  applyLang();
+  // Re-render current page
+  var cur = document.querySelector('.page.on');
+  if(cur) renderPage(cur.id);
+}
+function applyLang() {
+  // Auth screens
+  var el = document.getElementById('login-title'); if(el) el.textContent = t('welcome');
+  var el = document.getElementById('lbl-create-account'); if(el) el.textContent = t('createAcc');
+  var el = document.getElementById('lbl-logout'); if(el) el.textContent = t('signout');
+  var el = document.getElementById('btn-login'); if(el) el.textContent = 'Sign In';
+  // Sidebar lang button
+  document.querySelectorAll('.sb-lang-btn').forEach(function(b){
+    if(b.textContent === lang.toUpperCase()) b.classList.add('on');
+    else b.classList.remove('on');
+  });
+  // Build nav
+  buildNav();
+}
+
+// ══════════════════════════════════════════
+// AUTH
+// ══════════════════════════════════════════
+function selectTier(tier) {
+  selectedTier = tier;
+  document.getElementById('tier-free').classList.toggle('selected', tier==='free');
+  document.getElementById('tier-pro').classList.toggle('selected', tier==='pro');
+}
+
+async function doLogin() {
+  var email = document.getElementById('login-email').value.trim();
+  var pass = document.getElementById('login-pass').value;
+  var err = document.getElementById('login-err');
+  err.style.display='none';
+  if(!email||!pass){err.textContent='Please fill in all fields.';err.style.display='block';return;}
+  var btn = document.getElementById('btn-login');
+  btn.textContent='...'; btn.disabled=true;
+  var res = await sbSignIn(email, pass);
+  btn.disabled=false; btn.textContent='Sign In';
+  if(res.error||res.error_description){
+    var msg = res.error_description||res.error;
+    if(msg.includes('Invalid')) msg = 'Invalid email or password.';
+    err.textContent=msg; err.style.display='block'; return;
+  }
+  var user = res.user;
+  finishLogin(user);
+}
+
+async function doRegister() {
+  var name = document.getElementById('reg-name').value.trim();
+  var email = document.getElementById('reg-email').value.trim();
+  var phone = document.getElementById('reg-phone').value.trim();
+  var role = document.getElementById('reg-role').value;
+  var pass = document.getElementById('reg-pass').value;
+  var err = document.getElementById('reg-err');
+  var ok = document.getElementById('reg-ok');
+  err.style.display='none'; ok.style.display='none';
+  if(!name||!email||!pass){err.textContent='Please fill in all required fields.';err.style.display='block';return;}
+  if(pass.length<8){err.textContent='Password must be at least 8 characters.';err.style.display='block';return;}
+  var btn = document.getElementById('btn-register');
+  btn.textContent='...'; btn.disabled=true;
+  var res = await sbSignUp(email, pass, {full_name:name,phone:phone,role:role,tier:selectedTier});
+  btn.disabled=false; btn.textContent=t('createAcc');
+  if(res.error||res.msg){
+    var msg = res.error||res.msg;
+    if(msg.includes('already registered')) msg='This email is already registered. Please sign in.';
+    err.textContent=msg; err.style.display='block'; return;
+  }
+  ok.textContent='Account created! Please check your email to confirm, then sign in.';
+  ok.style.display='block';
+  setTimeout(function(){showScreen('screen-login');},3000);
+}
+
+async function doForgot() {
+  var email = document.getElementById('forgot-email').value.trim();
+  var ok = document.getElementById('forgot-ok');
+  if(!email){ok.textContent='Please enter your email.';ok.style.display='block';return;}
+  var btn = document.getElementById('btn-forgot');
+  btn.textContent='...'; btn.disabled=true;
+  await sbRecover(email);
+  btn.disabled=false; btn.textContent='Send Reset Link';
+  ok.textContent='If an account exists for '+email+', a reset link was sent. Check your spam folder.';
+  ok.style.display='block';
+}
+
+function doGoogleLogin() {
+  var redirect = encodeURIComponent(location.origin+location.pathname);
+  location.href = SB_URL+'/auth/v1/authorize?provider=google&redirect_to='+redirect;
+}
+
+function doLogout() {
+  sbToken=null; currentUser=null; currentRole=null;
+  localStorage.removeItem('pc_session');
+  showScreen('screen-login');
+}
+
+function finishLogin(user) {
+  currentUser = user;
+  currentRole = user.email===MANAGER_EMAIL ? 'manager' : (user.user_metadata&&user.user_metadata.role)||'owner';
+  currentTier = (user.user_metadata&&user.user_metadata.tier)||'free';
+  if(sbToken) localStorage.setItem('pc_session',JSON.stringify({token:sbToken,user:user}));
+  loadData();
+}
+
+// ══════════════════════════════════════════
+// SESSION RESTORE
+// ══════════════════════════════════════════
+window.addEventListener('load', function() {
+  // Restore language
+  var savedLang = localStorage.getItem('pc_lang');
+  if(savedLang) { lang = savedLang; }
+
+  // Handle OAuth redirect
+  var hash = location.hash;
+  if(hash && hash.includes('access_token')) {
+    var params = {};
+    hash.replace('#','').split('&').forEach(function(p){var kv=p.split('=');params[decodeURIComponent(kv[0])]=decodeURIComponent(kv[1]||'');});
+    if(params.access_token) {
+      sbToken = params.access_token;
+      history.replaceState(null,'',location.pathname);
+      if(params.type==='recovery') { showScreen('screen-login'); return; }
+      sbGetUser().then(function(user){if(user&&user.id){finishLogin(user);}});
+      return;
+    }
+  }
+
+  // Restore session
+  var saved = localStorage.getItem('pc_session');
+  if(saved) {
+    try {
+      var s = JSON.parse(saved);
+      sbToken = s.token;
+      finishLogin(s.user);
+      return;
+    } catch(e) { localStorage.removeItem('pc_session'); }
+  }
+
+  // Show language selection
+  if(!savedLang) { showScreen('screen-lang'); }
+  else { applyLang(); showScreen('screen-login'); }
+});
+
+// ══════════════════════════════════════════
+// DATA LOADING
+// ══════════════════════════════════════════
+async function loadData() {
+  // Demo data for now — will connect to Supabase tables
+  if(currentRole==='manager') {
+    properties = [
+      {id:'p1',address:'ul. Rakovski 42, Sofia',type:'apartment',area:85,status:'rented',rent:850,rented_since:'2024-11-01',meter_water:'W-12345',meter_elec:'E-67890',owner_id:'demo',owner_name:'Alexander Voronov'},
+      {id:'p2',address:'Lozenets, Jolio-Curie',type:'apartment',area:64,status:'rented',rent:650,rented_since:'2024-10-15',meter_water:'W-22222',meter_elec:'E-33333',owner_id:'demo2',owner_name:'Elena Sokolova'},
+      {id:'p3',address:'Studentski, bl.33',type:'studio',area:42,status:'vacant',rent:0,rented_since:'',meter_water:'W-44444',meter_elec:'E-55555',owner_id:'demo3',owner_name:'Dmitry Chernov'}
+    ];
+    clients = [
+      {id:'demo',name:'Alexander Voronov',email:'a.voronov@email.com',phone:'+7 999 123 45 67',role:'owner',tier:'pro',props:1},
+      {id:'demo2',name:'Elena Sokolova',email:'e.sokolova@email.com',phone:'+7 912 555 00 11',role:'owner',tier:'free',props:1},
+      {id:'demo3',name:'Dmitry Chernov',email:'d.chernov@email.com',phone:'+7 916 777 88 99',role:'owner',tier:'free',props:1}
+    ];
+    bills = [
+      {id:'b1',prop_id:'p1',provider:'cez',amount:67,due:'2025-04-10',status:'due',owner_id:'demo',prop_addr:'ul. Rakovski 42'},
+      {id:'b2',prop_id:'p1',provider:'vivacom',amount:76,due:'2025-04-15',status:'due',owner_id:'demo',prop_addr:'ul. Rakovski 42'},
+      {id:'b3',prop_id:'p2',provider:'cez',amount:54,due:'2025-04-10',status:'paid',owner_id:'demo2',prop_addr:'Lozenets'},
+      {id:'b4',prop_id:'p3',provider:'nap',amount:380,due:'2025-10-31',status:'soon',owner_id:'demo3',prop_addr:'Studentski'}
+    ];
+    requests = [
+      {id:'r1',type:'repair',desc:'Leaking faucet in bathroom',status:'progress',owner:'Alexander Voronov',prop:'ul. Rakovski 42',created:'2025-04-01',cost:0},
+      {id:'r2',type:'cleaning',desc:'Pre-checkout cleaning',status:'done',owner:'Elena Sokolova',prop:'Lozenets',created:'2025-03-28',cost:80},
+      {id:'r3',type:'photo',desc:'Monthly photo report',status:'new',owner:'Dmitry Chernov',prop:'Studentski',created:'2025-04-02',cost:0}
+    ];
+  } else {
+    // Owner demo data
+    properties = [
+      {id:'p1',address:'ul. Rakovski 42, Sofia',type:'apartment',area:85,status:'rented',rent:850,rented_since:'2024-11-01',meter_water:'W-12345',meter_elec:'E-67890'}
+    ];
+    bills = [
+      {id:'b1',prop_id:'p1',provider:'cez',amount:67,due:'2025-04-10',status:'due'},
+      {id:'b2',prop_id:'p1',provider:'vivacom',amount:76,due:'2025-04-15',status:'due'},
+      {id:'b3',prop_id:'p1',provider:'nap',amount:380,due:'2025-10-31',status:'soon'}
+    ];
+    requests = [
+      {id:'r1',type:'repair',desc:'Leaking faucet in bathroom',status:'progress',created:'2025-04-01',cost:0}
+    ];
+  }
+  initApp();
+}
+
+// ══════════════════════════════════════════
+// APP INIT
+// ══════════════════════════════════════════
+function initApp() {
+  showScreen('screen-app');
+  buildNav();
+  updateUserChip();
+  applyLang();
+  var firstPage = currentRole==='manager'?'page-dashboard':'page-dashboard';
+  goToPage(firstPage, document.querySelector('.nav-item'));
+}
+
+function updateUserChip() {
+  if(!currentUser) return;
+  var name = (currentUser.user_metadata&&currentUser.user_metadata.full_name)||currentUser.email.split('@')[0];
+  var initials = name.substring(0,2).toUpperCase();
+  document.getElementById('sb-av').textContent = initials;
+  document.getElementById('sb-name').textContent = name;
+  var roleLabel = currentRole==='manager'?t('manager'):currentRole==='broker'?t('broker'):currentRole==='tenant'?t('tenant'):t('owner');
+  var tierLabel = currentTier==='pro'?' · Pro':'';
+  document.getElementById('sb-role').textContent = roleLabel+tierLabel;
+}
+
+function buildNav() {
+  var nav = document.getElementById('sb-nav');
+  if(!nav) return;
+  var isManager = currentRole==='manager';
+  var isTenant = currentRole==='tenant';
+  var html = '';
+  if(isManager) {
+    html += navItem('page-dashboard','⌂',t('dashboard'));
+    html += '<div class="nav-sec">Properties</div>';
+    html += navItem('page-clients','◉',t('clients'),clients.length);
+    html += navItem('page-properties','⊞',t('properties'));
+    html += '<div class="nav-sec">Finance</div>';
+    html += navItem('page-bills','◎',t('bills'),bills.filter(function(b){return b.status==='due'||b.status==='overdue';}).length||null);
+    html += navItem('page-finances','€',t('finances'));
+    html += '<div class="nav-sec">Operations</div>';
+    html += navItem('page-requests','✦',t('requests'),requests.filter(function(r){return r.status==='new';}).length||null);
+    html += navItem('page-reports','↗',t('reports'));
+  } else if(isTenant) {
+    html += navItem('page-requests','✦',t('requests'));
+  } else {
+    html += navItem('page-dashboard','⌂',t('dashboard'));
+    html += navItem('page-properties','⊞',t('properties'));
+    html += navItem('page-bills','◎',t('bills'));
+    html += navItem('page-finances','€',t('finances'));
+    html += navItem('page-requests','✦',t('requests'));
+  }
+  nav.innerHTML = html;
+}
+function navItem(page,icon,label,badge) {
+  var b = badge ? '<span class="nav-badge">'+badge+'</span>' : '';
+  return '<button class="nav-item" onclick="goToPage(\''+page+'\',this)"><span class="nav-ic">'+icon+'</span><span>'+label+'</span>'+b+'</button>';
+}
+
+// ══════════════════════════════════════════
+// PAGE RENDERERS
+// ══════════════════════════════════════════
+function renderPage(id) {
+  var fns = {
+    'page-dashboard': renderDashboard,
+    'page-properties': renderProperties,
+    'page-bills': renderBills,
+    'page-requests': renderRequests,
+    'page-finances': renderFinances,
+    'page-clients': renderClients,
+    'page-reports': renderReports
+  };
+  if(fns[id]) fns[id]();
+}
+
+// ─── DASHBOARD ───
+function renderDashboard() {
+  var pg = document.getElementById('page-dashboard');
+  var isManager = currentRole==='manager';
+  var totalIncome = properties.filter(function(p){return p.status==='rented';}).reduce(function(s,p){return s+(p.rent||0);},0);
+  var totalBillsDue = bills.filter(function(b){return b.status==='due'||b.status==='overdue';}).reduce(function(s,b){return s+(b.amount||0);},0);
+  var openReqs = requests.filter(function(r){return r.status!=='done';}).length;
+
+  var html = '';
+  if(isManager) {
+    html += '<div class="g4">';
+    html += statCard(t('totalClients'), clients.length, '', 'c-em');
+    html += statCard(t('totalProps'), properties.length, '', 'c-em');
+    html += statCard(t('activeBills'), bills.filter(function(b){return b.status==='due'||b.status==='overdue';}).length, '', 'c-red');
+    html += statCard(t('openReqs'), openReqs, '', 'c-gold');
+    html += '</div>';
+    html += '<div class="g2">';
+    html += '<div class="card"><div class="sec-head"><div class="sec-title">Recent Requests</div><button class="btn btn-sm" onclick="goToPage(\'page-requests\',null)">View All</button></div>';
+    requests.slice(0,3).forEach(function(r){
+      html += '<div class="req-item"><div class="req-icon">'+reqIcon(r.type)+'</div><div><div class="req-title">'+reqTypeLabel(r.type)+'</div><div class="req-meta">'+r.owner+' · '+r.prop+'</div></div><div class="req-actions"><span class="pill '+reqPill(r.status)+'">'+reqStatusLabel(r.status)+'</span></div></div>';
+    });
+    html += '</div>';
+    html += '<div class="card"><div class="sec-head"><div class="sec-title">Overdue Bills</div><button class="btn btn-sm" onclick="goToPage(\'page-bills\',null)">View All</button></div>';
+    var dueBills = bills.filter(function(b){return b.status==='due'||b.status==='overdue';});
+    if(!dueBills.length) html += '<div class="empty"><div class="empty-icon">✅</div><div class="empty-text">All bills are up to date</div></div>';
+    else dueBills.forEach(function(b){
+      html += '<div class="finance-row"><span>'+providerName(b.provider)+(b.prop_addr?' · '+b.prop_addr:'')+'</span><span class="c-red" style="font-weight:500">€'+b.amount+'</span></div>';
+    });
+    html += '</div></div>';
+  } else {
+    var rentedProps = properties.filter(function(p){return p.status==='rented';});
+    html += '<div class="g3">';
+    html += statCard(t('income'), '€'+totalIncome, 'per month', 'c-em');
+    html += statCard(t('expenses'), '€'+totalBillsDue, 'outstanding', 'c-red');
+    html += statCard(t('profit'), '€'+(totalIncome-totalBillsDue), 'estimated', totalIncome>=totalBillsDue?'c-em':'c-red');
+    html += '</div>';
+    if(currentTier==='free') {
+      html += '<div class="pro-banner"><div class="pro-banner-icon">⭐</div><div><div class="pro-banner-title">Upgrade to Pro</div><div class="pro-banner-desc">Automatic notifications, monthly visits, and more for €99/month.</div></div><button class="pro-banner-btn" onclick="alert(\'Contact us on WhatsApp to upgrade!\')">Upgrade</button></div>';
+    }
+    html += '<div class="g2">';
+    html += '<div class="card"><div class="sec-head"><div class="sec-title">'+t('properties')+'</div><button class="btn btn-sm btn-em" onclick="goToPage(\'page-properties\',null)">'+t('addProperty')+'</button></div>';
+    if(!properties.length) html += '<div class="empty"><div class="empty-icon">🏠</div><div class="empty-text">'+t('noProps')+'</div></div>';
+    else properties.forEach(function(p){
+      html += '<div class="finance-row"><span>📍 '+p.address+'</span><span class="pill '+(p.status==='rented'?'p-paid':'p-due')+'">'+t(p.status)+'</span></div>';
+    });
+    html += '</div>';
+    html += '<div class="card"><div class="sec-head"><div class="sec-title">'+t('bills')+'</div><button class="btn btn-sm" onclick="goToPage(\'page-bills\',null)">View All</button></div>';
+    var dueBills2 = bills.filter(function(b){return b.status==='due'||b.status==='overdue';});
+    if(!dueBills2.length) html += '<div class="empty"><div class="empty-icon">✅</div><div class="empty-text">No outstanding bills</div></div>';
+    else dueBills2.slice(0,4).forEach(function(b){
+      html += '<div class="finance-row"><span>'+providerName(b.provider)+'</span><span class="c-red" style="font-weight:500">€'+b.amount+'</span></div>';
+    });
+    html += '</div></div>';
+    // Contact manager
+    html += '<div class="card"><div class="sec-head"><div class="sec-title">Your Manager</div></div>';
+    html += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:1rem"><div style="width:46px;height:46px;border-radius:50%;background:var(--eml);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;color:var(--em);border:2px solid var(--borderem)">К</div><div><div style="font-weight:500;font-size:15px">Katerina</div><div style="font-size:12px;color:var(--dark60)">Personal Manager</div></div></div>';
+    html += '<div style="display:flex;gap:8px;flex-wrap:wrap">';
+    html += '<a href="https://wa.me/'+WA_NUMBER+'" target="_blank" style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1px solid var(--border);border-radius:20px;font-size:12px;text-decoration:none;color:var(--dark);background:var(--warm);transition:all .15s" onmouseover="this.style.background=\'#E7F8EE\'" onmouseout="this.style.background=\'var(--warm)\'">💬 WhatsApp</a>';
+    html += '<a href="https://t.me/'+TG_USER+'" target="_blank" style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1px solid var(--border);border-radius:20px;font-size:12px;text-decoration:none;color:var(--dark);background:var(--warm)">✈ Telegram</a>';
+    html += '</div></div>';
+  }
+  pg.innerHTML = html;
+  // Set topbar action
+  document.getElementById('topbar-actions').innerHTML = '';
+}
+
+function statCard(label,val,sub,cls) {
+  return '<div class="stat"><div class="stat-label">'+label+'</div><div class="stat-val '+(cls||'')+'">'+val+'</div>'+(sub?'<div class="stat-sub">'+sub+'</div>':'')+'</div>';
+}
+
+// ─── PROPERTIES ───
+function renderProperties() {
+  var pg = document.getElementById('page-properties');
+  var canAdd = currentRole==='manager' || properties.length < (currentTier==='pro'?10:3);
+  var html = '<div class="sec-head"><div class="sec-title">'+t('properties')+'</div>';
+  if(canAdd) html += '<button class="btn btn-em" onclick="openPropModal()">'+t('addProperty')+'</button>';
+  html += '</div>';
+  if(!properties.length) {
+    html += '<div class="card"><div class="empty"><div class="empty-icon">🏠</div><div class="empty-text">'+t('noProps')+'</div><button class="btn btn-em" onclick="openPropModal()">'+t('addProperty')+'</button></div></div>';
+  } else {
+    html += '<div class="prop-grid">';
+    properties.forEach(function(p){
+      var grad = p.status==='rented'?'linear-gradient(135deg,#C5D5CF,#8FB5A8)':'linear-gradient(135deg,#C5C8D5,#9098B0)';
+      var emoji = p.type==='apartment'?'🏢':p.type==='house'?'🏠':p.type==='studio'?'🛋':'🏗';
+      html += '<div class="prop-card" onclick="showPropDetail(\''+p.id+'\')">';
+      html += '<div class="prop-img" style="background:'+grad+'">'+emoji;
+      html += '<span class="prop-status-badge '+(p.status==='rented'?'p-paid':'p-due')+'">'+t(p.status)+'</span></div>';
+      html += '<div class="prop-body"><div class="prop-name">'+p.address+'</div>';
+      html += '<div class="prop-addr">'+p.type.charAt(0).toUpperCase()+p.type.slice(1)+(p.area?' · '+p.area+' m²':'')+'</div>';
+      html += '<div class="prop-meta">';
+      if(p.status==='rented') html += '<span>€'+p.rent+'/mo</span>';
+      if(currentRole==='manager'&&p.owner_name) html += '<span>'+p.owner_name+'</span>';
+      html += '</div></div></div>';
+    });
+    html += '</div>';
+  }
+  pg.innerHTML = html;
+  document.getElementById('topbar-actions').innerHTML = canAdd?'<button class="btn btn-em btn-sm" onclick="openPropModal()">'+t('addProperty')+'</button>':'';
+}
+
+// ─── BILLS ───
+function renderBills() {
+  var pg = document.getElementById('page-bills');
+  var due = bills.filter(function(b){return b.status==='due'||b.status==='overdue';});
+  var paid = bills.filter(function(b){return b.status==='paid';});
+  var dueTotal = due.reduce(function(s,b){return s+b.amount;},0);
+  var paidTotal = paid.reduce(function(s,b){return s+b.amount;},0);
+  var html = '<div class="g3">';
+  html += statCard('Outstanding','€'+dueTotal,due.length+' bills','c-red');
+  html += statCard('Paid This Year','€'+paidTotal,paid.length+' payments','c-em');
+  html += statCard('Next Tax Due','€380','31 Oct 2025','');
+  html += '</div>';
+  html += '<div class="card">';
+  html += '<div class="sec-head"><div class="sec-title">'+t('bills')+'</div>';
+  if(currentRole==='manager') html += '<button class="btn btn-em btn-sm" onclick="openBillModal()">'+t('addBill')+'</button>';
+  html += '</div>';
+  if(!bills.length) { html += '<div class="empty"><div class="empty-icon">📋</div><div class="empty-text">'+t('noBills')+'</div></div>'; }
+  else {
+    html += '<div class="tbl-wrap"><table><thead><tr>';
+    html += '<th>Provider</th>';
+    if(currentRole==='manager') html += '<th>Client</th><th>Property</th>';
+    html += '<th>Amount</th><th>Due</th><th>Status</th><th></th></tr></thead><tbody>';
+    bills.forEach(function(b){
+      html += '<tr>';
+      html += '<td style="font-weight:500">'+providerName(b.provider)+'</td>';
+      if(currentRole==='manager') {
+        var client = clients.find(function(c){return c.id===b.owner_id;});
+        html += '<td>'+(client?client.name:'—')+'</td><td>'+(b.prop_addr||'—')+'</td>';
+      }
+      html += '<td style="font-weight:500">€'+b.amount+'</td>';
+      html += '<td>'+(b.due||'—')+'</td>';
+      html += '<td><span class="pill '+billPill(b.status)+'">'+t(b.status)+'</span></td>';
+      html += '<td>';
+      if(b.status==='due'||b.status==='overdue') {
+        html += '<button class="btn btn-em btn-sm" onclick="openPayModal(\''+b.id+'\')">Pay</button>';
+      }
+      if(currentRole==='manager') {
+        html += ' <button class="btn btn-sm" onclick="editBill(\''+b.id+'\')">Edit</button>';
+      }
+      html += '</td></tr>';
+    });
+    html += '</tbody></table></div>';
+  }
+  html += '</div>';
+  pg.innerHTML = html;
+  document.getElementById('topbar-actions').innerHTML = currentRole==='manager'?'<button class="btn btn-em btn-sm" onclick="openBillModal()">'+t('addBill')+'</button>':'';
+}
+
+// ─── REQUESTS ───
+function renderRequests() {
+  var pg = document.getElementById('page-requests');
+  var isManager = currentRole==='manager';
+  var html = '<div class="sec-head"><div class="sec-title">'+t('requests')+'</div><button class="btn btn-em" onclick="openReqModal()">'+t('newRequest')+'</button></div>';
+  if(!requests.length) {
+    html += '<div class="card"><div class="empty"><div class="empty-icon">📋</div><div class="empty-text">'+t('noReqs')+'</div><button class="btn btn-em" onclick="openReqModal()">'+t('newRequest')+'</button></div></div>';
+  } else {
+    html += '<div class="card">';
+    requests.forEach(function(r){
+      html += '<div class="req-item">';
+      html += '<div class="req-icon">'+reqIcon(r.type)+'</div>';
+      html += '<div style="flex:1"><div class="req-title">'+reqTypeLabel(r.type)+'</div>';
+      if(isManager) html += '<div class="req-meta">'+r.owner+' · '+r.prop+'</div>';
+      html += '<div class="req-meta" style="margin-top:2px">'+r.desc+'</div>';
+      if(r.cost) html += '<div class="req-meta">Cost: €'+r.cost+'</div>';
+      html += '</div>';
+      html += '<div class="req-actions">';
+      html += '<span class="pill '+reqPill(r.status)+'">'+reqStatusLabel(r.status)+'</span>';
+      if(isManager) html += '<button class="btn btn-sm" onclick="editRequest(\''+r.id+'\')">Update</button>';
+      html += '</div></div>';
+    });
+    html += '</div>';
+  }
+  pg.innerHTML = html;
+  document.getElementById('topbar-actions').innerHTML = '<button class="btn btn-em btn-sm" onclick="openReqModal()">'+t('newRequest')+'</button>';
+}
+
+// ─── FINANCES ───
+function renderFinances() {
+  var pg = document.getElementById('page-finances');
+  var isManager = currentRole==='manager';
+  var totalIncome = properties.filter(function(p){return p.status==='rented';}).reduce(function(s,p){return s+(p.rent||0);},0);
+  var totalExp = bills.filter(function(b){return b.status==='paid';}).reduce(function(s,b){return s+(b.amount||0);},0);
+  var profit = totalIncome - totalExp;
+  var html = '<div class="g3">';
+  html += statCard(t('income'),'€'+totalIncome,'per month','c-em');
+  html += statCard(t('expenses'),'€'+totalExp,'paid bills','c-red');
+  html += statCard(t('profit'),'€'+profit,'estimated',profit>=0?'c-em':'c-red');
+  html += '</div>';
+  html += '<div class="card"><div class="sec-head"><div class="sec-title">Payment History</div><button class="btn btn-sm" onclick="exportExcel()">↓ Export Excel</button></div>';
+  html += '<div class="tbl-wrap"><table><thead><tr>';
+  if(isManager) html += '<th>Client</th>';
+  html += '<th>Property</th><th>Type</th><th>Amount</th><th>Date</th><th>Status</th></tr></thead><tbody>';
+  bills.forEach(function(b){
+    var prop = properties.find(function(p){return p.id===b.prop_id;});
+    if(isManager){var client=clients.find(function(c){return c.id===b.owner_id;});html+='<td>'+(client?client.name:'—')+'</td>';}
+    html += '<tr>';
+    if(isManager){var client=clients.find(function(c){return c.id===b.owner_id;});html+='<td>'+(client?client.name:'—')+'</td>';}
+    html += '<td>'+(prop?prop.address:b.prop_addr||'—')+'</td>';
+    html += '<td>'+providerName(b.provider)+'</td>';
+    html += '<td style="font-weight:500">€'+b.amount+'</td>';
+    html += '<td>'+(b.due||'—')+'</td>';
+    html += '<td><span class="pill '+billPill(b.status)+'">'+t(b.status)+'</span></td>';
+    html += '</tr>';
+  });
+  html += '</tbody></table></div></div>';
+  pg.innerHTML = html;
+  document.getElementById('topbar-actions').innerHTML = '<button class="btn btn-sm" onclick="exportExcel()">↓ Excel</button>';
+}
+
+// ─── CLIENTS (Manager) ───
+function renderClients() {
+  var pg = document.getElementById('page-clients');
+  var html = '<div class="card"><div class="sec-head"><div class="sec-title">'+t('clients')+'</div></div>';
+  html += '<div class="tbl-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Role</th><th>Plan</th><th>Properties</th></tr></thead><tbody>';
+  clients.forEach(function(c){
+    html += '<tr><td style="font-weight:500">'+c.name+'</td><td>'+c.email+'</td><td>'+(c.phone||'—')+'</td>';
+    html += '<td>'+t(c.role)+'</td>';
+    html += '<td><span class="pill '+(c.tier==='pro'?'p-new':'p-free')+'">'+(c.tier==='pro'?'Pro':'Free')+'</span></td>';
+    html += '<td>'+c.props+'</td></tr>';
+  });
+  html += '</tbody></table></div></div>';
+  pg.innerHTML = html;
+  document.getElementById('topbar-actions').innerHTML = '';
+}
+
+// ─── REPORTS (Manager) ───
+function renderReports() {
+  var pg = document.getElementById('page-reports');
+  var html = '<div class="g2">';
+  html += '<div class="card"><div class="sec-head"><div class="sec-title">Revenue by Client</div><button class="btn btn-sm" onclick="exportExcel()">↓ Export</button></div>';
+  html += '<div class="tbl-wrap"><table><thead><tr><th>Client</th><th>Properties</th><th>Monthly Income</th><th>Paid Bills</th></tr></thead><tbody>';
+  clients.forEach(function(c){
+    var cProps = properties.filter(function(p){return p.owner_id===c.id;});
+    var cIncome = cProps.filter(function(p){return p.status==='rented';}).reduce(function(s,p){return s+(p.rent||0);},0);
+    var cBills = bills.filter(function(b){return b.owner_id===c.id&&b.status==='paid';}).reduce(function(s,b){return s+(b.amount||0);},0);
+    html += '<tr><td style="font-weight:500">'+c.name+'</td><td>'+c.props+'</td><td class="c-em">€'+cIncome+'</td><td class="c-red">€'+cBills+'</td></tr>';
+  });
+  html += '</tbody></table></div></div>';
+  html += '<div class="card"><div class="sec-head"><div class="sec-title">Bill Status Summary</div></div>';
+  var statuses = ['paid','due','overdue','soon'];
+  statuses.forEach(function(s){
+    var cnt = bills.filter(function(b){return b.status===s;});
+    var total = cnt.reduce(function(acc,b){return acc+b.amount;},0);
+    html += '<div class="finance-row"><span><span class="pill '+billPill(s)+'">'+t(s)+'</span> · '+cnt.length+' bills</span><span style="font-weight:500">€'+total+'</span></div>';
+  });
+  html += '</div></div>';
+  pg.innerHTML = html;
+  document.getElementById('topbar-actions').innerHTML = '<button class="btn btn-sm" onclick="exportExcel()">↓ Export Excel</button>';
+}
+
+// ══════════════════════════════════════════
+// MODAL OPENERS
+// ══════════════════════════════════════════
+function openPropModal(id) {
+  document.getElementById('prop-edit-id').value = id||'';
+  document.getElementById('prop-modal-title').textContent = id?'Edit Property':'Add Property';
+  document.getElementById('btn-save-prop').textContent = id?'Save Changes':'Add Property';
+  if(id) {
+    var p = properties.find(function(x){return x.id===id;});
+    if(p) {
+      document.getElementById('prop-address').value=p.address||'';
+      document.getElementById('prop-type').value=p.type||'apartment';
+      document.getElementById('prop-area').value=p.area||'';
+      document.getElementById('prop-meter-water').value=p.meter_water||'';
+      document.getElementById('prop-meter-elec').value=p.meter_elec||'';
+      document.getElementById('prop-meter-gas').value=p.meter_gas||'';
+      document.getElementById('prop-meter-hoa').value=p.meter_hoa||'';
+      document.getElementById('prop-rental-status').value=p.status||'vacant';
+      document.getElementById('prop-rent-amount').value=p.rent||'';
+      document.getElementById('prop-rent-since').value=p.rented_since||'';
+      toggleRentalFields();
+    }
+  } else {
+    ['prop-address','prop-area','prop-meter-water','prop-meter-elec','prop-meter-gas','prop-meter-hoa','prop-rent-amount','prop-rent-since'].forEach(function(f){document.getElementById(f).value='';});
+    document.getElementById('prop-rental-status').value='vacant';
+    toggleRentalFields();
+  }
+  openModal('modal-property');
+}
+
+function toggleRentalFields() {
+  var s = document.getElementById('prop-rental-status').value;
+  document.getElementById('prop-rent-amount-group').style.display = s==='rented'?'':'none';
+  document.getElementById('prop-rent-since-group').style.display = s==='rented'?'':'none';
+}
+
+function saveProp() {
+  var addr = document.getElementById('prop-address').value.trim();
+  if(!addr){alert('Please enter an address.');return;}
+  var id = document.getElementById('prop-edit-id').value;
+  var data = {
+    address: addr,
+    type: document.getElementById('prop-type').value,
+    area: parseFloat(document.getElementById('prop-area').value)||0,
+    meter_water: document.getElementById('prop-meter-water').value,
+    meter_elec: document.getElementById('prop-meter-elec').value,
+    meter_gas: document.getElementById('prop-meter-gas').value,
+    meter_hoa: document.getElementById('prop-meter-hoa').value,
+    status: document.getElementById('prop-rental-status').value,
+    rent: parseFloat(document.getElementById('prop-rent-amount').value)||0,
+    rented_since: document.getElementById('prop-rent-since').value
+  };
+  if(id) {
+    var idx = properties.findIndex(function(p){return p.id===id;});
+    if(idx>=0) Object.assign(properties[idx],data);
+  } else {
+    data.id = 'p'+Date.now();
+    properties.push(data);
+  }
+  closeModal('modal-property');
+  renderProperties();
+  buildNav();
+}
+
+function showPropDetail(id) {
+  var p = properties.find(function(x){return x.id===id;});
+  if(!p) return;
+  if(currentRole==='manager'||currentRole==='owner') openPropModal(id);
+}
+
+function openBillModal(id) {
+  document.getElementById('bill-edit-id').value = id||'';
+  document.getElementById('bill-modal-title').textContent = id?'Edit Bill':'Add Bill';
+  document.getElementById('btn-save-bill').textContent = id?'Save':'Add Bill';
+  // Fill property selector
+  var propSel = document.getElementById('bill-prop-sel');
+  propSel.innerHTML = properties.map(function(p){return '<option value="'+p.id+'">'+p.address+'</option>';}).join('');
+  if(id) {
+    var b = bills.find(function(x){return x.id===id;});
+    if(b){
+      document.getElementById('bill-provider').value=b.provider;
+      document.getElementById('bill-amount').value=b.amount;
+      document.getElementById('bill-due').value=b.due;
+      document.getElementById('bill-status').value=b.status;
+      document.getElementById('bill-prop-sel').value=b.prop_id;
+    }
+  } else {
+    ['bill-amount','bill-due'].forEach(function(f){document.getElementById(f).value='';});
+    document.getElementById('bill-status').value='due';
+  }
+  openModal('modal-bill');
+}
+function editBill(id){openBillModal(id);}
+
+function saveBill() {
+  var propId = document.getElementById('bill-prop-sel').value;
+  var amount = parseFloat(document.getElementById('bill-amount').value);
+  if(!propId||!amount){alert('Please fill required fields.');return;}
+  var id = document.getElementById('bill-edit-id').value;
+  var prop = properties.find(function(p){return p.id===propId;});
+  var data = {
+    prop_id: propId,
+    prop_addr: prop?prop.address:'',
+    provider: document.getElementById('bill-provider').value,
+    amount: amount,
+    due: document.getElementById('bill-due').value,
+    status: document.getElementById('bill-status').value,
+    owner_id: prop?prop.owner_id:''
+  };
+  if(id) {
+    var idx = bills.findIndex(function(b){return b.id===id;});
+    if(idx>=0) Object.assign(bills[idx],data);
+  } else {
+    data.id = 'b'+Date.now();
+    bills.push(data);
+  }
+  closeModal('modal-bill');
+  renderBills();
+  buildNav();
+}
+
+function openPayModal(billId) {
+  var b = bills.find(function(x){return x.id===billId;});
+  var prop = b?properties.find(function(p){return p.id===b.prop_id;}):null;
+  var meter = '';
+  if(prop&&b){
+    if(b.provider==='cez'||b.provider==='toplofikacia') meter=prop.meter_elec;
+    else if(b.provider==='sofwater') meter=prop.meter_water;
+    else if(b.provider==='hoa') meter=prop.meter_hoa;
+  }
+  document.getElementById('pay-provider-name').textContent = b?providerName(b.provider):'';
+  var url = 'https://epay.bg'+(meter?'?meter='+meter:'');
+  document.getElementById('btn-pay-go').onclick = function(){window.open(url,'_blank');closeModal('modal-payment');};
+  openModal('modal-payment');
+}
+
+function openReqModal(id) {
+  document.getElementById('req-edit-id').value = id||'';
+  document.getElementById('req-modal-title').textContent = id?'Update Request':'New Request';
+  document.getElementById('btn-save-req').textContent = id?'Save':'Submit Request';
+  document.getElementById('req-status-group').style.display = (id&&currentRole==='manager')?'':'none';
+  document.getElementById('req-cost-group').style.display = (id&&currentRole==='manager')?'':'none';
+  if(id) {
+    var r = requests.find(function(x){return x.id===id;});
+    if(r){
+      document.getElementById('req-type').value=r.type;
+      document.getElementById('req-description').value=r.desc;
+      document.getElementById('req-status').value=r.status;
+      document.getElementById('req-cost').value=r.cost||'';
+    }
+  } else {
+    document.getElementById('req-description').value='';
+    document.getElementById('req-cost').value='';
+  }
+  openModal('modal-request');
+}
+function editRequest(id){openReqModal(id);}
+
+function saveRequest() {
+  var type = document.getElementById('req-type').value;
+  var desc = document.getElementById('req-description').value.trim();
+  if(!desc){alert('Please describe your request.');return;}
+  var id = document.getElementById('req-edit-id').value;
+  var data = {type:type,desc:desc};
+  if(currentRole==='manager') {
+    data.status = document.getElementById('req-status').value;
+    data.cost = parseFloat(document.getElementById('req-cost').value)||0;
+  }
+  if(id) {
+    var idx = requests.findIndex(function(r){return r.id===id;});
+    if(idx>=0) Object.assign(requests[idx],data);
+  } else {
+    data.id='r'+Date.now();
+    data.status='new';
+    data.created=new Date().toISOString().split('T')[0];
+    data.cost=0;
+    if(currentUser){
+      var name=(currentUser.user_metadata&&currentUser.user_metadata.full_name)||currentUser.email.split('@')[0];
+      data.owner=name;
+    }
+    requests.push(data);
+  }
+  closeModal('modal-request');
+  renderRequests();
+  buildNav();
+}
+
+// ══════════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════════
+function providerName(code) {
+  var map={cez:'CEZ',toplofikacia:'Toplofikacia',sofwater:'Sofiyska Voda',vivacom:'Vivacom',nap:'NAP (Tax)',hoa:'HOA Fee',other:'Other'};
+  return map[code]||code;
+}
+function billPill(s) {
+  return s==='paid'?'p-paid':s==='due'?'p-due':s==='overdue'?'p-over':'p-soon';
+}
+function reqIcon(type) {
+  var map={repair:'🔧',cleaning:'🧹',photo:'📷','tenant-check':'👤',emergency:'🚨',other:'📋'};
+  return map[type]||'📋';
+}
+function reqTypeLabel(type) {
+  var map={repair:'Repair',cleaning:'Cleaning',photo:'Photo Report','tenant-check':'Tenant Check',emergency:'Emergency Visit',other:'Other'};
+  return map[type]||type;
+}
+function reqStatusLabel(s) {
+  var map={new:t('statusNew'),accepted:t('accepted'),progress:t('progress'),done:t('done')};
+  return map[s]||s;
+}
+function reqPill(s) {
+  return s==='new'?'p-new':s==='accepted'?'p-soon':s==='progress'?'p-progress':'p-done';
+}
+function exportExcel() {
+  alert('Export to Excel — coming soon! Data will be available for download once connected to the database.');
+}
+</script>
+</body>
+</html>
