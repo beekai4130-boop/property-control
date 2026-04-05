@@ -844,7 +844,8 @@ async function doLogin(){
   btn.disabled=false;btn.textContent='Sign In';
   if(res.error||res.error_description){
     var msg=res.error_description||res.error||'Login failed.';
-    if(msg.includes('Invalid')) msg='Incorrect email or password.';
+    if(msg.includes('Invalid')||msg.includes('invalid')) msg='Incorrect email or password.';
+if(msg.includes('confirm')||msg.includes('Email not confirmed')) msg='✉️ Please confirm your email first — check your inbox.';
     if(msg.includes('confirm')) msg='Please confirm your email first.';
     err.textContent=msg;err.style.display='block';return;
   }
