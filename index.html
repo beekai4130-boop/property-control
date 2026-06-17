@@ -901,6 +901,7 @@ function doLogout(){
 }
 
 function finishLogin(user){
+  if(!user||!user.email) return;
   curUser=user;
   curRole=user.email===MANAGER_EMAIL?'manager':(user.user_metadata&&user.user_metadata.role)||'owner';
   curTier=(user.user_metadata&&user.user_metadata.tier)||'free';
