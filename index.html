@@ -1545,15 +1545,34 @@ function openPropModal(pid){
   toggleRentalFields();
   openModal('modal-prop');
 }
-function saveProp(){
+async function saveProp(){
   var addr=document.getElementById('prop-address').value.trim();
   if(!addr){alert('Please enter an address.');return;}
   var pid=document.getElementById('prop-id').value;
-  var data={address:addr,type:document.getElementById('prop-type').value,area:parseFloat(document.getElementById('prop-area').value)||0,mw:document.getElementById('prop-m-water').value,me:document.getElementById('prop-m-elec').value,mg:document.getElementById('prop-m-gas').value,mh:document.getElementById('prop-m-hoa').value,status:document.getElementById('prop-rental-status').value,rent:parseFloat(document.getElementById('prop-rent').value)||0,since:document.getElementById('prop-rent-since').value};
-  if(pid){var idx=props.findIndex(function(p){return p.id===pid;});if(idx>=0) Object.assign(props[idx],data);}
-  else{data.id='p'+Date.now();data.cid='me';props.push(data);}
+  var data={
+    address:addr,
+    type:document.getElementById('prop-type').value,
+    sqm:parseFloat(document.getElementById('prop-area').value)||0,
+    status:document.getElementById('prop-rental-status').value,
+    rent_amount:parseFloat(document.getElementById('prop-rent').value)||0,
+    owner_id:curUser.id
+  };
+  if(pid){
+    await sb.from('properties').update(data).eq('id',pid);
+  } else {
+    var res=await sb.from('properties').insert(data).select().single();
+    if(res.data){
+      var propId=res.data.id;
+      var due=new Date(new Date().getFullYear(),new Date().getMonth()+1,10).toISOString().split('T')[0];
+      await sb.from('bills').insert([
+        {property_id:propId,owner_id:curUser.id,provider:'EVN',service:'electricity',amount:0,due_date:due,status:'pending'},
+        {property_id:propId,owner_id:curUser.id,provider:'Sofiyska Voda',service:'water',amount:0,due_date:due,status:'pending'},
+        {property_id:propId,owner_id:curUser.id,provider:'HOA',service:'management',amount:0,due_date:due,status:'pending'}
+      ]);
+    }
+  }
   closeModal('modal-prop');
-  rProperties();
+  await loadProperties();
   buildNav();
 }
 
