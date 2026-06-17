@@ -1593,10 +1593,11 @@ async function saveProp(){
     }
   }
   closeModal('modal-prop');
-  await loadProperties();
+ var res=await sb.from('properties').select('*').eq('owner_id',curUser.id);
+  if(res.data) props=res.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id};});
+  rProperties();
   buildNav();
 }
-
 // ─ REQUEST MODAL ─
 function openReqModal(rid){
   document.getElementById('req-id').value=rid||'';
