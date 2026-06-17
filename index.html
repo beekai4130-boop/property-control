@@ -1208,6 +1208,13 @@ function rProperties(){
 // ══════════════════════════════════════════
 // BILLS
 // ══════════════════════════════════════════
+async function loadBills(){
+  var propIds=props.map(function(p){return p.id;});
+  if(!propIds.length){bills=[];rBills();return;}
+  var res=await sb.from('bills').select('*').in('property_id',propIds);
+  if(res.data) bills=res.data.map(function(b){return {id:b.id,pid:b.property_id,provider:b.provider,service:b.service,amount:b.amount||0,due:b.due_date,status:b.status,cid:b.owner_id};});
+  rBills();
+}
 function rBills(){
   var pg=document.getElementById('page-bills');
   var isMgr=curRole==='manager';
