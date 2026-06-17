@@ -905,7 +905,7 @@ function finishLogin(user){
   curRole=user.email===MANAGER_EMAIL?'manager':(user.user_metadata&&user.user_metadata.role)||'owner';
   curTier=(user.user_metadata&&user.user_metadata.tier)||'free';
   if(sbToken) localStorage.setItem('pc_sess',JSON.stringify({token:sbToken,user:user}));
-  loadDemoData();
+  loadProperties().then(function(){ loadBills(); });
   initApp();
 }
 
