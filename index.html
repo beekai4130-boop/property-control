@@ -905,8 +905,20 @@ function finishLogin(user){
   curRole=user.email===MANAGER_EMAIL?'manager':(user.user_metadata&&user.user_metadata.role)||'owner';
   curTier=(user.user_metadata&&user.user_metadata.tier)||'free';
   if(sbToken) localStorage.setItem('pc_sess',JSON.stringify({token:sbToken,user:user}));
-  loadProperties().then(function(){ loadBills(); });
   initApp();
+  setTimeout(async function(){
+    if(!curUser||!curUser.id) return;
+    var res=await sb.from('properties').select('*').eq('owner_id',curUser.id);
+    if(res.data) props=res.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id};});
+    var propIds=props.map(function(p){return p.id;});
+    if(propIds.length){
+      var rb=await sb.from('bills').select('*').in('property_id',propIds);
+      if(rb.data) bills=rb.data.map(function(b){return {id:b.id,pid:b.property_id,provider:b.provider,service:b.service,amount:b.amount||0,due:b.due_date,status:b.status,cid:b.owner_id};});
+    }
+    rProperties();
+    rBills();
+    buildNav();
+  },100);
 }
 
 // ══════════════════════════════════════════
