@@ -1078,7 +1078,15 @@ function ni(page,icon,label,badge){
 // PAGE RENDER ROUTER
 // ══════════════════════════════════════════
 function renderPage(id){
-  var map={'page-dashboard':rDashboard,'page-properties':rProperties,'page-bills':rBills,'page-requests':rRequests,'page-finances':rFinances,'page-clients':rClients,'page-reports':rReports};
+  if(id==='page-bills'){loadBills();return;}
+  if(id==='page-properties'){
+    sb.from('properties').select('*').eq('owner_id',curUser.id).then(function(res){
+      if(res.data) props=res.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id};});
+      rProperties();
+    });
+    return;
+  }
+  var map={'page-dashboard':rDashboard,'page-requests':rRequests,'page-finances':rFinances,'page-clients':rClients,'page-reports':rReports};
   if(map[id]) map[id]();
 }
 
