@@ -1586,9 +1586,9 @@ async function saveProp(){
       var propId=res.data.id;
       var due=new Date(new Date().getFullYear(),new Date().getMonth()+1,10).toISOString().split('T')[0];
       await sb.from('bills').insert([
-        {property_id:propId,owner_id:curUser.id,provider:'EVN',service:'electricity',amount:0,due_date:due,status:'pending'},
-        {property_id:propId,owner_id:curUser.id,provider:'Sofiyska Voda',service:'water',amount:0,due_date:due,status:'pending'},
-        {property_id:propId,owner_id:curUser.id,provider:'HOA',service:'management',amount:0,due_date:due,status:'pending'}
+        {property_id:propId,owner_id:curUser.id,provider:'EVN',service:'electricity',amount:0,due_date:due,status:'due'},
+        {property_id:propId,owner_id:curUser.id,provider:'Sofiyska Voda',service:'water',amount:0,due_date:due,status:'due'},
+        {property_id:propId,owner_id:curUser.id,provider:'HOA',service:'management',amount:0,due_date:due,status:'due'}
       ]);
     }
   }
