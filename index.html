@@ -608,6 +608,27 @@ tr:hover td{background:rgba(27,77,62,.02)}
   </div>
 </div>
 
+<div class="modal-ov" id="modal-client">
+  <div class="modal">
+    <div class="modal-title">Добавить клиента</div>
+    <div class="form-group">
+      <label class="form-label">Имя</label>
+      <input class="form-input" type="text" id="client-name" placeholder="Иван Иванов">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input class="form-input" type="email" id="client-email" placeholder="client@mail.com">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Телефон</label>
+      <input class="form-input" type="text" id="client-phone" placeholder="+359 88 123 4567">
+    </div>
+    <div class="modal-acts">
+      <button class="modal-cancel" onclick="closeModal('modal-client')">Cancel</button>
+      <button class="modal-confirm" onclick="saveClient()">Добавить</button>
+    </div>
+  </div>
+</div>
 <!-- ADD/EDIT REQUEST MODAL -->
 <div class="modal-ov" id="modal-req">
   <div class="modal">
@@ -1380,14 +1401,13 @@ async function fetchClientsData(){
     var p=profilesData.find(function(pr){return pr.id===l.owner_id;});
     return {
       id:l.owner_id||l.id,
-      name:p?p.full_name:(l.invited_email+' (pending)'),
+      name:p?p.full_name:(l.invited_name||l.invited_email)+(p?'':' (pending)'),
       email:p?p.email:l.invited_email,
-      phone:p?p.phone:'',
+      phone:p?p.phone:(l.invited_phone||''),
       role:p?p.role:'owner',
       tier:'free'
     };
   });
-}
 async function loadClients(){
   if(curRole!=='manager'){clients=[];rClients();return;}
   await fetchClientsData();
@@ -1406,12 +1426,34 @@ async function loadProperties(){
   }
   rProperties();
 }
+function openClientModal(){
+  document.getElementById('client-name').value='';
+  document.getElementById('client-email').value='';
+  document.getElementById('client-phone').value='';
+  openModal('modal-client');
+}
+async function saveClient(){
+  var name=document.getElementById('client-name').value.trim();
+  var email=document.getElementById('client-email').value.trim();
+  var phone=document.getElementById('client-phone').value.trim();
+  if(!email){alert('Пожалуйста, укажите email клиента.');return;}
+  await sb.from('manager_owners').insert({
+    manager_id:curUser.id,
+    owner_id:null,
+    status:'pending',
+    invited_email:email,
+    invited_name:name,
+    invited_phone:phone
+  });
+  closeModal('modal-client');
+  await loadClients();
+}
 // ══════════════════════════════════════════
 // CLIENTS (manager only)
 // ══════════════════════════════════════════
 function rClients(){
   var pg=document.getElementById('page-clients');
-  var h='<div class="card"><div class="sec-head"><div class="sec-title">'+t('clients')+' ('+clients.length+')</div></div>';
+  var h='<div class="card"><div class="sec-head"><div class="sec-title">'+t('clients')+' ('+clients.length+')</div><button class="btn btn-em btn-sm" onclick="openClientModal()">+ Добавить клиента</button></div></div>';
   if(!clients.length){
     h+='<div class="empty"><div class="empty-icon">👤</div><div class="empty-text">No clients yet</div></div>';
   } else {
@@ -1433,7 +1475,7 @@ function rClients(){
   }
   h+='</div>';
   pg.innerHTML=h;
-  document.getElementById('topbar-acts').innerHTML='';
+  document.getElementById('topbar-acts').innerHTML='<button class="btn btn-em btn-sm" onclick="openClientModal()">+ Добавить клиента</button>';
 }
 
 // ══════════════════════════════════════════
