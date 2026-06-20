@@ -1471,6 +1471,39 @@ async function saveClient(){
   closeModal('modal-client');
   await loadClients();
 }
+async function openMyProfile(){
+  document.getElementById('myprofile-name').textContent=(curUser.user_metadata&&curUser.user_metadata.full_name)||curUser.email;
+  var grp=document.getElementById('myprofile-manager-grp');
+  var saveBtn=document.getElementById('myprofile-save-btn');
+  if(curRole==='owner'){
+    var managersRes=await sb.from('profiles').select('*').eq('role','manager');
+    var managers=managersRes.data||[];
+    var linkRes=await sb.from('manager_owners').select('*').eq('owner_id',curUser.id).limit(1);
+    var curLink=(linkRes.data&&linkRes.data[0])||null;
+    var sel=document.getElementById('myprofile-manager');
+    sel.innerHTML='<option value="">— Не выбран —</option>'+managers.map(function(m){return '<option value="'+m.id+'">'+(m.full_name||m.email)+'</option>';}).join('');
+    if(curLink) sel.value=curLink.manager_id;
+    grp.style.display='';
+    saveBtn.style.display='';
+  } else {
+    grp.style.display='none';
+    saveBtn.style.display='none';
+  }
+  openModal('modal-myprofile');
+}
+async function saveMyManager(){
+  var managerId=document.getElementById('myprofile-manager').value;
+  if(!managerId){alert('Выберите менеджера из списка.');return;}
+  var linkRes=await sb.from('manager_owners').select('*').eq('owner_id',curUser.id).limit(1);
+  var curLink=(linkRes.data&&linkRes.data[0])||null;
+  if(curLink){
+    await sb.from('manager_owners').update({manager_id:managerId,status:'exclusive'}).eq('id',curLink.id);
+  } else {
+    await sb.from('manager_owners').insert({manager_id:managerId,owner_id:curUser.id,status:'exclusive'});
+  }
+  closeModal('modal-myprofile');
+  alert('Менеджер сохранён!');
+}
   
 // ══════════════════════════════════════════
 // CLIENTS (manager only)
