@@ -1251,7 +1251,7 @@ function rProperties(){
       h+='<div class="prop-meta">';
       h+='<span>'+p.type.charAt(0).toUpperCase()+p.type.slice(1)+(p.area?' · '+p.area+' m²':'')+'</span>';
       if(isRented) h+='<span style="color:var(--em);font-weight:500">€'+p.rent+'/mo</span>';
-      if(cl) h+='<span>👤 '+cl.name+'</span>';
+      if(cl) h+='<span>👤 '+cl.name+(cl.status==='exclusive'?' <span class="pill p-paid" style="margin-left:4px">Эксклюзив</span>':'')+'</span>';
       h+='</div>';
       // Meter numbers
       var meters=[];
@@ -1426,10 +1426,11 @@ async function fetchClientsData(){
       phone:p?p.phone:(l.invited_phone||''),
       role:p?p.role:'owner',
       tier:'free',
-      registered:!!p
+      registered:!!p,
+      status:l.status
     };
   });
-  }
+}
   
 async function loadClients(){
   if(curRole!=='manager'){clients=[];rClients();return;}
@@ -1519,7 +1520,7 @@ function rClients(){
       var cProps=props.filter(function(p){return p.cid===c.id;});
       var cRent=cProps.filter(function(p){return p.status==='rented';}).reduce(function(s,p){return s+(p.rent||0);},0);
       h+='<tr>';
-      h+='<td style="font-weight:500">'+c.name+'</td>';
+      h+='<td style="font-weight:500">'+c.name+(c.status==='exclusive'?' <span class="pill p-paid">Эксклюзив</span>':'')+'</td>';
       h+='<td style="font-size:12px">'+c.email+'</td>';
       h+='<td style="font-size:12px">'+(c.phone||'—')+'</td>';
       h+='<td>'+t(c.role)+'</td>';
