@@ -540,6 +540,10 @@ tr:hover td{background:rgba(27,77,62,.02)}
   <div class="modal">
     <div class="modal-title" id="prop-modal-title">Add Property</div>
     <input type="hidden" id="prop-id">
+    <div class="form-group" id="prop-client-grp" style="display:none">
+      <label class="form-label">Client (Owner)</label>
+      <select class="form-select" id="prop-client"></select>
+    </div>
     <div class="form-group">
       <label class="form-label">Address</label>
       <input class="form-input" type="text" id="prop-address" placeholder="ul. Rakovski 42, Sofia">
@@ -1369,8 +1373,7 @@ function rFinances(){
 // ══════════════════════════════════════════
 // LOAD CLIENTS (manager only)
 // ══════════════════════════════════════════
-async function loadClients(){
-  if(curRole!=='manager'){clients=[];rClients();return;}
+async function fetchClientsData(){
   var res=await sb.from('manager_owners').select('*').eq('manager_id',curUser.id);
   var links=res.data||[];
   var ownerIds=links.filter(function(l){return l.owner_id;}).map(function(l){return l.owner_id;});
@@ -1387,10 +1390,27 @@ async function loadClients(){
       email:p?p.email:l.invited_email,
       phone:p?p.phone:'',
       role:p?p.role:'owner',
-      tier:'free' // TODO: пока нет поля tier в БД, ставим всем Free
+      tier:'free'
     };
   });
+}
+async function loadClients(){
+  if(curRole!=='manager'){clients=[];rClients();return;}
+  await fetchClientsData();
   rClients();
+}
+async function loadProperties(){
+  if(curRole==='manager'){
+    await fetchClientsData();
+    var ownerIds=clients.map(function(c){return c.id;});
+    if(!ownerIds.length){props=[];rProperties();return;}
+    var res=await sb.from('properties').select('*').in('owner_id',ownerIds);
+    if(res.data) props=res.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id};});
+  } else {
+    var res2=await sb.from('properties').select('*').eq('owner_id',curUser.id);
+    if(res2.data) props=res2.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id};});
+  }
+  rProperties();
 }
 // ══════════════════════════════════════════
 // CLIENTS (manager only)
