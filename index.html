@@ -1410,6 +1410,8 @@ async function fetchClientsData(){
       tier:'free'
     };
   });
+  }
+  
 async function loadClients(){
   if(curRole!=='manager'){clients=[];rClients();return;}
   await fetchClientsData();
