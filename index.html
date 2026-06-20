@@ -1407,7 +1407,8 @@ async function fetchClientsData(){
       email:p?p.email:l.invited_email,
       phone:p?p.phone:(l.invited_phone||''),
       role:p?p.role:'owner',
-      tier:'free'
+      tier:'free',
+      registered:!!p
     };
   });
   }
@@ -1647,8 +1648,13 @@ async function openPropModal(pid){
   var clientGrp=document.getElementById('prop-client-grp');
   if(curRole==='manager'){
     await fetchClientsData();
+    var registeredClients=clients.filter(function(c){return c.registered;});
     var sel=document.getElementById('prop-client');
-    sel.innerHTML='<option value="">— Select client —</option>'+clients.map(function(c){return '<option value="'+c.id+'">'+c.name+'</option>';}).join('');
+    if(registeredClients.length){
+      sel.innerHTML='<option value="">— Select client —</option>'+registeredClients.map(function(c){return '<option value="'+c.id+'">'+c.name+'</option>';}).join('');
+    } else {
+      sel.innerHTML='<option value="">Нет зарегистрированных клиентов</option>';
+    }
     clientGrp.style.display='';
   } else {
     clientGrp.style.display='none';
