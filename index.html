@@ -1084,13 +1084,7 @@ function ni(page,icon,label,badge){
 function renderPage(id){
   if(id==='page-bills'){loadBills();return;}
   if(id==='page-clients'){loadClients();return;}
-  if(id==='page-properties'){
-    sb.from('properties').select('*').eq('owner_id',curUser.id).then(function(res){
-      if(res.data) props=res.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id};});
-      rProperties();
-    });
-    return;
-  }
+ if(id==='page-properties'){loadProperties();return;}
   var map={'page-dashboard':rDashboard,'page-requests':rRequests,'page-finances':rFinances,'page-reports':rReports};
   if(map[id]) map[id]();
 }
@@ -1599,10 +1593,19 @@ function toggleRentalFields(){
   document.getElementById('prop-rent-grp').style.display=s==='rented'?'':'none';
   document.getElementById('prop-since-grp').style.display=s==='rented'?'':'none';
 }
-function openPropModal(pid){
+async function openPropModal(pid){
   document.getElementById('prop-id').value=pid||'';
   document.getElementById('prop-modal-title').textContent=pid?'Edit Property':'Add Property';
   document.getElementById('prop-save-btn').textContent=pid?'Save Changes':'Add Property';
+  var clientGrp=document.getElementById('prop-client-grp');
+  if(curRole==='manager'){
+    await fetchClientsData();
+    var sel=document.getElementById('prop-client');
+    sel.innerHTML='<option value="">— Select client —</option>'+clients.map(function(c){return '<option value="'+c.id+'">'+c.name+'</option>';}).join('');
+    clientGrp.style.display='';
+  } else {
+    clientGrp.style.display='none';
+  }
   if(pid){
     var p=props.find(function(x){return x.id===pid;});
     if(p){
@@ -1616,6 +1619,7 @@ function openPropModal(pid){
       document.getElementById('prop-rental-status').value=p.status||'vacant';
       document.getElementById('prop-rent').value=p.rent||'';
       document.getElementById('prop-rent-since').value=p.since||'';
+      if(curRole==='manager') document.getElementById('prop-client').value=p.cid||'';
     }
   } else {
     ['prop-address','prop-area','prop-m-water','prop-m-elec','prop-m-gas','prop-m-hoa','prop-rent','prop-rent-since'].forEach(function(f){document.getElementById(f).value='';});
@@ -1628,6 +1632,11 @@ function openPropModal(pid){
 async function saveProp(){
   var addr=document.getElementById('prop-address').value.trim();
   if(!addr){alert('Please enter an address.');return;}
+  var ownerId=curUser.id;
+  if(curRole==='manager'){
+    ownerId=document.getElementById('prop-client').value;
+    if(!ownerId){alert('Пожалуйста, выберите клиента.');return;}
+  }
   var pid=document.getElementById('prop-id').value;
   var data={
     address:addr,
@@ -1635,7 +1644,7 @@ async function saveProp(){
     sqm:parseFloat(document.getElementById('prop-area').value)||0,
     status:document.getElementById('prop-rental-status').value,
     rent_amount:parseFloat(document.getElementById('prop-rent').value)||0,
-    owner_id:curUser.id
+    owner_id:ownerId
   };
   if(pid){
     await sb.from('properties').update(data).eq('id',pid);
@@ -1645,16 +1654,14 @@ async function saveProp(){
       var propId=res.data.id;
       var due=new Date(new Date().getFullYear(),new Date().getMonth()+1,10).toISOString().split('T')[0];
       await sb.from('bills').insert([
-        {property_id:propId,owner_id:curUser.id,provider:'EVN',service:'electricity',amount:0,due_date:due,status:'due'},
-        {property_id:propId,owner_id:curUser.id,provider:'Sofiyska Voda',service:'water',amount:0,due_date:due,status:'due'},
-        {property_id:propId,owner_id:curUser.id,provider:'HOA',service:'management',amount:0,due_date:due,status:'due'}
+        {property_id:propId,owner_id:ownerId,provider:'EVN',service:'electricity',amount:0,due_date:due,status:'due'},
+        {property_id:propId,owner_id:ownerId,provider:'Sofiyska Voda',service:'water',amount:0,due_date:due,status:'due'},
+        {property_id:propId,owner_id:ownerId,provider:'HOA',service:'management',amount:0,due_date:due,status:'due'}
       ]);
     }
   }
   closeModal('modal-prop');
- var res=await sb.from('properties').select('*').eq('owner_id',curUser.id);
-  if(res.data) props=res.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id};});
-  rProperties();
+  await loadProperties();
   buildNav();
 }
 // ─ REQUEST MODAL ─
