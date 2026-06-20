@@ -1130,9 +1130,9 @@ function renderPage(id){
   var map={'page-requests':rRequests,'page-finances':rFinances,'page-reports':rReports};
   if(map[id]) map[id]();
 }
-async function loadDashboard(){
+  async function loadDashboard(){
   myManager=null;
-  if(curRole==='owner'){
+  if(curRole==='owner'||curRole==='broker'){
     var linkRes=await sb.from('manager_owners').select('*').eq('owner_id',curUser.id).limit(1);
     var link=(linkRes.data&&linkRes.data[0])||null;
     if(link&&link.manager_id){
@@ -1492,7 +1492,7 @@ async function openMyProfile(){
   document.getElementById('myprofile-name').textContent=(curUser.user_metadata&&curUser.user_metadata.full_name)||curUser.email;
   var grp=document.getElementById('myprofile-manager-grp');
   var saveBtn=document.getElementById('myprofile-save-btn');
-  if(curRole==='owner'){
+  if(curRole==='owner'||curRole==='broker'){
     var managersRes=await sb.from('profiles').select('*').eq('role','manager');
     var managers=managersRes.data||[];
     var linkRes=await sb.from('manager_owners').select('*').eq('owner_id',curUser.id).limit(1);
