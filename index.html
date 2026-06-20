@@ -1703,6 +1703,7 @@ async function saveProp(){
     await sb.from('properties').update(data).eq('id',pid);
   } else {
     var res=await sb.from('properties').insert(data).select().single();
+    if(res.error){alert('Ошибка сохранения: '+res.error.message);return;}
     if(res.data){
       var propId=res.data.id;
       var due=new Date(new Date().getFullYear(),new Date().getMonth()+1,10).toISOString().split('T')[0];
