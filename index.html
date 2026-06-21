@@ -1487,6 +1487,11 @@ async function saveClient(){
   });
   closeModal('modal-client');
   await loadClients();
+  try{
+    await sb.functions.invoke('send-invite',{body:{email:email,name:name,managerName:(curUser.user_metadata&&curUser.user_metadata.full_name)||curUser.email}});
+  }catch(e){
+    console.error('Invite email failed:',e);
+  }
 }
 async function openMyProfile(){
   document.getElementById('myprofile-name').textContent=(curUser.user_metadata&&curUser.user_metadata.full_name)||curUser.email;
