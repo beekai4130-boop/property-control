@@ -1181,7 +1181,7 @@ function updateChip(){
 
 function buildNav(){
   var nav=document.getElementById('sb-nav');
-  var isMgr=curRole==='manager';
+  var isMgr=curRole==='manager'||curRole==='agent';
   var isTenant=curRole==='tenant';
   var dueBillsCnt=bills.filter(function(b){return b.status==='due'||b.status==='overdue';}).length;
   var newReqsCnt=reqs.filter(function(r){return r.status==='new';}).length;
@@ -1336,7 +1336,7 @@ function rDashboard(){
 // ══════════════════════════════════════════
 function rProperties(){
   var pg=document.getElementById('page-properties');
-  var isMgr=curRole==='manager';
+  var isMgr=curRole==='manager'||curRole==='agent';
   var maxProps=curTier==='pro'?10:3;
   var canAdd=isMgr||(props.length<maxProps);
   var h='<div class="sec-head"><div class="sec-title">'+t('properties')+'</div>';
@@ -1388,7 +1388,7 @@ async function loadBills(){
 }
 function rBills(){
   var pg=document.getElementById('page-bills');
-  var isMgr=curRole==='manager';
+  var isMgr=curRole==='manager'||curRole==='agent';
   var allBills=bills;
   var due=allBills.filter(function(b){return b.status==='due'||b.status==='overdue';});
   var paid=allBills.filter(function(b){return b.status==='paid';});
@@ -1436,7 +1436,7 @@ function rBills(){
 // ══════════════════════════════════════════
 function rRequests(){
   var pg=document.getElementById('page-requests');
-  var isMgr=curRole==='manager';
+  var isMgr=curRole==='manager'||curRole==='agent';
   var h='<div class="sec-head"><div class="sec-title">'+t('requests')+'</div><button class="btn btn-em" onclick="openReqModal()">'+t('newReq')+'</button></div>';
   if(!reqs.length){
     h+='<div class="card"><div class="empty"><div class="empty-icon">📋</div><div class="empty-text">'+t('noReq')+'</div><button class="btn btn-em" onclick="openReqModal()">'+t('newReq')+'</button></div></div>';
@@ -1470,7 +1470,7 @@ function rRequests(){
 // ══════════════════════════════════════════
 function rFinances(){
   var pg=document.getElementById('page-finances');
-  var isMgr=curRole==='manager';
+  var isMgr=curRole==='manager'||curRole==='agent';
   var totalRent=props.filter(function(p){return p.status==='rented';}).reduce(function(s,p){return s+(p.rent||0);},0);
   var totalExp=bills.filter(function(b){return b.status==='paid';}).reduce(function(s,b){return s+(b.amount||0);},0);
   var totalCostReqs=reqs.filter(function(r){return r.cost>0;}).reduce(function(s,r){return s+(r.cost||0);},0);
@@ -1888,7 +1888,7 @@ async function saveProp(){
 // ─ REQUEST MODAL ─
 function openReqModal(rid){
   document.getElementById('req-id').value=rid||'';
-  var isMgr=curRole==='manager';
+  var isMgr=curRole==='manager'||curRole==='agent';
   document.getElementById('req-modal-title').textContent=rid?'Update Request':'New Request';
   document.getElementById('req-save-btn').textContent=rid?'Save Changes':'Submit Request';
   document.getElementById('req-status-grp').style.display=(rid&&isMgr)?'':'none';
@@ -1916,7 +1916,7 @@ function saveReq(){
   var rid=document.getElementById('req-id').value;
   var desc=document.getElementById('req-desc').value.trim();
   if(!desc){alert('Please describe your request.');return;}
-  var isMgr=curRole==='manager';
+  var isMgr=curRole==='manager'||curRole==='agent';
   if(rid){
     var r=reqs.find(function(x){return x.id===rid;});
     if(r){
