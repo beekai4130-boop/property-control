@@ -348,7 +348,7 @@ tr:hover td{background:rgba(27,77,62,.02)}
         <label class="form-label" id="t-reg-iam">I am a...</label>
         <select class="form-select" id="reg-role">
           <option value="owner" id="t-owner">Property Owner</option>
-          <option value="broker" id="t-broker">Broker / Agent</option>
+          <option value="agent" id="t-agent">Agent</option>
           <option value="tenant" id="t-tenant">Tenant</option>
         </select>
       </div>
@@ -779,7 +779,7 @@ var T = {
     income:'Rental Income',expenses:'Bill Expenses',profit:'Net Profit',
     totalProp:'Total Properties',activeBills:'Active Bills',openReqs:'Open Requests',totalClients:'Total Clients',
     yourPlan:'Your Plan',freePlan:'Free Plan',proPlan:'Pro Plan',
-    manager:'Manager',owner:'Property Owner',broker:'Broker / Agent',tenant:'Tenant',
+    manager:'Manager',owner:'Property Owner',agent:'Agent',tenant:'Tenant',
     regTitle:'Create Account',regName:'Full Name',regEmail:'Email',regPhone:'Phone',
     regIAm:'I am a...',regPlan:'Select Plan',regPass:'Password',regPassHint:'Min. 8 characters',
     regBtn:'Create Account',regHaveAcc:'Already have an account?',regFree:'Up to 3 properties',regPro:'Up to 10 properties',
@@ -802,7 +802,7 @@ var T = {
     income:'Доход от аренды',expenses:'Расходы на счета',profit:'Чистая прибыль',
     totalProp:'Всего объектов',activeBills:'Активных счетов',openReqs:'Открытых заявок',totalClients:'Всего клиентов',
     yourPlan:'Ваш тариф',freePlan:'Бесплатный',proPlan:'Pro тариф',
-    manager:'Менеджер',owner:'Собственник',broker:'Брокер / Агент',tenant:'Жилец',
+    manager:'Менеджер',owner:'Собственник',agent:'Агент',tenant:'Жилец',
     regTitle:'Создать аккаунт',regName:'Полное имя',regEmail:'Email',regPhone:'Телефон',
     regIAm:'Кто я...',regPlan:'Выберите тариф',regPass:'Пароль',regPassHint:'Мин. 8 символов',
     regBtn:'Создать аккаунт',regHaveAcc:'Уже есть аккаунт?',regFree:'До 3 объектов',regPro:'До 10 объектов',
@@ -825,7 +825,7 @@ var T = {
     income:'Приход от наем',expenses:'Разходи за сметки',profit:'Нетна печалба',
     totalProp:'Общо имоти',activeBills:'Активни сметки',openReqs:'Отворени заявки',totalClients:'Общо клиенти',
     yourPlan:'Вашият план',freePlan:'Безплатен план',proPlan:'Pro план',
-    manager:'Мениджър',owner:'Собственик',broker:'Брокер / Агент',tenant:'Наемател',
+    manager:'Мениджър',owner:'Собственик',agent:'Агент',tenant:'Наемател',
     regTitle:'Създай акаунт',regName:'Пълно име',regEmail:'Имейл',regPhone:'Телефон',
     regIAm:'Аз съм...',regPlan:'Изберете план',regPass:'Парола',regPassHint:'Мин. 8 символа',
     regBtn:'Създай акаунт',regHaveAcc:'Вече имате акаунт?',regFree:'До 3 имота',regPro:'До 10 имота',
@@ -925,7 +925,7 @@ function applyLangUI(){
     't-reg-phone':'regPhone','t-reg-iam':'regIAm','t-reg-plan':'regPlan',
     't-reg-pass':'regPass','t-free-desc':'regFree','t-pro-desc':'regPro',
     't-full-name':'regName','t-phone':'regPhone','t-i-am':'regIAm','t-select-plan':'regPlan',
-    't-password2':'regPass'
+    't-password2':'regPass','t-owner':'owner','t-agent':'agent','t-tenant':'tenant'
   };
   Object.keys(ids).forEach(function(id){
     var el=document.getElementById(id);
@@ -1174,7 +1174,7 @@ function updateChip(){
   var name=(curUser.user_metadata&&curUser.user_metadata.full_name)||curUser.email.split('@')[0];
   document.getElementById('sb-av').textContent=name.substring(0,2).toUpperCase();
   document.getElementById('sb-uname').textContent=name;
-  var roleLabel=curRole==='manager'?t('manager'):curRole==='broker'?t('broker'):curRole==='tenant'?t('tenant'):t('owner');
+  var roleLabel=curRole==='manager'?t('manager'):curRole==='agent'?t('agent'):curRole==='tenant'?t('tenant'):t('owner');
   var tierHtml=curTier==='pro'?'<span class="tier-pill tier-pill-pro">PRO</span>':'<span class="tier-pill tier-pill-free">FREE</span>';
   document.getElementById('sb-role').innerHTML=roleLabel+tierHtml;
 }
@@ -1226,7 +1226,7 @@ function renderPage(id){
 }
   async function loadDashboard(){
   myManager=null;
-  if(curRole==='owner'||curRole==='broker'){
+  if(curRole==='owner'||curRole==='agent'){
     var linkRes=await sb.from('manager_owners').select('*').eq('owner_id',curUser.id).limit(1);
     var link=(linkRes.data&&linkRes.data[0])||null;
     if(link&&link.manager_id){
@@ -1591,7 +1591,7 @@ async function openMyProfile(){
   document.getElementById('myprofile-name').textContent=(curUser.user_metadata&&curUser.user_metadata.full_name)||curUser.email;
   var grp=document.getElementById('myprofile-manager-grp');
   var saveBtn=document.getElementById('myprofile-save-btn');
-  if(curRole==='owner'||curRole==='broker'){
+  if(curRole==='owner'||curRole==='agent'){
     var managersRes=await sb.from('profiles').select('*').eq('role','manager');
     var managers=managersRes.data||[];
     var linkRes=await sb.from('manager_owners').select('*').eq('owner_id',curUser.id).limit(1);
