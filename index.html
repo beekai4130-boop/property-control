@@ -309,19 +309,37 @@ tr:hover td{background:rgba(27,77,62,.02)}
       <div class="auth-ok" id="reg-ok"></div>
       <div class="auth-title" id="t-reg-title">Create Account</div>
       <div class="form-group">
-        <label class="form-label" id="t-full-name">Full Name</label>
-        <input class="form-input" type="text" id="reg-name" placeholder="Ivan Ivanov">
+        <label class="form-label" id="t-reg-name">Full Name</label>
+        <input class="form-input" type="text" id="reg-name" placeholder="Ivan Ivanov" required>
       </div>
       <div class="form-group">
-        <label class="form-label">Email</label>
-        <input class="form-input" type="email" id="reg-email" placeholder="your@email.com">
+        <label class="form-label" id="t-reg-email">Email</label>
+        <input class="form-input" type="email" id="reg-email" placeholder="your@email.com" required>
       </div>
       <div class="form-group">
-        <label class="form-label" id="t-phone">Phone</label>
-        <input class="form-input" type="tel" id="reg-phone" placeholder="+7 / +359 ...">
+        <label class="form-label" id="t-reg-phone">Phone</label>
+        <div style="display:flex;gap:8px">
+          <select class="form-select" id="reg-phone-country" onchange="applyCountryCode()" style="width:auto;min-width:140px">
+            <option value="+7">🇷🇺 +7</option>
+            <option value="+359" selected>🇧🇬 +359</option>
+            <option value="+380">🇺🇦 +380</option>
+            <option value="+49">🇩🇪 +49</option>
+            <option value="+33">🇫🇷 +33</option>
+            <option value="+39">🇮🇹 +39</option>
+            <option value="+34">🇪🇸 +34</option>
+            <option value="+31">🇳🇱 +31</option>
+            <option value="+43">🇦🇹 +43</option>
+            <option value="+41">🇨🇭 +41</option>
+            <option value="+44">🇬🇧 +44</option>
+            <option value="+1">🇺🇸 +1</option>
+            <option value="+90">🇹🇷 +90</option>
+            <option value="+971">🇦🇪 +971</option>
+          </select>
+          <input class="form-input" type="tel" id="reg-phone" placeholder="88123456" style="flex:1" required>
+        </div>
       </div>
       <div class="form-group">
-        <label class="form-label" id="t-i-am">I am a...</label>
+        <label class="form-label" id="t-reg-iam">I am a...</label>
         <select class="form-select" id="reg-role">
           <option value="owner" id="t-owner">Property Owner</option>
           <option value="broker" id="t-broker">Broker / Agent</option>
@@ -329,7 +347,7 @@ tr:hover td{background:rgba(27,77,62,.02)}
         </select>
       </div>
       <div class="form-group">
-        <label class="form-label" id="t-select-plan">Select Plan</label>
+        <label class="form-label" id="t-reg-plan">Select Plan</label>
         <div class="tier-cards">
           <div class="tier-card sel" id="tier-free-card" onclick="selTier('free')">
             <div class="tier-name">Free</div>
@@ -343,8 +361,8 @@ tr:hover td{background:rgba(27,77,62,.02)}
         </div>
       </div>
       <div class="form-group">
-        <label class="form-label" id="t-password2">Password</label>
-        <input class="form-input" type="password" id="reg-pass" placeholder="Min. 8 characters">
+        <label class="form-label" id="t-reg-pass">Password</label>
+        <input class="form-input" type="password" id="reg-pass" placeholder="Min. 8 characters" required>
       </div>
       <button class="btn-main" id="btn-register" onclick="doRegister()">Create Account</button>
       <div class="auth-divider">or</div>
@@ -756,6 +774,16 @@ var T = {
     totalProp:'Total Properties',activeBills:'Active Bills',openReqs:'Open Requests',totalClients:'Total Clients',
     yourPlan:'Your Plan',freePlan:'Free Plan',proPlan:'Pro Plan',
     manager:'Manager',owner:'Property Owner',broker:'Broker / Agent',tenant:'Tenant',
+    regTitle:'Create Account',regName:'Full Name',regEmail:'Email',regPhone:'Phone',
+    regIAm:'I am a...',regPlan:'Select Plan',regPass:'Password',regPassHint:'Min. 8 characters',
+    regBtn:'Create Account',regHaveAcc:'Already have an account?',regFree:'Up to 3 properties',regPro:'Up to 10 properties',
+    regErrFields:'Please fill in all fields: name, email, phone and password.',
+    regErrEmail:'Please enter a valid email (e.g. ivan@mail.com).',
+    regErrPhone:'Enter phone in format: +359881234567 (+ and digits, no spaces).',
+    regErrPass:'Password must be at least 8 characters.',
+    regErrExists:'This email is already registered. Please sign in.',
+    regOk:'Account created! Check your email to confirm, then sign in.',
+    selectCountry:'Country code',
     repair:'Repair',cleaning:'Cleaning',photo:'Photo Report',tenantCheck:'Tenant Check',emergency:'Emergency Visit',other:'Other'
   },
   ru:{
@@ -769,6 +797,16 @@ var T = {
     totalProp:'Всего объектов',activeBills:'Активных счетов',openReqs:'Открытых заявок',totalClients:'Всего клиентов',
     yourPlan:'Ваш тариф',freePlan:'Бесплатный',proPlan:'Pro тариф',
     manager:'Менеджер',owner:'Собственник',broker:'Брокер / Агент',tenant:'Жилец',
+    regTitle:'Создать аккаунт',regName:'Полное имя',regEmail:'Email',regPhone:'Телефон',
+    regIAm:'Кто я...',regPlan:'Выберите тариф',regPass:'Пароль',regPassHint:'Мин. 8 символов',
+    regBtn:'Создать аккаунт',regHaveAcc:'Уже есть аккаунт?',regFree:'До 3 объектов',regPro:'До 10 объектов',
+    regErrFields:'Пожалуйста, заполните все поля: имя, email, телефон и пароль.',
+    regErrEmail:'Введите корректный email (например: ivan@mail.com).',
+    regErrPhone:'Введите телефон в формате: +359881234567 (+ и цифры, без пробелов).',
+    regErrPass:'Пароль должен быть не менее 8 символов.',
+    regErrExists:'Этот email уже зарегистрирован. Войдите в аккаунт.',
+    regOk:'Аккаунт создан! Проверьте email для подтверждения, затем войдите.',
+    selectCountry:'Код страны',
     repair:'Ремонт',cleaning:'Уборка',photo:'Фото-отчёт',tenantCheck:'Проверка жильца',emergency:'Экстренный выезд',other:'Другое'
   },
   bg:{
@@ -782,6 +820,16 @@ var T = {
     totalProp:'Общо имоти',activeBills:'Активни сметки',openReqs:'Отворени заявки',totalClients:'Общо клиенти',
     yourPlan:'Вашият план',freePlan:'Безплатен план',proPlan:'Pro план',
     manager:'Мениджър',owner:'Собственик',broker:'Брокер / Агент',tenant:'Наемател',
+    regTitle:'Създай акаунт',regName:'Пълно име',regEmail:'Имейл',regPhone:'Телефон',
+    regIAm:'Аз съм...',regPlan:'Изберете план',regPass:'Парола',regPassHint:'Мин. 8 символа',
+    regBtn:'Създай акаунт',regHaveAcc:'Вече имате акаунт?',regFree:'До 3 имота',regPro:'До 10 имота',
+    regErrFields:'Моля, попълнете всички полета: име, имейл, телефон и парола.',
+    regErrEmail:'Въведете валиден имейл (напр. ivan@mail.com).',
+    regErrPhone:'Въведете телефон във формат: +359881234567 (+ и цифри, без интервали).',
+    regErrPass:'Паролата трябва да е поне 8 символа.',
+    regErrExists:'Този имейл вече е регистриран. Влезте в акаунта.',
+    regOk:'Акаунтът е създаден! Проверете имейла си за потвърждение, след което влезте.',
+    selectCountry:'Код на страната',
     repair:'Ремонт',cleaning:'Почистване',photo:'Фото отчет',tenantCheck:'Проверка на наемател',emergency:'Спешно посещение',other:'Друго'
   }
 };
@@ -863,10 +911,30 @@ function setLang(l,btn){
   updateChip();
 }
 function applyLangUI(){
-  // Sidebar lang buttons
   document.querySelectorAll('.sb-lang-btn').forEach(function(b){
     b.classList.toggle('on',b.textContent===lang.toUpperCase());
   });
+  var ids={
+    't-reg-title':'regTitle','t-reg-name':'regName','t-reg-email':'regEmail',
+    't-reg-phone':'regPhone','t-reg-iam':'regIAm','t-reg-plan':'regPlan',
+    't-reg-pass':'regPass','t-free-desc':'regFree','t-pro-desc':'regPro',
+    't-full-name':'regName','t-phone':'regPhone','t-i-am':'regIAm','t-select-plan':'regPlan',
+    't-password2':'regPass'
+  };
+  Object.keys(ids).forEach(function(id){
+    var el=document.getElementById(id);
+    if(el) el.textContent=t(ids[id]);
+  });
+  var regPass=document.getElementById('reg-pass');
+  if(regPass) regPass.placeholder=t('regPassHint');
+  var regBtn=document.getElementById('btn-register');
+  if(regBtn) regBtn.textContent=t('regBtn');
+}
+function applyCountryCode(){
+  var code=document.getElementById('reg-phone-country').value;
+  var ph=document.getElementById('reg-phone');
+  ph.value='';
+  ph.placeholder=code==='default'?'':code.replace('+','')+'xxxxxxxx';
 }
 
 // ══════════════════════════════════════════
@@ -907,18 +975,24 @@ async function doRegister(){
   var err=document.getElementById('reg-err');
   var ok=document.getElementById('reg-ok');
   err.style.display='none';ok.style.display='none';
-  if(!name||!email||!pass){err.textContent='Please fill in all required fields.';err.style.display='block';return;}
-  if(pass.length<8){err.textContent='Password must be at least 8 characters.';err.style.display='block';return;}
+  var countryCode=document.getElementById('reg-phone-country')?document.getElementById('reg-phone-country').value:'';
+  var phoneRaw=phone.replace(/\s+/g,'');
+  var fullPhone=phoneRaw.startsWith('+')?phoneRaw:(countryCode+phoneRaw);
+  phone=fullPhone;
+  if(!name||!email||!phone||!pass){err.textContent=t('regErrFields');err.style.display='block';return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.textContent=t('regErrEmail');err.style.display='block';return;}
+  if(!/^\+[0-9]{7,15}$/.test(phone)){err.textContent=t('regErrPhone');err.style.display='block';return;}
+  if(pass.length<8){err.textContent=t('regErrPass');err.style.display='block';return;}
   var btn=document.getElementById('btn-register');
   btn.textContent='...';btn.disabled=true;
   var res=await sbSignUp(email,pass,{full_name:name,phone:phone,role:role,tier:selTierVal});
   btn.disabled=false;btn.textContent='Create Account';
   if(res.error){
     var msg=res.error;
-    if(msg.includes('already')) msg='This email is already registered. Please sign in.';
+    if(msg.includes('already')||msg.includes('registered')) msg=t('regErrExists');
     err.textContent=msg;err.style.display='block';return;
   }
-  ok.textContent='Account created! Check your email to confirm, then sign in.';
+  ok.textContent=t('regOk');
   ok.style.display='block';
   setTimeout(function(){showScreen('screen-login');},3000);
 }
