@@ -307,6 +307,11 @@ tr:hover td{background:rgba(27,77,62,.02)}
     <div class="auth-card">
       <div class="auth-err" id="reg-err"></div>
       <div class="auth-ok" id="reg-ok"></div>
+      <div style="display:flex;justify-content:flex-end;gap:6px;margin-bottom:12px">
+        <button onclick="chooseLangReg('en')" id="reg-lang-en" class="sb-lang-btn on" style="padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:var(--card);cursor:pointer;font-size:12px">EN</button>
+        <button onclick="chooseLangReg('ru')" id="reg-lang-ru" class="sb-lang-btn" style="padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:var(--card);cursor:pointer;font-size:12px">RU</button>
+        <button onclick="chooseLangReg('bg')" id="reg-lang-bg" class="sb-lang-btn" style="padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:var(--card);cursor:pointer;font-size:12px">BG</button>
+      </div>
       <div class="auth-title" id="t-reg-title">Create Account</div>
       <div class="form-group">
         <label class="form-label" id="t-reg-name">Full Name</label>
@@ -334,6 +339,7 @@ tr:hover td{background:rgba(27,77,62,.02)}
             <option value="+1">🇺🇸 +1</option>
             <option value="+90">🇹🇷 +90</option>
             <option value="+971">🇦🇪 +971</option>
+            <option value="other">✏️ Другое</option>
           </select>
           <input class="form-input" type="tel" id="reg-phone" placeholder="88123456" style="flex:1" required>
         </div>
@@ -930,11 +936,24 @@ function applyLangUI(){
   var regBtn=document.getElementById('btn-register');
   if(regBtn) regBtn.textContent=t('regBtn');
 }
-function applyCountryCode(){
+function chooseLangReg(l){
+  lang=l;
+  localStorage.setItem('pc_lang',l);
+  document.querySelectorAll('#screen-register .sb-lang-btn').forEach(function(b){
+    b.classList.toggle('on',b.textContent===l.toUpperCase());
+  });
+  applyLangUI();
+}
   var code=document.getElementById('reg-phone-country').value;
   var ph=document.getElementById('reg-phone');
   ph.value='';
-  ph.placeholder=code==='default'?'':code.replace('+','')+'xxxxxxxx';
+  if(code==='other'){
+    ph.placeholder='+xxxxxxxxxxx';
+    ph.pattern='^\+[0-9]{7,15}$';
+  } else {
+    ph.placeholder=code.replace('+','')+'xxxxxxxx';
+    ph.pattern='';
+  }
 }
 
 // ══════════════════════════════════════════
