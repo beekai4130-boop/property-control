@@ -1437,7 +1437,7 @@ async function fetchClientsData(){
     var p=profilesData.find(function(pr){return pr.id===l.owner_id;});
     return {
       id:l.owner_id||l.id,
-      name:p?p.full_name:(l.invited_name||l.invited_email)+(p?'':' (pending)'),
+      name:p?p.full_name:(l.invited_name||l.invited_email),
       email:p?p.email:l.invited_email,
       phone:p?p.phone:(l.invited_phone||''),
       role:p?p.role:'owner',
