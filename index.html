@@ -1543,12 +1543,12 @@ async function fetchClientsData(){
 }
   
 async function loadClients(){
-  if(curRole!=='manager'){clients=[];rClients();return;}
+  if(curRole!=='manager'&&curRole!=='agent'){clients=[];rClients();return;}
   await fetchClientsData();
   rClients();
 }
 async function loadProperties(){
-  if(curRole==='manager'){
+  if(curRole==='manager'||curRole==='agent'){
     await fetchClientsData();
     var ownerIds=clients.map(function(c){return c.id;});
     if(!ownerIds.length){props=[];rProperties();return;}
