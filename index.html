@@ -1571,7 +1571,7 @@ async function saveClient(){
   var email=document.getElementById('client-email').value.trim();
   var phone=document.getElementById('client-phone').value.trim();
   if(!email){alert('Пожалуйста, укажите email клиента.');return;}
-  await sb.from('manager_owners').insert({
+  var ins=await sb.from('manager_owners').insert({
     manager_id:curUser.id,
     owner_id:null,
     status:'pending',
@@ -1579,12 +1579,15 @@ async function saveClient(){
     invited_name:name,
     invited_phone:phone
   });
+  if(ins.error){alert('Ошибка: '+ins.error.message);return;}
   closeModal('modal-client');
   await loadClients();
   try{
-    await sb.functions.invoke('send-invite',{body:{email:email,name:name,managerName:(curUser.user_metadata&&curUser.user_metadata.full_name)||curUser.email}});
+    await sb.functions.invoke('send-invite',{
+      body:{email:email,name:name,managerName:(curUser.user_metadata&&curUser.user_metadata.full_name)||curUser.email}
+    });
   }catch(e){
-    console.error('Invite email failed:',e);
+    console.warn('Invite email failed (non-critical):',e);
   }
 }
 async function openMyProfile(){
