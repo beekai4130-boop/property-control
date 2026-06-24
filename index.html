@@ -1049,16 +1049,31 @@ function finishLogin(user){
   initApp();
   setTimeout(async function(){
     if(!curUser||!curUser.id) return;
-    var res=await sb.from('properties').select('*').eq('owner_id',curUser.id);
-    if(res.data) props=res.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id};});
-    var propIds=props.map(function(p){return p.id;});
-    if(propIds.length){
-      var rb=await sb.from('bills').select('*').in('property_id',propIds);
-      if(rb.data) bills=rb.data.map(function(b){return {id:b.id,pid:b.property_id,provider:b.provider,service:b.service,amount:b.amount||0,due:b.due_date,status:b.status,cid:b.owner_id};});
+    if(curRole==='manager'||curRole==='agent'){
+      await fetchClientsData();
+      var ownerIds=clients.map(function(c){return c.id;});
+      if(ownerIds.length){
+        var res=await sb.from('properties').select('*').in('owner_id',ownerIds);
+        if(res.data) props=res.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id};});
+        var propIds=props.map(function(p){return p.id;});
+        if(propIds.length){
+          var rb=await sb.from('bills').select('*').in('property_id',propIds);
+          if(rb.data) bills=rb.data.map(function(b){return {id:b.id,pid:b.property_id,provider:b.provider,service:b.service,amount:b.amount||0,due:b.due_date,status:b.status,cid:b.owner_id};});
+        }
+      }
+    } else {
+      var res=await sb.from('properties').select('*').eq('owner_id',curUser.id);
+      if(res.data) props=res.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id};});
+      var propIds=props.map(function(p){return p.id;});
+      if(propIds.length){
+        var rb=await sb.from('bills').select('*').in('property_id',propIds);
+        if(rb.data) bills=rb.data.map(function(b){return {id:b.id,pid:b.property_id,provider:b.provider,service:b.service,amount:b.amount||0,due:b.due_date,status:b.status,cid:b.owner_id};});
+      }
     }
     rProperties();
     rBills();
     buildNav();
+    loadDashboard();
   },100);
 }
 
