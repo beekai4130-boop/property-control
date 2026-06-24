@@ -1831,7 +1831,7 @@ async function openPropModal(pid){
   document.getElementById('prop-modal-title').textContent=pid?'Edit Property':'Add Property';
   document.getElementById('prop-save-btn').textContent=pid?'Save Changes':'Add Property';
   var clientGrp=document.getElementById('prop-client-grp');
-  if(curRole==='manager'){
+  if(curRole==='manager'||curRole==='agent'){
     await fetchClientsData();
     var registeredClients=clients.filter(function(c){return c.registered;});
     var sel=document.getElementById('prop-client');
@@ -1857,7 +1857,7 @@ async function openPropModal(pid){
       document.getElementById('prop-rental-status').value=p.status||'vacant';
       document.getElementById('prop-rent').value=p.rent||'';
       document.getElementById('prop-rent-since').value=p.since||'';
-      if(curRole==='manager') document.getElementById('prop-client').value=p.cid||'';
+      if(curRole==='manager'||curRole==='agent') document.getElementById('prop-client').value=p.cid||'';
     }
   } else {
     ['prop-address','prop-area','prop-m-water','prop-m-elec','prop-m-gas','prop-m-hoa','prop-rent','prop-rent-since'].forEach(function(f){document.getElementById(f).value='';});
@@ -1871,7 +1871,7 @@ async function saveProp(){
   var addr=document.getElementById('prop-address').value.trim();
   if(!addr){alert('Please enter an address.');return;}
   var ownerId=curUser.id;
-  if(curRole==='manager'){
+  if(curRole==='manager'||curRole==='agent'){
     ownerId=document.getElementById('prop-client').value;
     if(!ownerId){alert('Пожалуйста, выберите клиента.');return;}
   }
