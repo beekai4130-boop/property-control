@@ -628,6 +628,18 @@ tr:hover td{background:rgba(27,77,62,.02)}
     </div>
     <div class="form-row">
       <div class="form-group">
+      <label class="form-label">⚡ EVN Client Number</label>
+      <input class="form-input" type="text" id="prop-evn" placeholder="напр. 1234567890">
+    </div>
+    <div class="form-group">
+      <label class="form-label">💧 ВиК Client Number</label>
+      <input class="form-input" type="text" id="prop-vik" placeholder="напр. 987654321">
+    </div>
+    <div class="form-group">
+      <label class="form-label">📋 ЕГН / ЕИК (для налога)</label>
+      <input class="form-input" type="text" id="prop-egn" placeholder="напр. 7501010010">
+    </div>
+      <div class="form-group">
         <label class="form-label">Rental Status</label>
         <select class="form-select" id="prop-rental-status" onchange="toggleRentalFields()">
           <option value="vacant">Vacant</option>
@@ -1054,7 +1066,7 @@ function finishLogin(user){
       var ownerIds=clients.map(function(c){return c.id;});
       if(ownerIds.length){
         var res=await sb.from('properties').select('*').in('owner_id',ownerIds);
-        if(res.data) props=res.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id};});
+        if(res.data) props=res.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id,evn:p.evn_client_number,vik:p.vik_client_number,egn:p.egn};});
         var propIds=props.map(function(p){return p.id;});
         if(propIds.length){
           var rb=await sb.from('bills').select('*').in('property_id',propIds);
@@ -1063,7 +1075,7 @@ function finishLogin(user){
       }
     } else {
       var res=await sb.from('properties').select('*').eq('owner_id',curUser.id);
-      if(res.data) props=res.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id};});
+      if(res.data) props=res.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id,evn:p.evn_client_number,vik:p.vik_client_number,egn:p.egn};});
       var propIds=props.map(function(p){return p.id;});
       if(propIds.length){
         var rb=await sb.from('bills').select('*').in('property_id',propIds);
@@ -1568,7 +1580,7 @@ async function loadProperties(){
     var ownerIds=clients.map(function(c){return c.id;});
     if(!ownerIds.length){props=[];rProperties();return;}
     var res=await sb.from('properties').select('*').in('owner_id',ownerIds);
-    if(res.data) props=res.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id};});
+    if(res.data) props=res.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id,evn:p.evn_client_number,vik:p.vik_client_number,egn:p.egn};});
   } else {
     var res2=await sb.from('properties').select('*').eq('owner_id',curUser.id);
     if(res2.data) props=res2.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id};});
@@ -1854,13 +1866,16 @@ async function openPropModal(pid){
       document.getElementById('prop-m-elec').value=p.me||'';
       document.getElementById('prop-m-gas').value=p.mg||'';
       document.getElementById('prop-m-hoa').value=p.mh||'';
+      document.getElementById('prop-evn').value=p.evn||'';
+      document.getElementById('prop-vik').value=p.vik||'';
+      document.getElementById('prop-egn').value=p.egn||'';
       document.getElementById('prop-rental-status').value=p.status||'vacant';
       document.getElementById('prop-rent').value=p.rent||'';
       document.getElementById('prop-rent-since').value=p.since||'';
       if(curRole==='manager'||curRole==='agent') document.getElementById('prop-client').value=p.cid||'';
     }
   } else {
-    ['prop-address','prop-area','prop-m-water','prop-m-elec','prop-m-gas','prop-m-hoa','prop-rent','prop-rent-since'].forEach(function(f){document.getElementById(f).value='';});
+    ['prop-address','prop-area','prop-m-water','prop-m-elec','prop-m-gas','prop-m-hoa','prop-rent','prop-rent-since','prop-evn','prop-vik','prop-egn'].forEach(function(f){document.getElementById(f).value='';});
     document.getElementById('prop-type').value='apartment';
     document.getElementById('prop-rental-status').value='vacant';
   }
@@ -1882,7 +1897,10 @@ async function saveProp(){
     sqm:parseFloat(document.getElementById('prop-area').value)||0,
     status:document.getElementById('prop-rental-status').value,
     rent_amount:parseFloat(document.getElementById('prop-rent').value)||0,
-    owner_id:ownerId
+    owner_id:ownerId,
+    evn_client_number:document.getElementById('prop-evn').value.trim()||null,
+    vik_client_number:document.getElementById('prop-vik').value.trim()||null,
+    egn:document.getElementById('prop-egn').value.trim()||null
   };
   if(pid){
     await sb.from('properties').update(data).eq('id',pid);
