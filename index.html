@@ -605,39 +605,56 @@ tr:hover td{background:rgba(27,77,62,.02)}
         <input class="form-input" type="number" id="prop-area" placeholder="65">
       </div>
     </div>
-    <div style="font-size:12px;font-weight:500;color:var(--dark60);text-transform:uppercase;letter-spacing:.05em;margin:4px 0 8px">Meter Numbers</div>
+    <div style="font-size:12px;font-weight:500;color:var(--dark60);text-transform:uppercase;letter-spacing:.05em;margin:4px 0 8px" id="t-util-accounts">Utility Accounts</div>
+
     <div class="form-row">
       <div class="form-group">
-        <label class="form-label">💧 Water</label>
-        <input class="form-input" type="text" id="prop-m-water" placeholder="12345678">
+        <label class="form-label" id="t-elec-label">⚡ Electricity</label>
+        <select class="form-select" id="prop-elec-provider">
+          <option value="EVN">EVN Bulgaria</option>
+          <option value="Energo-Pro">Energo-Pro</option>
+          <option value="CEZ">ЧЕЗ</option>
+          <option value="other">Other</option>
+        </select>
       </div>
       <div class="form-group">
-        <label class="form-label">⚡ Electricity</label>
-        <input class="form-input" type="text" id="prop-m-elec" placeholder="87654321">
+        <label class="form-label">Client Number</label>
+        <input class="form-input" type="text" id="prop-m-elec" placeholder="1234567890">
       </div>
     </div>
+
     <div class="form-row">
       <div class="form-group">
-        <label class="form-label">🔥 Gas</label>
-        <input class="form-input" type="text" id="prop-m-gas" placeholder="optional">
+        <label class="form-label" id="t-water-label">💧 Water</label>
+        <select class="form-select" id="prop-water-provider">
+          <option value="ViK-Burgas">ВиК Бургас</option>
+          <option value="ViK-Varna">ВиК Варна</option>
+          <option value="ViK-Sofia">Софийска Вода</option>
+          <option value="other">Other</option>
+        </select>
       </div>
       <div class="form-group">
-        <label class="form-label">🏢 HOA Account</label>
-        <input class="form-input" type="text" id="prop-m-hoa" placeholder="optional">
+        <label class="form-label">Client Number</label>
+        <input class="form-input" type="text" id="prop-m-water" placeholder="987654321">
       </div>
     </div>
+
     <div class="form-row">
       <div class="form-group">
-      <label class="form-label">⚡ EVN Client Number</label>
-      <input class="form-input" type="text" id="prop-evn" placeholder="напр. 1234567890">
+        <label class="form-label" id="t-gas-label">🔥 Gas (optional)</label>
+        <input class="form-input" type="text" id="prop-m-gas" placeholder="Client number">
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="t-hoa-label">🏢 HOA (optional)</label>
+        <input class="form-input" type="text" id="prop-m-hoa" placeholder="Account number">
+      </div>
     </div>
-    <div class="form-group">
-      <label class="form-label">💧 ВиК Client Number</label>
-      <input class="form-input" type="text" id="prop-vik" placeholder="напр. 987654321">
-    </div>
-    <div class="form-group">
-      <label class="form-label">📋 ЕГН / ЕИК (для налога)</label>
-      <input class="form-input" type="text" id="prop-egn" placeholder="напр. 7501010010">
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" id="t-tax-id-label">📋 EGN / EIK (property tax)</label>
+        <input class="form-input" type="text" id="prop-egn" placeholder="7501010010">
+      </div>
     </div>
       <div class="form-group">
         <label class="form-label">Rental Status</label>
@@ -942,6 +959,8 @@ function applyLangUI(){
     b.classList.toggle('on',b.textContent===lang.toUpperCase());
   });
   var ids={
+    't-util-accounts':'utilAccounts','t-elec-label':'electricity','t-water-label':'water',
+    't-gas-label':'gas','t-hoa-label':'hoa','t-tax-id-label':'taxId',
     't-reg-title':'regTitle','t-reg-name':'regName','t-reg-email':'regEmail',
     't-reg-phone':'regPhone','t-reg-iam':'regIAm','t-reg-plan':'regPlan',
     't-reg-pass':'regPass','t-free-desc':'regFree','t-pro-desc':'regPro',
@@ -1875,8 +1894,8 @@ async function openPropModal(pid){
       document.getElementById('prop-m-elec').value=p.me||'';
       document.getElementById('prop-m-gas').value=p.mg||'';
       document.getElementById('prop-m-hoa').value=p.mh||'';
-      document.getElementById('prop-evn').value=p.evn||'';
-      document.getElementById('prop-vik').value=p.vik||'';
+      document.getElementById('prop-elec-provider').value=p.elec_provider||'EVN';
+      document.getElementById('prop-water-provider').value=p.water_provider||'ViK-Burgas';
       document.getElementById('prop-egn').value=p.egn||'';
       document.getElementById('prop-rental-status').value=p.status||'vacant';
       document.getElementById('prop-rent').value=p.rent||'';
@@ -1884,7 +1903,9 @@ async function openPropModal(pid){
       if(curRole==='manager'||curRole==='agent') document.getElementById('prop-client').value=p.cid||'';
     }
   } else {
-    ['prop-address','prop-area','prop-m-water','prop-m-elec','prop-m-gas','prop-m-hoa','prop-rent','prop-rent-since','prop-evn','prop-vik','prop-egn'].forEach(function(f){document.getElementById(f).value='';});
+    ['prop-address','prop-area','prop-m-water','prop-m-elec','prop-m-gas','prop-m-hoa','prop-rent','prop-rent-since','prop-egn'].forEach(function(f){document.getElementById(f).value='';});
+    document.getElementById('prop-elec-provider').value='EVN';
+    document.getElementById('prop-water-provider').value='ViK-Burgas';
     document.getElementById('prop-type').value='apartment';
     document.getElementById('prop-rental-status').value='vacant';
   }
@@ -1907,8 +1928,8 @@ async function saveProp(){
     status:document.getElementById('prop-rental-status').value,
     rent_amount:parseFloat(document.getElementById('prop-rent').value)||0,
     owner_id:ownerId,
-    evn_client_number:document.getElementById('prop-evn').value.trim()||null,
-    vik_client_number:document.getElementById('prop-vik').value.trim()||null,
+    elec_provider:document.getElementById('prop-elec-provider').value||'EVN',
+    water_provider:document.getElementById('prop-water-provider').value||'ViK-Burgas',
     egn:document.getElementById('prop-egn').value.trim()||null
   };
   if(pid){
