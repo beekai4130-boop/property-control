@@ -812,8 +812,9 @@ var T = {
     regTitle:'Create Account',regName:'Full Name',regEmail:'Email',regPhone:'Phone',
     regIAm:'I am a...',regPlan:'Select Plan',regPass:'Password',regPassHint:'Min. 8 characters',
     utilAccounts:'Utility Accounts',electricity:'Electricity',water:'Water',
-    gas:'Gas (optional)',hoa:'HOA (optional)',provider:'Provider',
+    gas:'Gas (optional)',hoa:'Maintenance fee (optional)',provider:'Provider',
     accountNum:'Account / Client Number',taxId:'EGN / EIK (for property tax)',
+    addPropTitle:'Add Property',editPropTitle:'Edit Property',addPropBtn:'Add Property',savePropBtn:'Save Changes',
     regBtn:'Create Account',regHaveAcc:'Already have an account?',regFree:'Up to 3 properties',regPro:'Up to 10 properties',
     regErrFields:'Please fill in all fields: name, email, phone and password.',
     regErrEmail:'Please enter a valid email (e.g. ivan@mail.com).',
@@ -837,9 +838,10 @@ var T = {
     manager:'Менеджер',owner:'Собственник',agent:'Агент',tenant:'Жилец',
     regTitle:'Создать аккаунт',regName:'Полное имя',regEmail:'Email',regPhone:'Телефон',
     regIAm:'Кто я...',regPlan:'Выберите тариф',regPass:'Пароль',regPassHint:'Мин. 8 символов',
-    utilAccounts:'Счета провайдеров',electricity:'Электричество',water:'Вода',
-    gas:'Газ (необязательно)',hoa:'HOA (необязательно)',provider:'Провайдер',
+   utilAccounts:'Счета провайдеров',electricity:'Электричество',water:'Вода',
+    gas:'Газ (необязательно)',hoa:'Такса поддержки (необязательно)',provider:'Провайдер',
     accountNum:'Номер аккаунта / клиента',taxId:'ЕГН / ЕИК (для налога)',
+    addPropTitle:'Добавить объект',editPropTitle:'Редактировать объект',addPropBtn:'Добавить объект',savePropBtn:'Сохранить изменения',
     regBtn:'Создать аккаунт',regHaveAcc:'Уже есть аккаунт?',regFree:'До 3 объектов',regPro:'До 10 объектов',
     regErrFields:'Пожалуйста, заполните все поля: имя, email, телефон и пароль.',
     regErrEmail:'Введите корректный email (например: ivan@mail.com).',
@@ -864,8 +866,9 @@ var T = {
     regTitle:'Създай акаунт',regName:'Пълно име',regEmail:'Имейл',regPhone:'Телефон',
     regIAm:'Аз съм...',regPlan:'Изберете план',regPass:'Парола',regPassHint:'Мин. 8 символа',
     utilAccounts:'Сметки на доставчици',electricity:'Електричество',water:'Вода',
-    gas:'Газ (по желание)',hoa:'HOA (по желание)',provider:'Доставчик',
+    gas:'Газ (по желание)',hoa:'Такса поддръжка (по желание)',provider:'Доставчик',
     accountNum:'Номер на акаунт / клиент',taxId:'ЕГН / ЕИК (за данък)',
+    addPropTitle:'Добави имот',editPropTitle:'Редактирай имот',addPropBtn:'Добави имот',savePropBtn:'Запази промените',
     regBtn:'Създай акаунт',regHaveAcc:'Вече имате акаунт?',regFree:'До 3 имота',regPro:'До 10 имота',
     regErrFields:'Моля, попълнете всички полета: име, имейл, телефон и парола.',
     regErrEmail:'Въведете валиден имейл (напр. ivan@mail.com).',
@@ -1868,8 +1871,8 @@ function toggleRentalFields(){
 }
 async function openPropModal(pid){
   document.getElementById('prop-id').value=pid||'';
-  document.getElementById('prop-modal-title').textContent=pid?'Edit Property':'Add Property';
-  document.getElementById('prop-save-btn').textContent=pid?'Save Changes':'Add Property';
+  document.getElementById('prop-modal-title').textContent=pid?t('editPropTitle'):t('addPropTitle');
+  document.getElementById('prop-save-btn').textContent=pid?t('savePropBtn'):t('addPropBtn');
   var clientGrp=document.getElementById('prop-client-grp');
   if(curRole==='manager'||curRole==='agent'){
     await fetchClientsData();
