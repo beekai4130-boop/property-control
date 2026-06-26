@@ -1094,7 +1094,7 @@ function finishLogin(user){
       var ownerIds=clients.map(function(c){return c.id;});
       if(ownerIds.length){
         var res=await sb.from('properties').select('*').in('owner_id',ownerIds);
-        if(res.data) props=res.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id,evn:p.evn_client_number,vik:p.vik_client_number,egn:p.egn};});
+        if(res.data) props=res.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id,mw:p.meter_water,me:p.meter_elec,mg:p.meter_gas,mh:p.meter_hoa,elec_provider:p.elec_provider||'EVN',water_provider:p.water_provider||'ViK-Burgas',egn:p.egn};});
         var propIds=props.map(function(p){return p.id;});
         if(propIds.length){
           var rb=await sb.from('bills').select('*').in('property_id',propIds);
@@ -1103,7 +1103,7 @@ function finishLogin(user){
       }
     } else {
       var res=await sb.from('properties').select('*').eq('owner_id',curUser.id);
-      if(res.data) props=res.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id,evn:p.evn_client_number,vik:p.vik_client_number,egn:p.egn};});
+      if(res.data) props=res.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id,mw:p.meter_water,me:p.meter_elec,mg:p.meter_gas,mh:p.meter_hoa,elec_provider:p.elec_provider||'EVN',water_provider:p.water_provider||'ViK-Burgas',egn:p.egn};});
       var propIds=props.map(function(p){return p.id;});
       if(propIds.length){
         var rb=await sb.from('bills').select('*').in('property_id',propIds);
@@ -1608,7 +1608,7 @@ async function loadProperties(){
     var ownerIds=clients.map(function(c){return c.id;});
     if(!ownerIds.length){props=[];rProperties();return;}
     var res=await sb.from('properties').select('*').in('owner_id',ownerIds);
-    if(res.data) props=res.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id,evn:p.evn_client_number,vik:p.vik_client_number,egn:p.egn};});
+    if(res.data) props=res.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id,mw:p.meter_water,me:p.meter_elec,mg:p.meter_gas,mh:p.meter_hoa,elec_provider:p.elec_provider||'EVN',water_provider:p.water_provider||'ViK-Burgas',egn:p.egn};});
   } else {
     var res2=await sb.from('properties').select('*').eq('owner_id',curUser.id);
     if(res2.data) props=res2.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id};});
