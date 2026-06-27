@@ -468,8 +468,8 @@ tr:hover td{background:rgba(27,77,62,.02)}
     <div class="modal-title" id="pay-title">Payment</div>
     <div class="modal-body" id="pay-body"></div>
     <div class="modal-acts">
-      <button class="modal-cancel" onclick="closeModal('modal-client')">Cancel</button>
-      <button class="modal-confirm" onclick="saveClient()">Добавить</button>
+      <button class="modal-cancel" onclick="closeModal('modal-pay')">Cancel</button>
+      <button class="modal-confirm" id="pay-go-btn">Go to payment →</button>
     </div>
   </div>
 </div>
@@ -546,7 +546,7 @@ tr:hover td{background:rgba(27,77,62,.02)}
           <option value="sofwater">💧 Sofiyska Voda (Water)</option>
           <option value="vivacom">📡 Vivacom (Internet/TV)</option>
           <option value="nap">🏛 NAP (Property Tax)</option>
-          <option value="hoa">🏢 HOA / Taksa Poddrzhka</option>
+         <option value="hoa">🏢 Такса поддержки</option>
           <option value="other">📋 Other</option>
         </select>
       </div>
@@ -1614,7 +1614,7 @@ async function loadProperties(){
     if(res.data) props=res.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id,mw:p.meter_water,me:p.meter_elec,mg:p.meter_gas,mh:p.meter_hoa,elec_provider:p.elec_provider||'EVN',water_provider:p.water_provider||'ViK-Burgas',egn:p.egn};});
   } else {
     var res2=await sb.from('properties').select('*').eq('owner_id',curUser.id);
-    if(res2.data) props=res2.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id};});
+    if(res2.data) props=res2.data.map(function(p){return {id:p.id,address:p.address,type:p.type,area:p.sqm,status:p.status,rent:p.rent_amount,cid:p.owner_id,mw:p.meter_water,me:p.meter_elec,mg:p.meter_gas,mh:p.meter_hoa,elec_provider:p.elec_provider||'EVN',water_provider:p.water_provider||'ViK-Burgas',egn:p.egn};});
   }
   rProperties();
 }
@@ -2027,7 +2027,7 @@ function exportExcel(){
 // HELPERS
 // ══════════════════════════════════════════
 function sc(label,val,sub,cls){return '<div class="stat"><div class="slabel">'+label+'</div><div class="sval '+(cls||'')+'">'+val+'</div>'+(sub?'<div class="ssub">'+sub+'</div>':'')+'</div>';}
-function pName(code){var m={cez:'CEZ',toplofikacia:'Toplofikacia',sofwater:'Sofiyska Voda',vivacom:'Vivacom',nap:'NAP (Tax)',hoa:'HOA Fee',other:'Other'};return m[code]||code;}
+function pName(code){var m={cez:'CEZ',toplofikacia:'Toplofikacia',sofwater:'Sofiyska Voda',vivacom:'Vivacom',nap:'NAP (Tax)',hoa:'Такса поддержки',other:'Other'};return m[code]||code;}
 function bPill(s){return s==='paid'?'p-paid':s==='due'?'p-due':s==='overdue'?'p-over':'p-soon';}
 function rIcon(t){var m={repair:'🔧',cleaning:'🧹',photo:'📷','tenant-check':'👤',emergency:'🚨',other:'📋'};return m[t]||'📋';}
 function rLabel(type){var m={repair:t('repair'),cleaning:t('cleaning'),photo:t('photo'),'tenant-check':t('tenantCheck'),emergency:t('emergency'),other:t('other')};return m[type]||type;}
