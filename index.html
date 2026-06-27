@@ -1481,9 +1481,9 @@ function rBills(){
   var dueTotal=due.reduce(function(s,b){return s+(b.amount||0);},0);
   var paidTotal=paid.reduce(function(s,b){return s+(b.amount||0);},0);
   var h='<div class="g3">';
-  h+=sc('Outstanding','€'+dueTotal,due.length+' bill(s)','c-red');
-  h+=sc('Paid This Year','€'+paidTotal,paid.length+' payment(s)','c-em');
-  h+=sc('Next Tax (NAP)','€380','31 Oct 2025','c-gold');
+  h+=sc(t('billOutstanding'),'€'+dueTotal,due.length+' '+t('activeBills'),'c-red');
+  h+=sc(t('billPaidYear'),'€'+paidTotal,paid.length+' '+t('activeBills'),'c-em');
+  h+=sc(t('billNextTax')+' (NAP)','€380','31 Oct 2025','c-gold');
   h+='</div>';
   h+='<div class="card"><div class="sec-head"><div class="sec-title">'+t('bills')+'</div>';
   if(isMgr) h+='<button class="btn btn-em btn-sm" onclick="openAddBillModal()">'+t('addBill')+'</button>';
@@ -1492,9 +1492,9 @@ function rBills(){
     h+='<div class="empty"><div class="empty-icon">📋</div><div class="empty-text">'+t('noBill')+'</div></div>';
   } else {
     h+='<div class="tbl-wrap"><table><thead><tr>';
-    h+='<th>Provider</th>';
-    if(isMgr) h+='<th>Client</th><th>Property</th>';
-    h+='<th>Amount</th><th>Due Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>';
+    h+='<th>'+t('billProvider')+'</th>';
+    if(isMgr) h+='<th>'+t('billClient')+'</th><th>'+t('billProperty')+'</th>';
+    h+='<th>'+t('billAmount')+'</th><th>'+t('billDue')+'</th><th>'+t('billStatus')+'</th><th>'+t('billActions')+'</th></tr></thead><tbody>';
     allBills.forEach(function(b){
       var cl=clients.find(function(c){return c.id===b.cid;});
       var pr=props.find(function(p){return p.id===b.pid;});
