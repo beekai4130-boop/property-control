@@ -469,10 +469,11 @@ tr:hover td{background:rgba(27,77,62,.02)}
       </div>
     </div>
     <div class="modal-title" id="pay-title">Payment</div>
-    <div class="modal-body" id="pay-body"></div>
+   <div class="modal-body" id="pay-body"></div>
+    </div>
     <div class="modal-acts">
-      <button class="modal-cancel" onclick="closeModal('modal-pay')">Cancel</button>
-      <button class="modal-confirm" id="pay-go-btn">Go to payment →</button>
+      <button class="modal-cancel" onclick="closeModal('modal-pay')">Отмена</button>
+      <button class="modal-confirm" id="pay-go-btn">Перейти к оплате →</button>
     </div>
   </div>
 </div>
@@ -498,6 +499,7 @@ tr:hover td{background:rgba(27,77,62,.02)}
 <!-- EDIT BILL MODAL -->
 <div class="modal-ov" id="modal-edit-bill">
   <div class="modal" style="max-width:420px">
+    <div class="modal-scroll">
     <div class="modal-title" id="edit-bill-heading">Edit Bill</div>
     <div style="font-size:13px;color:var(--dark60);margin-bottom:1rem" id="edit-bill-info"></div>
     <input type="hidden" id="edit-bill-id">
@@ -520,9 +522,10 @@ tr:hover td{background:rgba(27,77,62,.02)}
         <option value="soon">Upcoming / Предстоит</option>
       </select>
     </div>
+    </div>
     <div class="modal-acts">
-      <button class="modal-cancel" onclick="closeModal('modal-edit-bill')">Cancel</button>
-      <button class="modal-confirm" onclick="saveEditBill()">Save Changes</button>
+      <button class="modal-cancel" onclick="closeModal('modal-edit-bill')">Отмена</button>
+      <button class="modal-confirm" onclick="saveEditBill()">Сохранить изменения</button>
     </div>
   </div>
 </div>
