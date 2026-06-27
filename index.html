@@ -583,25 +583,25 @@ tr:hover td{background:rgba(27,77,62,.02)}
     <div class="modal-title" id="prop-modal-title">Add Property</div>
     <input type="hidden" id="prop-id">
     <div class="form-group" id="prop-client-grp" style="display:none">
-      <label class="form-label">Client (Owner)</label>
+      <label class="form-label" id="t-prop-client">Client (Owner)</label>
       <select class="form-select" id="prop-client"></select>
     </div>
     <div class="form-group">
-      <label class="form-label">Address</label>
+      <label class="form-label" id="t-prop-address">Address</label>
       <input class="form-input" type="text" id="prop-address" placeholder="ul. Rakovski 42, Sofia">
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label class="form-label">Type</label>
+        <label class="form-label" id="t-prop-type">Type</label>
         <select class="form-select" id="prop-type">
-          <option value="apartment">Apartment</option>
-          <option value="house">House</option>
-          <option value="studio">Studio</option>
-          <option value="commercial">Commercial</option>
+          <option value="apartment" id="t-prop-type-apt">Apartment</option>
+          <option value="house" id="t-prop-type-house">House</option>
+          <option value="studio" id="t-prop-type-studio">Studio</option>
+          <option value="commercial" id="t-prop-type-com">Commercial</option>
         </select>
       </div>
       <div class="form-group">
-        <label class="form-label">Area (m²)</label>
+        <label class="form-label" id="t-prop-area">Area (m²)</label>
         <input class="form-input" type="number" id="prop-area" placeholder="65">
       </div>
     </div>
@@ -618,7 +618,7 @@ tr:hover td{background:rgba(27,77,62,.02)}
         </select>
       </div>
       <div class="form-group">
-        <label class="form-label">Client Number</label>
+        <label class="form-label" id="t-prop-clientnum1">Client Number</label>
         <input class="form-input" type="text" id="prop-m-elec" placeholder="1234567890">
       </div>
     </div>
@@ -634,7 +634,7 @@ tr:hover td{background:rgba(27,77,62,.02)}
         </select>
       </div>
       <div class="form-group">
-        <label class="form-label">Client Number</label>
+        <label class="form-label" id="t-prop-clientnum2">Client Number</label>
         <input class="form-input" type="text" id="prop-m-water" placeholder="987654321">
       </div>
     </div>
@@ -657,23 +657,23 @@ tr:hover td{background:rgba(27,77,62,.02)}
       </div>
     </div>
       <div class="form-group">
-        <label class="form-label">Rental Status</label>
+        <label class="form-label" id="t-prop-rental-status">Rental Status</label>
         <select class="form-select" id="prop-rental-status" onchange="toggleRentalFields()">
-          <option value="vacant">Vacant</option>
-          <option value="rented">Rented</option>
+          <option value="vacant" id="t-prop-vacant">Vacant</option>
+          <option value="rented" id="t-prop-rented">Rented</option>
         </select>
       </div>
       <div class="form-group" id="prop-rent-grp">
-        <label class="form-label">Monthly Rent (€)</label>
+        <label class="form-label" id="t-prop-rent">Monthly Rent (€)</label>
         <input class="form-input" type="number" id="prop-rent" placeholder="850">
       </div>
     </div>
     <div class="form-group" id="prop-since-grp">
-      <label class="form-label">Rented Since</label>
+      <label class="form-label" id="t-prop-since">Rented Since</label>
       <input class="form-input" type="date" id="prop-rent-since">
     </div>
     <div class="modal-acts">
-      <button class="modal-cancel" onclick="closeModal('modal-prop')">Cancel</button>
+      <button class="modal-cancel" id="t-prop-cancel" onclick="closeModal('modal-prop')">Cancel</button>
       <button class="modal-confirm" id="prop-save-btn" onclick="saveProp()">Add Property</button>
     </div>
   </div>
@@ -985,6 +985,13 @@ function applyLangUI(){
   var ids={
     't-util-accounts':'utilAccounts','t-elec-label':'electricity','t-water-label':'water',
     't-gas-label':'gas','t-hoa-label':'hoa','t-tax-id-label':'taxId',
+    't-prop-client':'propClient','t-prop-address':'propAddress','t-prop-type':'propType',
+    't-prop-area':'propArea','t-prop-clientnum1':'propClientNum','t-prop-clientnum2':'propClientNum',
+    't-prop-rental-status':'propRentalStatus','t-prop-rent':'propRent','t-prop-since':'propSince',
+    't-prop-cancel':'cancel',
+    't-prop-type-apt':'propTypeApt','t-prop-type-house':'propTypeHouse',
+    't-prop-type-studio':'propTypeStudio','t-prop-type-com':'propTypeCom',
+    't-prop-vacant':'propVacant','t-prop-rented':'propRented',
     't-reg-title':'regTitle','t-reg-name':'regName','t-reg-email':'regEmail',
     't-reg-phone':'regPhone','t-reg-iam':'regIAm','t-reg-plan':'regPlan',
     't-reg-pass':'regPass','t-free-desc':'regFree','t-pro-desc':'regPro',
