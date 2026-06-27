@@ -1794,12 +1794,16 @@ function rReports(){
 
 // ─ PAY MODAL ─
 var PROVIDER_URLS={
-  cez:'https://www.cez.bg/bg/services/payments.html',
+  EVN:'https://epay.bg',
+  'ViK-Burgas':'https://epay.bg',
+  'ViK-Varna':'https://epay.bg',
+  'ViK-Sofia':'https://epay.bg',
+  cez:'https://www.cez.bg',
   toplofikacia:'https://www.toplo.bg',
   sofwater:'https://www.sofiyska-voda.bg',
   vivacom:'https://www.vivacom.bg',
-  nap:'https://iamt.nra.bg',
-  hoa:'https://epay.bg',
+  nap:'https://egov.bg',
+  hoa:'',
   other:'https://epay.bg'
 };
 function openPayModal(bid){
@@ -1807,24 +1811,38 @@ function openPayModal(bid){
   if(!b) return;
   var pr=props.find(function(p){return p.id===b.pid;});
   var meter='';
+  var providerLabel=pName(b.provider);
   if(pr){
-    if(b.provider==='cez'||b.provider==='toplofikacia') meter=pr.me||'';
-    else if(b.provider==='sofwater') meter=pr.mw||'';
+    var ep=pr.elec_provider||'EVN';
+    var wp=pr.water_provider||'ViK-Burgas';
+    if(b.provider===ep||b.provider==='EVN'||b.provider==='cez'||b.provider==='toplofikacia') meter=pr.me||'';
+    else if(b.provider===wp||b.provider==='ViK-Burgas'||b.provider==='ViK-Varna'||b.provider==='ViK-Sofia'||b.provider==='sofwater') meter=pr.mw||'';
+    else if(b.provider==='nap') meter=pr.egn||'';
     else if(b.provider==='hoa') meter=pr.mh||'';
   }
   var url=PROVIDER_URLS[b.provider]||'https://epay.bg';
-  if(meter) url+=(url.includes('?')?'&':'?')+'meter='+encodeURIComponent(meter);
-  document.getElementById('pay-title').textContent=pName(b.provider)+' — €'+b.amount;
-  document.getElementById('pay-body').innerHTML='You will be redirected to the <strong>'+pName(b.provider)+'</strong> official payment website.'+(meter?'<br><br>🔢 Your meter number: <strong>'+meter+'</strong>':'')+'<br><br>After payment, come back and mark this bill as <strong>Paid</strong>.';
+  var lang=currentLang||'ru';
+  var bodyHtml='';
+  if(b.provider==='hoa'){
+    bodyHtml='<div style="background:#FFF8E7;border:1px solid #F5C842;border-radius:10px;padding:12px 14px;font-size:13px">🏢 Такса поддержки оплачивается банковским переводом напрямую управляющей компании.</div>';
+    document.getElementById('pay-go-btn').style.display='none';
+  } else {
+    document.getElementById('pay-go-btn').style.display='';
+    var siteLabel=b.provider==='nap'?'egov.bg':'ePay.bg';
+    bodyHtml='<div style="font-size:13px;color:var(--dark60);line-height:1.7">Вы будете перенаправлены на официальный сайт <strong>'+siteLabel+'</strong> для оплаты <strong>'+providerLabel+'</strong>.</div>';
+    if(meter) bodyHtml+='<div style="margin-top:14px;background:var(--warm2,#F5F2EE);border-radius:10px;padding:12px 16px"><div style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--dark60);margin-bottom:4px">Номер клиента / счётчика</div><div style="font-size:20px;font-weight:600;letter-spacing:.05em">'+meter+'</div></div>';
+    bodyHtml+='<div style="margin-top:12px;font-size:12px;color:var(--dark60)">После оплаты вернитесь и отметьте счёт как оплаченный.</div>';
+  }
+  document.getElementById('pay-title').textContent=providerLabel+' — €'+b.amount;
+  document.getElementById('pay-body').innerHTML=bodyHtml;
+  document.getElementById('pay-go-btn').textContent='Перейти к оплате →';
   document.getElementById('pay-go-btn').onclick=function(){
     window.open(url,'_blank');
     closeModal('modal-pay');
     setTimeout(function(){
-      if(confirm('Did you complete the payment for '+pName(b.provider)+'?\n\nClick OK to mark as Paid.')) {
+      if(confirm('Вы завершили оплату '+providerLabel+'?\n\nНажмите OK чтобы отметить как оплачено.')){
         b.status='paid';
-        rBills();
-        buildNav();
-        rDashboard();
+        rBills();buildNav();rDashboard();
       }
     },1500);
   };
@@ -2056,7 +2074,7 @@ function exportExcel(){
 // HELPERS
 // ══════════════════════════════════════════
 function sc(label,val,sub,cls){return '<div class="stat"><div class="slabel">'+label+'</div><div class="sval '+(cls||'')+'">'+val+'</div>'+(sub?'<div class="ssub">'+sub+'</div>':'')+'</div>';}
-function pName(code){var m={cez:'CEZ',toplofikacia:'Toplofikacia',sofwater:'Sofiyska Voda',vivacom:'Vivacom',nap:'NAP (Tax)',hoa:'Такса поддержки',other:'Other'};return m[code]||code;}
+function pName(code){var m={EVN:'EVN Bulgaria','ViK-Burgas':'ВиК Бургас','ViK-Varna':'ВиК Варна','ViK-Sofia':'Софийска Вода',cez:'ЧЕЗ',toplofikacia:'Топлофикация',sofwater:'Софийска Вода',vivacom:'Vivacom',nap:'Данък (NAP / egov.bg)',hoa:'Такса поддържки',other:'Друго'};return m[code]||code;}
 function bPill(s){return s==='paid'?'p-paid':s==='due'?'p-due':s==='overdue'?'p-over':'p-soon';}
 function rIcon(t){var m={repair:'🔧',cleaning:'🧹',photo:'📷','tenant-check':'👤',emergency:'🚨',other:'📋'};return m[t]||'📋';}
 function rLabel(type){var m={repair:t('repair'),cleaning:t('cleaning'),photo:t('photo'),'tenant-check':t('tenantCheck'),emergency:t('emergency'),other:t('other')};return m[type]||type;}
