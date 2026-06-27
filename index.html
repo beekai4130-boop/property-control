@@ -605,7 +605,7 @@ tr:hover td{background:rgba(27,77,62,.02)}
         <input class="form-input" type="number" id="prop-area" placeholder="65">
       </div>
     </div>
-    <div style="font-size:12px;font-weight:500;color:var(--dark60);text-transform:uppercase;letter-spacing:.05em;margin:4px 0 8px" id="t-util-accounts">Utility Accounts</div>
+    <div style="font-size:13px;font-weight:600;color:var(--dark);text-transform:uppercase;letter-spacing:.06em;margin:8px 0 10px;border-bottom:1px solid var(--border);padding-bottom:6px" id="t-util-accounts">Utility Accounts</div>
 
     <div class="form-row">
       <div class="form-group">
@@ -644,7 +644,7 @@ tr:hover td{background:rgba(27,77,62,.02)}
         <label class="form-label" id="t-gas-label">🔥 Gas (optional)</label>
         <input class="form-input" type="text" id="prop-m-gas" placeholder="Client number">
       </div>
-      <div class="form-group">
+      <div class="form-group" style="display:none">
         <label class="form-label" id="t-hoa-label">🏢 Maintenance fee (optional)</label>
         <input class="form-input" type="text" id="prop-m-hoa" placeholder="Account number">
       </div>
@@ -823,7 +823,14 @@ var T = {
     regErrExists:'This email is already registered. Please sign in.',
     regOk:'Account created! Check your email to confirm, then sign in.',
     selectCountry:'Country code',
-    repair:'Repair',cleaning:'Cleaning',photo:'Photo Report',tenantCheck:'Tenant Check',emergency:'Emergency Visit',other:'Other'
+    repair:'Repair',cleaning:'Cleaning',photo:'Photo Report',tenantCheck:'Tenant Check',emergency:'Emergency Visit',other:'Other',
+    propClient:'Client (Owner)',propAddress:'Address',propType:'Type',propArea:'Area (m²)',
+    propClientNum:'Client Number',propRentalStatus:'Rental Status',propRent:'Monthly Rent (€)',propSince:'Rented Since',
+    propTypeApt:'Apartment',propTypeHouse:'House',propTypeStudio:'Studio',propTypeCom:'Commercial',
+    propVacant:'Vacant',propRented:'Rented',
+    billProvider:'Provider',billClient:'Client',billProperty:'Property',billAmount:'Amount',billDue:'Due Date',billStatus:'Status',billActions:'Actions',
+    billOutstanding:'Outstanding',billPaidYear:'Paid This Year',billNextTax:'Next Tax',
+    cancel:'Cancel',payBtn:'Go to payment →'
   },
   ru:{
     dashboard:'Обзор',properties:'Мои объекты',bills:'Счета и налоги',
@@ -850,7 +857,14 @@ var T = {
     regErrExists:'Этот email уже зарегистрирован. Войдите в аккаунт.',
     regOk:'Аккаунт создан! Проверьте email для подтверждения, затем войдите.',
     selectCountry:'Код страны',
-    repair:'Ремонт',cleaning:'Уборка',photo:'Фото-отчёт',tenantCheck:'Проверка жильца',emergency:'Экстренный выезд',other:'Другое'
+    repair:'Ремонт',cleaning:'Уборка',photo:'Фото-отчёт',tenantCheck:'Проверка жильца',emergency:'Экстренный выезд',other:'Другое',
+    propClient:'Клиент (собственник)',propAddress:'Адрес',propType:'Тип',propArea:'Площадь (м²)',
+    propClientNum:'Номер клиента',propRentalStatus:'Статус аренды',propRent:'Арендная плата (€/мес)',propSince:'Сдаётся с',
+    propTypeApt:'Квартира',propTypeHouse:'Дом',propTypeStudio:'Студия',propTypeCom:'Коммерческое',
+    propVacant:'Свободен',propRented:'Сдан',
+    billProvider:'Провайдер',billClient:'Клиент',billProperty:'Объект',billAmount:'Сумма',billDue:'Срок оплаты',billStatus:'Статус',billActions:'Действия',
+    billOutstanding:'К оплате',billPaidYear:'Оплачено в этом году',billNextTax:'Ближайший налог',
+    cancel:'Отмена',payBtn:'Перейти к оплате →'
   },
   bg:{
     dashboard:'Преглед',properties:'Моите имоти',bills:'Сметки и данъци',
@@ -877,7 +891,14 @@ var T = {
     regErrExists:'Този имейл вече е регистриран. Влезте в акаунта.',
     regOk:'Акаунтът е създаден! Проверете имейла си за потвърждение, след което влезте.',
     selectCountry:'Код на страната',
-    repair:'Ремонт',cleaning:'Почистване',photo:'Фото отчет',tenantCheck:'Проверка на наемател',emergency:'Спешно посещение',other:'Друго'
+    repair:'Ремонт',cleaning:'Почистване',photo:'Фото отчет',tenantCheck:'Проверка на наемател',emergency:'Спешно посещение',other:'Друго',
+    propClient:'Клиент (собственик)',propAddress:'Адрес',propType:'Тип',propArea:'Площ (м²)',
+    propClientNum:'Номер на клиент',propRentalStatus:'Статус на наем',propRent:'Наемна цена (€/мес)',propSince:'Отдаден от',
+    propTypeApt:'Апартамент',propTypeHouse:'Къща',propTypeStudio:'Студио',propTypeCom:'Търговски',
+    propVacant:'Свободен',propRented:'Отдаден',
+    billProvider:'Доставчик',billClient:'Клиент',billProperty:'Имот',billAmount:'Сума',billDue:'Срок на плащане',billStatus:'Статус',billActions:'Действия',
+    billOutstanding:'За плащане',billPaidYear:'Платено тази година',billNextTax:'Следващ данък',
+    cancel:'Отказ',payBtn:'Към плащане →'
   }
 };
 function t(k){return (T[lang]&&T[lang][k])||(T['en']&&T['en'][k])||k;}
