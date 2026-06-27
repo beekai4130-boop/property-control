@@ -477,9 +477,10 @@ tr:hover td{background:rgba(27,77,62,.02)}
     </div>
   </div>
 </div>
-
+  
 <div class="modal-ov" id="modal-myprofile">
   <div class="modal">
+    <div class="modal-scroll">
     <div class="modal-title">Мой профиль</div>
     <div class="form-group">
       <label class="form-label">Имя</label>
@@ -489,8 +490,9 @@ tr:hover td{background:rgba(27,77,62,.02)}
       <label class="form-label">Мой менеджер</label>
       <select class="form-select" id="myprofile-manager"></select>
     </div>
+   </div>
     <div class="modal-acts">
-      <button class="modal-cancel" onclick="closeModal('modal-myprofile')">Cancel</button>
+      <button class="modal-cancel" onclick="closeModal('modal-myprofile')">Отмена</button>
       <button class="modal-confirm" id="myprofile-save-btn" onclick="saveMyManager()" style="display:none">Сохранить</button>
     </div>
   </div>
