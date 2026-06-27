@@ -654,7 +654,7 @@ tr:hover td{background:rgba(27,77,62,.02)}
 
     <div class="form-row">
       <div class="form-group">
-        <label class="form-label" id="t-tax-id-label">📋 EGN / EIK (property tax)</label>
+        <<label class="form-label" id="t-tax-id-label">📋 ЕГН / Булстат</label>
         <input class="form-input" type="text" id="prop-egn" placeholder="7501010010">
       </div>
     </div>
@@ -669,17 +669,15 @@ tr:hover td{background:rgba(27,77,62,.02)}
         <label class="form-label" id="t-prop-rent">Monthly Rent (€)</label>
         <input class="form-input" type="number" id="prop-rent" placeholder="850">
       </div>
-    </div>
-    <div class="form-group" id="prop-since-grp">
-      <label class="form-label">Rented Since</label>
-      <input class="form-input" type="date" id="prop-rent-since">
-    </div>
+      <div class="form-group" id="prop-since-grp">
+        <label class="form-label" id="t-prop-since">Rented Since</label>
+        <input class="form-input" type="date" id="prop-rent-since">
+      </div>
     </div>
     <div class="modal-acts">
       <button class="modal-cancel" id="t-prop-cancel" onclick="closeModal('modal-prop')">Cancel</button>
       <button class="modal-confirm" id="prop-save-btn" onclick="saveProp()">Add Property</button>
     </div>
-  </div>
 </div>
 
 <div class="modal-ov" id="modal-client">
