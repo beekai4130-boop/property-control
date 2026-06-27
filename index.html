@@ -831,7 +831,7 @@ var T = {
     propVacant:'Vacant',propRented:'Rented',
     billProvider:'Provider',billClient:'Client',billProperty:'Property',billAmount:'Amount',billDue:'Due Date',billStatus:'Status',billActions:'Actions',
     billOutstanding:'Outstanding',billPaidYear:'Paid This Year',billNextTax:'Next Tax',
-    cancel:'Cancel',payBtn:'Go to payment →'
+    cancel:'Cancel',edit:'Edit',payBtn:'Go to payment →'
   },
   ru:{
     dashboard:'Обзор',properties:'Мои объекты',bills:'Счета и налоги',
@@ -865,7 +865,7 @@ var T = {
     propVacant:'Свободен',propRented:'Сдан',
     billProvider:'Провайдер',billClient:'Клиент',billProperty:'Объект',billAmount:'Сумма',billDue:'Срок оплаты',billStatus:'Статус',billActions:'Действия',
     billOutstanding:'К оплате',billPaidYear:'Оплачено в этом году',billNextTax:'Ближайший налог',
-    cancel:'Отмена',payBtn:'Перейти к оплате →'
+    ccancel:'Отмена',edit:'Изменить',payBtn:'Перейти к оплате →'
   },
   bg:{
     dashboard:'Преглед',properties:'Моите имоти',bills:'Сметки и данъци',
@@ -899,7 +899,7 @@ var T = {
     propVacant:'Свободен',propRented:'Отдаден',
     billProvider:'Доставчик',billClient:'Клиент',billProperty:'Имот',billAmount:'Сума',billDue:'Срок на плащане',billStatus:'Статус',billActions:'Действия',
     billOutstanding:'За плащане',billPaidYear:'Платено тази година',billNextTax:'Следващ данък',
-    cancel:'Отказ',payBtn:'Към плащане →'
+    cancel:'Отказ',edit:'Промени',payBtn:'Към плащане →'
   }
 };
 function t(k){return (T[lang]&&T[lang][k])||(T['en']&&T['en'][k])||k;}
@@ -1508,7 +1508,7 @@ function rBills(){
       if(b.status==='due'||b.status==='overdue'){
         h+='<button class="btn btn-em btn-sm" onclick="openPayModal(\''+b.id+'\')">💳 Pay</button> ';
       }
-      h+='<button class="btn btn-sm" onclick="openEditBillModal(\''+b.id+'\')">✏ Edit</button>';
+      h+='<button class="btn btn-sm" onclick="openEditBillModal(\''+b.id+'\')">✏ '+t('edit')+'</button>';
       h+='</td></tr>';
     });
     h+='</tbody></table></div>';
