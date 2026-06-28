@@ -1882,13 +1882,25 @@ function openEditBillModal(bid){
   document.getElementById('edit-bill-status').value=b.status;
   openModal('modal-edit-bill');
 }
-function saveEditBill(){
+async function saveEditBill(){
   var id=document.getElementById('edit-bill-id').value;
   var b=bills.find(function(x){return x.id===id;});
   if(!b) return;
-  b.amount=parseFloat(document.getElementById('edit-bill-amount').value)||b.amount;
-  b.due=document.getElementById('edit-bill-due').value||b.due;
-  b.status=document.getElementById('edit-bill-status').value;
+  var newProvider=document.getElementById('edit-bill-provider').value||b.provider;
+  var newAmount=parseFloat(document.getElementById('edit-bill-amount').value)||b.amount;
+  var newDue=document.getElementById('edit-bill-due').value||b.due;
+  var newStatus=document.getElementById('edit-bill-status').value;
+  var res=await sb.from('bills').update({
+    provider:newProvider,
+    amount:newAmount,
+    due_date:newDue,
+    status:newStatus
+  }).eq('id',id);
+  if(res.error){alert('Ошибка: '+res.error.message);return;}
+  b.provider=newProvider;
+  b.amount=newAmount;
+  b.due=newDue;
+  b.status=newStatus;
   closeModal('modal-edit-bill');
   rBills();
   buildNav();
