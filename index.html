@@ -1528,7 +1528,7 @@ function rBills(){
       if(b.status==='due'||b.status==='overdue'){
         h+='<button class="btn btn-em btn-sm" onclick="openPayModal(\''+b.id+'\')">💳 Pay</button> ';
       }
-      h+='<button class="btn btn-sm" onclick="openEditBillModal(\''+b.id+'\')">✏ '+t('edit')+'</button>';
+      h+='<button class="btn btn-sm" onclick="openEditBillModal(\''+b.id+'\')" title="'+t('edit')+'">✏</button>';
       h+='</td></tr>';
     });
     h+='</tbody></table></div>';
