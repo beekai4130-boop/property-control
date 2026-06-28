@@ -1876,6 +1876,7 @@ function openEditBillModal(bid){
   document.getElementById('edit-bill-id').value=bid;
   document.getElementById('edit-bill-heading').textContent='Edit Bill — '+pName(b.provider);
   document.getElementById('edit-bill-info').textContent=(pr?pr.address.split(',')[0]+' · ':'')+pName(b.provider);
+  document.getElementById('edit-bill-provider').value=b.provider||'EVN';
   document.getElementById('edit-bill-amount').value=b.amount;
   document.getElementById('edit-bill-due').value=b.due||'';
   document.getElementById('edit-bill-status').value=b.status;
@@ -2018,10 +2019,12 @@ async function saveProp(){
     if(res.data){
       var propId=res.data.id;
       var due=new Date(new Date().getFullYear(),new Date().getMonth()+1,10).toISOString().split('T')[0];
-      await sb.from('bills').insert([
+      var newBills=[
         {property_id:propId,owner_id:ownerId,provider:elecProv,service:'electricity',amount:0,due_date:due,status:'due'},
         {property_id:propId,owner_id:ownerId,provider:waterProv,service:'water',amount:0,due_date:due,status:'due'}
-      ]);
+      ];
+      if(meterGas) newBills.push({property_id:propId,owner_id:ownerId,provider:'gas',service:'gas',amount:0,due_date:due,status:'due'});
+      await sb.from('bills').insert(newBills);
     }
   }
   closeModal('modal-prop');
