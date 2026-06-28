@@ -463,8 +463,8 @@ tr:hover td{background:rgba(27,77,62,.02)}
     <div class="sec-badge">
       <div class="sec-badge-icon">🔒</div>
       <div>
-        <div class="sec-badge-title">Your security is our priority</div>
-        <div class="sec-badge-desc">Property Control never stores or processes your payments. You pay directly on the provider's official website.</div>
+        <div class="sec-badge-title" id="pay-badge-title">Ваша безопасность — наш приоритет</div>
+        <div class="sec-badge-desc" id="pay-badge-desc">Property Control не хранит и не обрабатывает платежи. Вы платите напрямую на официальном сайте провайдера.</div>
       </div>
     </div>
     <div class="modal-title" id="pay-title">Payment</div>
@@ -1836,7 +1836,7 @@ function openPayModal(bid){
     document.getElementById('pay-go-btn').style.display='';
     var siteLabel=b.provider==='nap'?'egov.bg':'ePay.bg';
     bodyHtml='<div style="font-size:13px;color:var(--dark60);line-height:1.7">Вы будете перенаправлены на официальный сайт <strong>'+siteLabel+'</strong> для оплаты <strong>'+providerLabel+'</strong>.</div>';
-    if(meter) bodyHtml+='<div style="margin-top:14px;background:var(--warm2,#F5F2EE);border-radius:10px;padding:12px 16px"><div style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--dark60);margin-bottom:4px">Номер клиента / счётчика</div><div style="font-size:20px;font-weight:600;letter-spacing:.05em">'+meter+'</div></div>';
+    if(meter) bodyHtml+='<div style="margin-top:14px;background:var(--warm2,#F5F2EE);border-radius:10px;padding:12px 16px"><div style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--dark60);margin-bottom:6px">Номер клиента / счётчика</div><div style="display:flex;align-items:center;gap:12px"><div style="font-size:22px;font-weight:700;letter-spacing:.08em;font-family:monospace">'+meter+'</div><button onclick="navigator.clipboard.writeText(\''+meter+'\').then(function(){this.textContent=\'✓ Скопировано\';setTimeout(function(){document.querySelector(\'.copy-meter-btn\').textContent=\'📋 Скопировать\'},1500)}.bind(this))" class="copy-meter-btn" style="font-size:12px;padding:5px 10px;background:var(--em);color:white;border:none;border-radius:8px;cursor:pointer;white-space:nowrap">📋 Скопировать</button></div><div style="margin-top:8px;font-size:11px;color:var(--dark60)">Скопируйте номер и вставьте на сайте провайдера</div></div>';
     bodyHtml+='<div style="margin-top:12px;font-size:12px;color:var(--dark60)">После оплаты вернитесь и отметьте счёт как оплаченный.</div>';
   }
   document.getElementById('pay-title').textContent=providerLabel+' — €'+b.amount;
