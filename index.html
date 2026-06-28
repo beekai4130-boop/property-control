@@ -1828,7 +1828,6 @@ function openPayModal(bid){
     else if(b.provider==='hoa') meter=pr.mh||'';
   }
   var url=PROVIDER_URLS[b.provider]||'https://epay.bg';
-  var lang=currentLang||'ru';
   var bodyHtml='';
   if(b.provider==='hoa'){
     bodyHtml='<div style="background:#FFF8E7;border:1px solid #F5C842;border-radius:10px;padding:12px 14px;font-size:13px">🏢 Такса поддержки оплачивается банковским переводом напрямую управляющей компании.</div>';
