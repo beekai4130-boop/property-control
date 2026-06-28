@@ -1977,15 +1977,24 @@ async function saveProp(){
     if(!ownerId){alert('Пожалуйста, выберите клиента.');return;}
   }
   var pid=document.getElementById('prop-id').value;
+  var elecProv=document.getElementById('prop-elec-provider').value||'EVN';
+  var waterProv=document.getElementById('prop-water-provider').value||'ViK-Burgas';
+  var meterElec=document.getElementById('prop-m-elec').value.trim()||null;
+  var meterWater=document.getElementById('prop-m-water').value.trim()||null;
+  var meterGas=document.getElementById('prop-m-gas').value.trim()||null;
   var data={
     address:addr,
     type:document.getElementById('prop-type').value,
     sqm:parseFloat(document.getElementById('prop-area').value)||0,
     status:document.getElementById('prop-rental-status').value,
     rent_amount:parseFloat(document.getElementById('prop-rent').value)||0,
+    rent_date:document.getElementById('prop-rent-since').value||null,
     owner_id:ownerId,
-    elec_provider:document.getElementById('prop-elec-provider').value||'EVN',
-    water_provider:document.getElementById('prop-water-provider').value||'ViK-Burgas',
+    elec_provider:elecProv,
+    water_provider:waterProv,
+    meter_elec:meterElec,
+    meter_water:meterWater,
+    meter_gas:meterGas,
     egn:document.getElementById('prop-egn').value.trim()||null
   };
   if(pid){
@@ -1997,9 +2006,8 @@ async function saveProp(){
       var propId=res.data.id;
       var due=new Date(new Date().getFullYear(),new Date().getMonth()+1,10).toISOString().split('T')[0];
       await sb.from('bills').insert([
-        {property_id:propId,owner_id:ownerId,provider:'EVN',service:'electricity',amount:0,due_date:due,status:'due'},
-        {property_id:propId,owner_id:ownerId,provider:'Sofiyska Voda',service:'water',amount:0,due_date:due,status:'due'},
-        {property_id:propId,owner_id:ownerId,provider:'HOA',service:'management',amount:0,due_date:due,status:'due'}
+        {property_id:propId,owner_id:ownerId,provider:elecProv,service:'electricity',amount:0,due_date:due,status:'due'},
+        {property_id:propId,owner_id:ownerId,provider:waterProv,service:'water',amount:0,due_date:due,status:'due'}
       ]);
     }
   }
