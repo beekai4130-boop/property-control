@@ -518,11 +518,11 @@ tr:hover td{background:rgba(27,77,62,.02)}
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label class="form-label">Amount (€)</label>
+        <label class="form-label" id="t-edit-bill-amount">Amount (€)</label>
         <input class="form-input" type="number" id="edit-bill-amount" placeholder="0.00">
       </div>
       <div class="form-group">
-        <label class="form-label">Due Date</label>
+        <label class="form-label" id="t-edit-bill-due">Due Date</label>
         <input class="form-input" type="date" id="edit-bill-due">
       </div>
     </div>
@@ -850,7 +850,9 @@ var T = {
     propVacant:'Vacant',propRented:'Rented',
     billProvider:'Provider',billClient:'Client',billProperty:'Property',billAmount:'Amount',billDue:'Due Date',billStatus:'Status',billActions:'Actions',
     billOutstanding:'Outstanding',billPaidYear:'Paid This Year',billNextTax:'Next Tax',
-    cancel:'Cancel',edit:'Edit',payBtn:'Go to payment →'
+    cancel:'Cancel',edit:'Edit',payBtn:'Go to payment →',
+    soon:'Soon',editBill:'Edit Bill',labelAmount:'Amount (€)',labelDueDate:'Due Date',
+    payBadgeTitle:'Your security is our priority',payBadgeDesc:'Property Control does not store or process payments. You pay directly on the official provider website.'
   },
   ru:{
     dashboard:'Обзор',properties:'Мои объекты',bills:'Счета и налоги',
@@ -884,7 +886,9 @@ var T = {
     propVacant:'Свободен',propRented:'Сдан',
     billProvider:'Провайдер',billClient:'Клиент',billProperty:'Объект',billAmount:'Сумма',billDue:'Срок оплаты',billStatus:'Статус',billActions:'Действия',
     billOutstanding:'К оплате',billPaidYear:'Оплачено в этом году',billNextTax:'Ближайший налог',
-    cancel:'Отмена',edit:'Изменить',payBtn:'Перейти к оплате →'
+    cancel:'Отмена',edit:'Изменить',payBtn:'Перейти к оплате →',
+    soon:'Скоро',editBill:'Изменить счёт',labelAmount:'Сумма (€)',labelDueDate:'Срок оплаты',
+    payBadgeTitle:'Ваша безопасность — наш приоритет',payBadgeDesc:'Property Control не хранит и не обрабатывает платежи. Вы платите напрямую на официальном сайте провайдера.'
   },
   bg:{
     dashboard:'Преглед',properties:'Моите имоти',bills:'Сметки и данъци',
@@ -918,7 +922,9 @@ var T = {
     propVacant:'Свободен',propRented:'Отдаден',
     billProvider:'Доставчик',billClient:'Клиент',billProperty:'Имот',billAmount:'Сума',billDue:'Срок на плащане',billStatus:'Статус',billActions:'Действия',
     billOutstanding:'За плащане',billPaidYear:'Платено тази година',billNextTax:'Следващ данък',
-    cancel:'Отказ',edit:'Промени',payBtn:'Към плащане →'
+    cancel:'Отказ',edit:'Промени',payBtn:'Към плащане →',
+    soon:'Скоро',editBill:'Промени сметка',labelAmount:'Сума (€)',labelDueDate:'Срок на плащане',
+    payBadgeTitle:'Вашата сигурност е наш приоритет',payBadgeDesc:'Property Control не съхранява и не обработва плащания. Плащате директно на официалния сайт на доставчика.'
   }
 };
 function t(k){return (T[lang]&&T[lang][k])||(T['en']&&T['en'][k])||k;}
@@ -1009,6 +1015,8 @@ function applyLangUI(){
     't-prop-area':'propArea','t-prop-clientnum1':'propClientNum','t-prop-clientnum2':'propClientNum',
     't-prop-rental-status':'propRentalStatus','t-prop-rent':'propRent','t-prop-since':'propSince',
     't-prop-cancel':'cancel',
+    'pay-badge-title':'payBadgeTitle','pay-badge-desc':'payBadgeDesc',
+    't-edit-bill-amount':'labelAmount','t-edit-bill-due':'labelDueDate',
     't-prop-type-apt':'propTypeApt','t-prop-type-house':'propTypeHouse',
     't-prop-type-studio':'propTypeStudio','t-prop-type-com':'propTypeCom',
     't-prop-vacant':'propVacant','t-prop-rented':'propRented',
@@ -1021,6 +1029,10 @@ function applyLangUI(){
   Object.keys(ids).forEach(function(id){
     var el=document.getElementById(id);
     if(el) el.textContent=t(ids[id]);
+  });
+  ['edit-bill-status','add-bill-status'].forEach(function(sid){
+    var sel=document.getElementById(sid);
+    if(sel) sel.querySelectorAll('option').forEach(function(opt){opt.textContent=t(opt.value);});
   });
   var regPass=document.getElementById('reg-pass');
   if(regPass) regPass.placeholder=t('regPassHint');
@@ -1976,7 +1988,7 @@ function openEditBillModal(bid){
   if(!b) return;
   var pr=props.find(function(p){return p.id===b.pid;});
   document.getElementById('edit-bill-id').value=bid;
-  document.getElementById('edit-bill-heading').textContent='Edit Bill — '+pName(b.provider);
+  document.getElementById('edit-bill-heading').textContent=t('editBill')+' — '+pName(b.provider);
   document.getElementById('edit-bill-info').textContent=(pr?pr.address.split(',')[0]+' · ':'')+pName(b.provider);
   document.getElementById('edit-bill-provider').value=b.provider||'EVN';
   document.getElementById('edit-bill-amount').value=b.amount;
