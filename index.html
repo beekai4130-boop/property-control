@@ -1499,12 +1499,19 @@ function rBills(){
   var curMonth=window._billMonth!==undefined?window._billMonth:now.getMonth();
   var curYear=window._billYear!==undefined?window._billYear:now.getFullYear();
 
+  var filterBills=function(b){
+    if(activeAddr==='all') return true;
+    var pr=props.find(function(p){return p.id===b.pid;});
+    return pr&&pr.address.split(',')[0]===activeAddr;
+  };
   var overdue=bills.filter(function(b){
     if(b.status==='paid') return false;
+    if(!filterBills(b)) return false;
     var d=new Date(b.due);
     return d.getFullYear()<curYear||(d.getFullYear()===curYear&&d.getMonth()<curMonth);
   });
   var curMonthBills=bills.filter(function(b){
+    if(!filterBills(b)) return false;
     var d=new Date(b.due);
     return d.getFullYear()===curYear&&d.getMonth()===curMonth;
   });
@@ -1520,8 +1527,15 @@ function rBills(){
     var key=d.getFullYear()+'-'+d.getMonth();
     if(!seen[key]){seen[key]=true;months.push({y:d.getFullYear(),m:d.getMonth(),key:key});}
   });
+  for(var fi=0;fi<6;fi++){
+    var fd=new Date(now.getFullYear(),now.getMonth()+fi,1);
+    var fkey=fd.getFullYear()+'-'+fd.getMonth();
+    if(!seen[fkey]){seen[fkey]=true;months.push({y:fd.getFullYear(),m:fd.getMonth(),key:fkey});}
+  }
   months.sort(function(a,b){return a.y!==b.y?a.y-b.y:a.m-b.m;});
 
+  var allAddresses=[...new Set(props.map(function(p){return p.address.split(',')[0];}))];
+  var activeAddr=window._billAddr||'all';
   var RU_MONTHS=['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'];
   var taxMonths=[3,9];
   var isNapMonth=taxMonths.indexOf(curMonth)!==-1;
@@ -1536,6 +1550,16 @@ function rBills(){
   if(isMgr) h+='<button class="btn btn-em btn-sm" onclick="openAddBillModal()">'+t('addBill')+'</button>';
   h+='</div>';
 
+  if(allAddresses.length>1){
+    h+='<div style="margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">';
+    h+='<span style="font-size:12px;color:var(--dark60)">Объект:</span>';
+    h+='<button onclick="window._billAddr=\'all\';rBills()" style="font-size:12px;padding:4px 12px;border-radius:20px;cursor:pointer;border:'+(activeAddr==='all'?'none':'0.5px solid var(--border)')+';background:'+(activeAddr==='all'?'var(--dark)':'transparent')+';color:'+(activeAddr==='all'?'var(--warm)':'var(--dark60)')+'">Все</button>';
+    allAddresses.forEach(function(addr){
+      var isA=activeAddr===addr;
+      h+='<button onclick="window._billAddr=\''+addr.replace(/'/g,"\\'")+'\'  ;rBills()" style="font-size:12px;padding:4px 12px;border-radius:20px;cursor:pointer;white-space:nowrap;border:'+(isA?'none':'0.5px solid var(--border)')+';background:'+(isA?'var(--dark)':'transparent')+';color:'+(isA?'var(--warm)':'var(--dark60)')+'">'+addr+'</button>';
+    });
+    h+='</div>';
+  }
   h+='<div style="display:flex;gap:6px;margin-bottom:1.25rem;overflow-x:auto;padding-bottom:4px;flex-wrap:wrap">';
   months.forEach(function(mo){
     var isActive=mo.m===curMonth&&mo.y===curYear;
