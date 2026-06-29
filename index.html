@@ -1496,8 +1496,9 @@ function rBills(){
   var pg=document.getElementById('page-bills');
   var isMgr=curRole==='manager'||curRole==='agent';
   var now=new Date();
-  var curMonth=window._billMonth!==undefined?window._billMonth:now.getMonth();
-  var curYear=window._billYear!==undefined?window._billYear:now.getFullYear();
+  if(window._billMonth===undefined){window._billMonth=now.getMonth();window._billYear=now.getFullYear();}
+  var curMonth=window._billMonth;
+  var curYear=window._billYear;
 
   var filterBills=function(b){
     if(activeAddr==='all') return true;
@@ -1550,14 +1551,16 @@ function rBills(){
   if(isMgr) h+='<button class="btn btn-em btn-sm" onclick="openAddBillModal()">'+t('addBill')+'</button>';
   h+='</div>';
 
-  if(allAddresses.length>1){
-    h+='<div style="margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">';
-    h+='<span style="font-size:12px;color:var(--dark60)">Объект:</span>';
-    h+='<button onclick="window._billAddr=\'all\';rBills()" style="font-size:12px;padding:4px 12px;border-radius:20px;cursor:pointer;border:'+(activeAddr==='all'?'none':'0.5px solid var(--border)')+';background:'+(activeAddr==='all'?'var(--dark)':'transparent')+';color:'+(activeAddr==='all'?'var(--warm)':'var(--dark60)')+'">Все</button>';
-    allAddresses.forEach(function(addr){
-      var isA=activeAddr===addr;
-      h+='<button onclick="window._billAddr=\''+addr.replace(/'/g,"\\'")+'\'  ;rBills()" style="font-size:12px;padding:4px 12px;border-radius:20px;cursor:pointer;white-space:nowrap;border:'+(isA?'none':'0.5px solid var(--border)')+';background:'+(isA?'var(--dark)':'transparent')+';color:'+(isA?'var(--warm)':'var(--dark60)')+'">'+addr+'</button>';
+  if(allAddresses.length>0){
+    var sortedAddr=allAddresses.slice().sort(function(a,b){return a.localeCompare(b,'ru');});
+    h+='<div style="margin-bottom:14px;display:flex;align-items:center;gap:10px">';
+    h+='<span style="font-size:12px;color:var(--dark60);white-space:nowrap">Объект:</span>';
+    h+='<select onchange="window._billAddr=this.value;rBills()" style="font-size:13px;padding:6px 12px;border-radius:var(--radius);border:1px solid var(--border);background:var(--warm);color:var(--dark);min-width:180px;cursor:pointer">';
+    h+='<option value="all"'+(activeAddr==='all'?' selected':'')+'>Все объекты</option>';
+    sortedAddr.forEach(function(addr){
+      h+='<option value="'+addr+'"'+(activeAddr===addr?' selected':'')+'>'+addr+'</option>';
     });
+    h+='</select>';
     h+='</div>';
   }
   h+='<div style="display:flex;gap:6px;margin-bottom:1.25rem;overflow-x:auto;padding-bottom:4px;flex-wrap:wrap">';
