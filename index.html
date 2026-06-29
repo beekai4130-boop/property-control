@@ -1496,10 +1496,15 @@ function rBills(){
   var pg=document.getElementById('page-bills');
   var isMgr=curRole==='manager'||curRole==='agent';
   var now=new Date();
-  if(window._billMonth===undefined){window._billMonth=now.getMonth();window._billYear=now.getFullYear();}
+  if(window._billMonth===undefined){
+    var firstBill=bills.filter(function(b){return b.status!=='paid';}).sort(function(a,b){return new Date(a.due)-new Date(b.due);})[0];
+    if(firstBill){var fd=parseDate(firstBill.due);window._billMonth=fd.getMonth();window._billYear=fd.getFullYear();}
+    else{window._billMonth=now.getMonth();window._billYear=now.getFullYear();}
+  }
   var curMonth=window._billMonth;
   var curYear=window._billYear;
 
+  var parseDate=function(s){if(!s) return new Date();var p=s.split('-');return new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2]));};
   var filterBills=function(b){
     if(activeAddr==='all') return true;
     var pr=props.find(function(p){return p.id===b.pid;});
@@ -1508,12 +1513,12 @@ function rBills(){
   var overdue=bills.filter(function(b){
     if(b.status==='paid') return false;
     if(!filterBills(b)) return false;
-    var d=new Date(b.due);
+    var d=parseDate(b.due);
     return d.getFullYear()<curYear||(d.getFullYear()===curYear&&d.getMonth()<curMonth);
   });
   var curMonthBills=bills.filter(function(b){
     if(!filterBills(b)) return false;
-    var d=new Date(b.due);
+    var d=parseDate(b.due);
     return d.getFullYear()===curYear&&d.getMonth()===curMonth;
   });
   var paid=bills.filter(function(b){return b.status==='paid';});
@@ -1524,7 +1529,7 @@ function rBills(){
   var months=[];
   var seen={};
   bills.forEach(function(b){
-    var d=new Date(b.due);
+    var d=parseDate(b.due);
     var key=d.getFullYear()+'-'+d.getMonth();
     if(!seen[key]){seen[key]=true;months.push({y:d.getFullYear(),m:d.getMonth(),key:key});}
   });
@@ -1555,7 +1560,7 @@ function rBills(){
     var sortedAddr=allAddresses.slice().sort(function(a,b){return a.localeCompare(b,'ru');});
     h+='<div style="margin-bottom:14px;display:flex;align-items:center;gap:10px">';
     h+='<span style="font-size:12px;color:var(--dark60);white-space:nowrap">Объект:</span>';
-    h+='<select onchange="window._billAddr=this.value;rBills()" style="font-size:13px;padding:6px 12px;border-radius:var(--radius);border:1px solid var(--border);background:var(--warm);color:var(--dark);min-width:180px;cursor:pointer">';
+    h+='<select onchange=\"window._billAddr=this.value;rBills()\" style=\"font-size:13px;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--warm);color:var(--dark);min-width:180px;cursor:pointer;appearance:auto\">';
     h+='<option value="all"'+(activeAddr==='all'?' selected':'')+'>Все объекты</option>';
     sortedAddr.forEach(function(addr){
       h+='<option value="'+addr+'"'+(activeAddr===addr?' selected':'')+'>'+addr+'</option>';
