@@ -1496,6 +1496,7 @@ function rBills(){
   var pg=document.getElementById('page-bills');
   var isMgr=curRole==='manager'||curRole==='agent';
   var now=new Date();
+  var parseDate=function(s){if(!s) return new Date();var p=s.split('-');return new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2]));};
   if(window._billMonth===undefined){
     var firstBill=bills.filter(function(b){return b.status!=='paid';}).sort(function(a,b){return new Date(a.due)-new Date(b.due);})[0];
     if(firstBill){var fd=parseDate(firstBill.due);window._billMonth=fd.getMonth();window._billYear=fd.getFullYear();}
@@ -1504,7 +1505,7 @@ function rBills(){
   var curMonth=window._billMonth;
   var curYear=window._billYear;
 
-  var parseDate=function(s){if(!s) return new Date();var p=s.split('-');return new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2]));};
+  var activeAddr=window._billAddr||'all';
   var filterBills=function(b){
     if(activeAddr==='all') return true;
     var pr=props.find(function(p){return p.id===b.pid;});
@@ -1541,7 +1542,6 @@ function rBills(){
   months.sort(function(a,b){return a.y!==b.y?a.y-b.y:a.m-b.m;});
 
   var allAddresses=[...new Set(props.map(function(p){return p.address.split(',')[0];}))];
-  var activeAddr=window._billAddr||'all';
   var RU_MONTHS=['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'];
   var taxMonths=[3,9];
   var isNapMonth=taxMonths.indexOf(curMonth)!==-1;
