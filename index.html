@@ -1506,6 +1506,7 @@ function rBills(){
   var curYear=window._billYear;
 
   var activeAddr=window._billAddr||'all';
+  var today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
   var filterBills=function(b){
     if(activeAddr==='all') return true;
     var pr=props.find(function(p){return p.id===b.pid;});
@@ -1515,7 +1516,7 @@ function rBills(){
     if(b.status==='paid') return false;
     if(!filterBills(b)) return false;
     var d=parseDate(b.due);
-    return d.getFullYear()<curYear||(d.getFullYear()===curYear&&d.getMonth()<curMonth);
+    return d<today;
   });
   var curMonthBills=bills.filter(function(b){
     if(!filterBills(b)) return false;
