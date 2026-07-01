@@ -746,6 +746,14 @@ tr:hover td{background:rgba(27,77,62,.02)}
       <label class="form-label" id="t-req-desc-label">Description</label>
       <textarea class="form-textarea" id="req-desc" placeholder="Describe the issue or request in detail..."></textarea>
     </div>
+    <div class="form-group" id="req-photo-grp">
+      <label class="form-label" id="t-req-photo-label">Attach Photo</label>
+      <label style="display:inline-flex;align-items:center;gap:8px;padding:8px 14px;background:var(--cream);border:1.5px dashed var(--border);border-radius:10px;cursor:pointer;font-size:13px;color:var(--dark60);transition:border-color .15s" onmouseover="this.style.borderColor='var(--em)'" onmouseout="this.style.borderColor='var(--border)'">
+        <input type="file" id="req-photo-input" accept="image/*" style="display:none" onchange="previewReqPhoto(this)">
+        <span id="t-req-attach-btn">📎 Attach photo</span>
+      </label>
+      <div id="req-photo-preview" style="display:none;margin-top:8px"></div>
+    </div>
     <div class="form-group" id="req-status-grp" style="display:none">
       <label class="form-label" id="t-req-status-label">Status</label>
       <select class="form-select" id="req-status">
@@ -765,6 +773,16 @@ tr:hover td{background:rgba(27,77,62,.02)}
       <button class="modal-confirm" id="req-save-btn" onclick="saveReq()">Submit Request</button>
     </div>
   </div>
+</div>
+
+<!-- WA NUDGE -->
+<div id="wa-nudge" style="display:none;position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:1rem 1.2rem;box-shadow:0 8px 32px rgba(0,0,0,.12);z-index:300;align-items:center;gap:12px;max-width:420px;width:calc(100% - 3rem)">
+  <span style="font-size:20px">✅</span>
+  <div style="flex:1;font-size:13px">
+    <div style="font-weight:600;margin-bottom:4px" id="wa-nudge-title">Request submitted ✓</div>
+    <a id="wa-nudge-link" href="#" target="_blank" rel="noopener" style="color:var(--em);font-size:12px;text-decoration:none" id="wa-nudge-wa">📱 Also send via WhatsApp →</a>
+  </div>
+  <button onclick="document.getElementById('wa-nudge').style.display='none'" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--dark60);line-height:1;padding:0 2px">×</button>
 </div>
 
 <!-- UPGRADE MODAL -->
@@ -873,7 +891,8 @@ var T = {
     freeLimitMsg:'You have reached the limit of {n} properties on the Free plan.',
     paymentHistory:'Payment History',exportExcel:'↓ Export Excel',overdueHeader:'Overdue Bills',
     months:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-    allObjects:'All properties'
+    allObjects:'All properties',
+    attachPhoto:'📎 Attach photo',reqSaved:'Request submitted ✓',waNotify:'📱 Also send via WhatsApp →'
   },
   ru:{
     dashboard:'Обзор',properties:'Мои объекты',bills:'Счета и налоги',
@@ -925,7 +944,8 @@ var T = {
     freeLimitMsg:'Достигнут лимит — {n} объекта на Free плане.',
     paymentHistory:'История платежей',exportExcel:'↓ Excel',overdueHeader:'Просроченные счета',
     months:['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'],
-    allObjects:'Все объекты'
+    allObjects:'Все объекты',
+    attachPhoto:'📎 Прикрепить фото',reqSaved:'Заявка отправлена ✓',waNotify:'📱 Также отправить в WhatsApp →'
   },
   bg:{
     dashboard:'Преглед',properties:'Моите имоти',bills:'Сметки и данъци',
@@ -977,7 +997,8 @@ var T = {
     freeLimitMsg:'Достигнахте лимита от {n} имота на Free плана.',
     paymentHistory:'История на плащанията',exportExcel:'↓ Excel',overdueHeader:'Просрочени сметки',
     months:['Яну','Фев','Мар','Апр','Май','Юни','Юли','Авг','Сеп','Окт','Ное','Дек'],
-    allObjects:'Всички имоти'
+    allObjects:'Всички имоти',
+    attachPhoto:'📎 Прикачи снимка',reqSaved:'Заявката е изпратена ✓',waNotify:'📱 Изпрати и в WhatsApp →'
   }
 };
 function t(k){return (T[lang]&&T[lang][k])||(T['en']&&T['en'][k])||k;}
@@ -1072,6 +1093,7 @@ function applyLangUI(){
     't-edit-bill-amount':'labelAmount','t-edit-bill-due':'labelDueDate',
     't-req-type-label':'reqTypeLabel','t-req-desc-label':'reqDescLabel',
     't-req-status-label':'reqStatusLabel','t-req-cost-label':'reqCostLabel',
+    't-req-photo-label':'attachPhoto','t-req-attach-btn':'attachPhoto',
     't-upgrade-title':'upgradeTitle','t-upgrade-later':'upgradeLater','t-upgrade-contact':'upgradeContact',
     't-logout':'signOut',
     't-prop-type-apt':'propTypeApt','t-prop-type-house':'propTypeHouse',
@@ -2253,8 +2275,23 @@ function openReqModal(rid){
     document.getElementById('req-desc').value='';
     document.getElementById('req-cost').value='';
     document.getElementById('req-type').value='repair';
+    reqPhotoBase64=null;
+    document.getElementById('req-photo-input').value='';
+    document.getElementById('req-photo-preview').style.display='none';
+    document.getElementById('req-photo-preview').innerHTML='';
   }
   openModal('modal-req');
+}
+function previewReqPhoto(input){
+  if(!input.files||!input.files[0]) return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    reqPhotoBase64=e.target.result;
+    var preview=document.getElementById('req-photo-preview');
+    preview.innerHTML='<img src="'+e.target.result+'" style="max-width:100%;max-height:120px;border-radius:8px;object-fit:cover;border:1px solid var(--border)">';
+    preview.style.display='block';
+  };
+  reader.readAsDataURL(input.files[0]);
 }
 async function loadReqs(){
   if(!curUser||!curUser.id){reqs=[];return;}
