@@ -140,6 +140,11 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--cream);c
 .p-progress{background:#E8F0FE;color:#1A56DB}
 .p-done{background:var(--eml);color:var(--em)}
 .p-accepted{background:var(--bluel);color:var(--blue)}
+.p-quoted{background:var(--bluel);color:var(--blue)}
+.p-approved{background:var(--eml);color:var(--em)}
+.p-completed{background:var(--em);color:white}
+.p-declined{background:var(--redl);color:var(--red)}
+.p-cancelled{background:#f0f0f0;color:#888}
 
 /* TABLE */
 .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -892,7 +897,12 @@ var T = {
     paymentHistory:'Payment History',exportExcel:'↓ Export Excel',overdueHeader:'Overdue Bills',
     months:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
     allObjects:'All properties',
-    attachPhoto:'📎 Attach photo',reqSaved:'Request submitted ✓',waNotify:'📱 Also send via WhatsApp →'
+    attachPhoto:'📎 Attach photo',reqSaved:'Request submitted ✓',waNotify:'📱 Also send via WhatsApp →',
+    quoted:'Quoted',approved:'Approved',completed:'Completed',declined:'Declined',cancelled:'Cancelled',
+    managerNote:'Comment for owner',sendQuote:'Send for approval',markComplete:'Mark as completed',
+    cancelReqBtn:'Cancel request',confirmReq:'✓ Confirm',declineReqBtn:'✗ Decline',
+    quotedPending:'⏳ Awaiting your decision',quoteCost:'Service cost',quoteComment:"Manager's comment",
+    ownerNote:'Your comment (optional)',serviceName:'Manager Service'
   },
   ru:{
     dashboard:'Обзор',properties:'Мои объекты',bills:'Счета и налоги',
@@ -945,7 +955,12 @@ var T = {
     paymentHistory:'История платежей',exportExcel:'↓ Excel',overdueHeader:'Просроченные счета',
     months:['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'],
     allObjects:'Все объекты',
-    attachPhoto:'📎 Прикрепить фото',reqSaved:'Заявка отправлена ✓',waNotify:'📱 Также отправить в WhatsApp →'
+    attachPhoto:'📎 Прикрепить фото',reqSaved:'Заявка отправлена ✓',waNotify:'📱 Также отправить в WhatsApp →',
+    quoted:'На согласовании',approved:'Одобрена',completed:'Выполнено',declined:'Отклонена',cancelled:'Отменена',
+    managerNote:'Комментарий для собственника',sendQuote:'Отправить на согласование',markComplete:'Отметить выполненным',
+    cancelReqBtn:'Отменить заявку',confirmReq:'✓ Подтвердить',declineReqBtn:'✗ Отклонить',
+    quotedPending:'⏳ Ожидает решения',quoteCost:'Стоимость услуги',quoteComment:'Комментарий менеджера',
+    ownerNote:'Ваш комментарий (необязательно)',serviceName:'Услуга менеджера'
   },
   bg:{
     dashboard:'Преглед',properties:'Моите имоти',bills:'Сметки и данъци',
@@ -998,7 +1013,12 @@ var T = {
     paymentHistory:'История на плащанията',exportExcel:'↓ Excel',overdueHeader:'Просрочени сметки',
     months:['Яну','Фев','Мар','Апр','Май','Юни','Юли','Авг','Сеп','Окт','Ное','Дек'],
     allObjects:'Всички имоти',
-    attachPhoto:'📎 Прикачи снимка',reqSaved:'Заявката е изпратена ✓',waNotify:'📱 Изпрати и в WhatsApp →'
+    attachPhoto:'📎 Прикачи снимка',reqSaved:'Заявката е изпратена ✓',waNotify:'📱 Изпрати и в WhatsApp →',
+    quoted:'За съгласуване',approved:'Одобрена',completed:'Изпълнено',declined:'Отказана',cancelled:'Отменена',
+    managerNote:'Коментар за собственика',sendQuote:'Изпрати за съгласуване',markComplete:'Отбележи като изпълнено',
+    cancelReqBtn:'Отмени заявка',confirmReq:'✓ Потвърди',declineReqBtn:'✗ Откажи',
+    quotedPending:'⏳ Очаква решение',quoteCost:'Цена на услугата',quoteComment:'Коментар на мениджъра',
+    ownerNote:'Вашият коментар (по желание)',serviceName:'Услуга на мениджъра'
   }
 };
 function t(k){return (T[lang]&&T[lang][k])||(T['en']&&T['en'][k])||k;}
@@ -2303,7 +2323,7 @@ async function loadReqs(){
   } else {
     q=await sb.from('requests').select('*').eq('owner_id',curUser.id).order('created_at',{ascending:false});
   }
-  if(q.data) reqs=q.data.map(function(r){return {id:r.id,type:r.type,desc:r.description,status:r.status,created:r.created_at?r.created_at.split('T')[0]:'',cost:0,cid:r.owner_id,pid:r.property_id,photo:r.photo_url};});
+  if(q.data) reqs=q.data.map(function(r){return {id:r.id,type:r.type,desc:r.description,status:r.status,created:r.created_at?r.created_at.split('T')[0]:'',cost:r.cost||0,cid:r.owner_id,pid:r.property_id,photo:r.photo_url,manager_note:r.manager_note||'',owner_note:r.owner_note||''};});
 }
 async function saveReq(){
   var btn=document.getElementById('req-save-btn');
@@ -2368,8 +2388,8 @@ function pName(code){var m={EVN:'EVN Bulgaria','ViK-Burgas':'ВиК Бургас
 function bPill(s){return s==='paid'?'p-paid':s==='due'?'p-due':s==='overdue'?'p-over':'p-soon';}
 function rIcon(t){var m={repair:'🔧',cleaning:'🧹',photo:'📷','tenant-check':'👤',emergency:'🚨',other:'📋'};return m[t]||'📋';}
 function rLabel(type){var m={repair:t('repair'),cleaning:t('cleaning'),photo:t('photo'),'tenant-check':t('tenantCheck'),emergency:t('emergency'),other:t('other')};return m[type]||type;}
-function rStatusLabel(s){var m={new:t('req_new'),accepted:t('accepted'),progress:t('progress'),done:t('done')};return m[s]||s;}
-function rPill(s){return s==='new'?'p-new':s==='accepted'?'p-accepted':s==='progress'?'p-progress':'p-done';}
+function rStatusLabel(s){var m={new:t('req_new'),quoted:t('quoted'),approved:t('approved'),completed:t('completed'),declined:t('declined'),cancelled:t('cancelled'),accepted:t('accepted'),progress:t('progress'),done:t('done')};return m[s]||s;}
+function rPill(s){var m={new:'p-new',quoted:'p-quoted',approved:'p-approved',completed:'p-completed',declined:'p-declined',cancelled:'p-cancelled',accepted:'p-accepted',progress:'p-progress',done:'p-done'};return m[s]||'p-done';}
 </script>
 </body>
 </html>
