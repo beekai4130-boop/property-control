@@ -2321,6 +2321,16 @@ async function saveReq(){
     var ins={owner_id:ownerId,type:reqType,description:desc,status:'new',photo_url:reqPhotoBase64||null};
     var res=await sb.from('requests').insert(ins);
     if(res.error){alert('Error: '+res.error.message);return;}
+    var ownerName=(curUser.user_metadata&&curUser.user_metadata.full_name)||curUser.email.split('@')[0];
+    fetch(SB_URL+'/functions/v1/notify-request',{method:'POST',headers:sbH(),body:JSON.stringify({type:reqType,description:desc,ownerName:ownerName,ownerEmail:curUser.email,propertyAddress:'—'})}).catch(function(){});
+    var typeEmoji={repair:'🔧',cleaning:'🧹',photo:'📷','tenant-check':'👤',emergency:'🚨',other:'📋'};
+    var waText=(lang==='ru'?'Новая заявка от ':lang==='bg'?'Нова заявка от ':'New request from ')+ownerName+': '+(typeEmoji[reqType]||'')+' '+t(reqType==='tenant-check'?'tenantCheck':reqType)+'\n'+desc;
+    var nudge=document.getElementById('wa-nudge');
+    document.getElementById('wa-nudge-title').textContent=t('reqSaved');
+    nudge.querySelector('a').textContent=t('waNotify');
+    nudge.querySelector('a').href='https://wa.me/'+WA+'?text='+encodeURIComponent(waText);
+    nudge.style.display='flex';
+    setTimeout(function(){nudge.style.display='none';},12000);
   }
   closeModal('modal-req');
   await loadReqs();
