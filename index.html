@@ -768,20 +768,22 @@ tr:hover td{background:rgba(27,77,62,.02)}
 <!-- UPGRADE MODAL -->
 <div class="modal-ov" id="modal-upgrade">
   <div class="modal" style="max-width:400px;text-align:center">
-    <div style="font-size:48px;margin-bottom:1rem">⭐</div>
-    <div class="modal-title" style="text-align:center">Upgrade to Pro</div>
-    <div class="modal-body" style="text-align:left">
-      <strong style="color:var(--em)">€99 / month</strong> — full property management:<br><br>
-      ✅ Up to <strong>10 properties</strong><br>
-      ✅ <strong>Push notifications</strong> for overdue bills<br>
-      ✅ Reminders <strong>3 days</strong> before due date<br>
-      ✅ <strong>1 planned visit</strong> per month (photo report, rent collection)<br>
-      ✅ <strong>1 emergency visit</strong> per month<br>
-      ✅ Priority support
+    <div class="modal-scroll">
+      <div style="font-size:48px;margin-bottom:1rem">⭐</div>
+      <div class="modal-title" id="t-upgrade-title" style="text-align:center">Upgrade to Pro</div>
+      <div class="modal-body" id="upgrade-body" style="text-align:left">
+        <strong style="color:var(--em)">€99 / month</strong> — full property management:<br><br>
+        ✅ Up to <strong>10 properties</strong><br>
+        ✅ <strong>Push notifications</strong> for overdue bills<br>
+        ✅ Reminders <strong>3 days</strong> before due date<br>
+        ✅ <strong>1 planned visit</strong> per month (photo report, rent collection)<br>
+        ✅ <strong>1 emergency visit</strong> per month<br>
+        ✅ Priority support
+      </div>
     </div>
-    <div style="display:flex;gap:10px;justify-content:center">
-      <button class="modal-cancel" style="flex:none" onclick="closeModal('modal-upgrade')">Maybe later</button>
-      <a href="https://wa.me/359884390322?text=I%20want%20to%20upgrade%20to%20Pro" target="_blank" style="flex:none;padding:10px 20px;background:var(--em);color:white;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:6px" onclick="closeModal('modal-upgrade')">💬 Contact to Upgrade</a>
+    <div class="modal-acts" style="justify-content:center">
+      <button class="modal-cancel" style="flex:none" id="t-upgrade-later" onclick="closeModal('modal-upgrade')">Maybe later</button>
+      <a href="https://wa.me/359884390322?text=I%20want%20to%20upgrade%20to%20Pro" target="_blank" id="t-upgrade-contact" style="flex:none;padding:10px 20px;background:var(--em);color:white;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:6px" onclick="closeModal('modal-upgrade')">💬 Contact to Upgrade</a>
     </div>
   </div>
 </div>
@@ -850,7 +852,10 @@ var T = {
     propVacant:'Vacant',propRented:'Rented',
     billProvider:'Provider',billClient:'Client',billProperty:'Property',billAmount:'Amount',billDue:'Due Date',billStatus:'Status',billActions:'Actions',
     billOutstanding:'Outstanding',billPaidYear:'Paid This Year',billNextTax:'Next Tax',
-    cancel:'Cancel',edit:'Edit',payBtn:'Go to payment →',
+    cancel:'Cancel',edit:'Edit',payBtn:'Pay',payGoBtn:'Go to payment →',
+    upgradeTitle:'Upgrade to Pro',upgradeLater:'Maybe later',upgradeContact:'💬 Contact to Upgrade',
+    propManager:'Property Manager',
+    upgradeBodyHtml:'<strong style="color:var(--em)">€99 / month</strong> — full property management:<br><br>✅ Up to <strong>10 properties</strong><br>✅ <strong>Push notifications</strong> for overdue bills<br>✅ Reminders <strong>3 days</strong> before due date<br>✅ <strong>1 planned visit</strong> per month (photo report, rent collection)<br>✅ <strong>1 emergency visit</strong> per month<br>✅ Priority support',
     soon:'Soon',editBill:'Edit Bill',labelAmount:'Amount (€)',labelDueDate:'Due Date',
     payBadgeTitle:'Your security is our priority',payBadgeDesc:'Property Control does not store or process payments. You pay directly on the official provider website.',
     reqNewTitle:'New Request',updateReq:'Update Request',submitReq:'Submit Request',
@@ -898,7 +903,10 @@ var T = {
     propVacant:'Свободен',propRented:'Сдан',
     billProvider:'Провайдер',billClient:'Клиент',billProperty:'Объект',billAmount:'Сумма',billDue:'Срок оплаты',billStatus:'Статус',billActions:'Действия',
     billOutstanding:'К оплате',billPaidYear:'Оплачено в этом году',billNextTax:'Ближайший налог',
-    cancel:'Отмена',edit:'Изменить',payBtn:'Перейти к оплате →',
+    cancel:'Отмена',edit:'Изменить',payBtn:'Оплатить',payGoBtn:'Перейти к оплате →',
+    upgradeTitle:'Перейти на Pro',upgradeLater:'Позже',upgradeContact:'💬 Написать нам',
+    propManager:'Менеджер',
+    upgradeBodyHtml:'<strong style="color:var(--em)">€99 / месяц</strong> — полное управление недвижимостью:<br><br>✅ До <strong>10 объектов</strong><br>✅ <strong>Push-уведомления</strong> о просроченных счетах<br>✅ Напоминания за <strong>3 дня</strong> до срока оплаты<br>✅ <strong>1 плановый выезд</strong> в месяц (фото-отчёт, проверка жильцов)<br>✅ <strong>1 экстренный выезд</strong> в месяц<br>✅ Приоритетная поддержка',
     soon:'Скоро',editBill:'Изменить счёт',labelAmount:'Сумма (€)',labelDueDate:'Срок оплаты',
     payBadgeTitle:'Ваша безопасность — наш приоритет',payBadgeDesc:'Property Control не хранит и не обрабатывает платежи. Вы платите напрямую на официальном сайте провайдера.',
     reqNewTitle:'Новая заявка',updateReq:'Обновить заявку',submitReq:'Отправить заявку',
@@ -908,7 +916,7 @@ var T = {
     perMonth:'в месяц',outstanding:'к оплате',estimated:'примерно',billsServices:'счета + услуги',
     freePlanDesc:'До 3 объектов · Услуги оплачиваются отдельно',
     proPlanDesc:'До 10 объектов · Ежемесячные визиты включены',
-    upgradePro:'Upgrade to Pro →',upgradeMore:'Расширить план',
+    upgradePro:'Перейти на Pro →',upgradeMore:'Расширить план',
     freeLimitMsg:'Достигнут лимит — {n} объекта на Free плане.',
     paymentHistory:'История платежей',exportExcel:'↓ Excel',overdueHeader:'Просроченные счета',
     months:['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'],
@@ -946,7 +954,10 @@ var T = {
     propVacant:'Свободен',propRented:'Отдаден',
     billProvider:'Доставчик',billClient:'Клиент',billProperty:'Имот',billAmount:'Сума',billDue:'Срок на плащане',billStatus:'Статус',billActions:'Действия',
     billOutstanding:'За плащане',billPaidYear:'Платено тази година',billNextTax:'Следващ данък',
-    cancel:'Отказ',edit:'Промени',payBtn:'Към плащане →',
+    cancel:'Отказ',edit:'Промени',payBtn:'Плати',payGoBtn:'Към плащане →',
+    upgradeTitle:'Надградете до Pro',upgradeLater:'По-късно',upgradeContact:'💬 Свържете се',
+    propManager:'Мениджър',
+    upgradeBodyHtml:'<strong style="color:var(--em)">€99 / месец</strong> — пълно управление на имоти:<br><br>✅ До <strong>10 имота</strong><br>✅ <strong>Push известия</strong> за просрочени сметки<br>✅ Напомняния <strong>3 дни</strong> преди срока<br>✅ <strong>1 планирано посещение</strong> на месец (фото отчет)<br>✅ <strong>1 спешно посещение</strong> на месец<br>✅ Приоритетна поддръжка',
     soon:'Скоро',editBill:'Промени сметка',labelAmount:'Сума (€)',labelDueDate:'Срок на плащане',
     payBadgeTitle:'Вашата сигурност е наш приоритет',payBadgeDesc:'Property Control не съхранява и не обработва плащания. Плащате директно на официалния сайт на доставчика.',
     reqNewTitle:'Нова заявка',updateReq:'Обнови заявка',submitReq:'Изпрати заявка',
@@ -956,7 +967,7 @@ var T = {
     perMonth:'на месец',outstanding:'за плащане',estimated:'приблизително',billsServices:'сметки + услуги',
     freePlanDesc:'До 3 имота · Услугите се заплащат отделно',
     proPlanDesc:'До 10 имота · Месечни посещения включени',
-    upgradePro:'Upgrade to Pro →',upgradeMore:'Разшири плана',
+    upgradePro:'Надградете до Pro →',upgradeMore:'Разшири плана',
     freeLimitMsg:'Достигнахте лимита от {n} имота на Free плана.',
     paymentHistory:'История на плащанията',exportExcel:'↓ Excel',overdueHeader:'Просрочени сметки',
     months:['Яну','Фев','Мар','Апр','Май','Юни','Юли','Авг','Сеп','Окт','Ное','Дек'],
@@ -1055,6 +1066,7 @@ function applyLangUI(){
     't-edit-bill-amount':'labelAmount','t-edit-bill-due':'labelDueDate',
     't-req-type-label':'reqTypeLabel','t-req-desc-label':'reqDescLabel',
     't-req-status-label':'reqStatusLabel','t-req-cost-label':'reqCostLabel',
+    't-upgrade-title':'upgradeTitle','t-upgrade-later':'upgradeLater','t-upgrade-contact':'upgradeContact',
     't-prop-type-apt':'propTypeApt','t-prop-type-house':'propTypeHouse',
     't-prop-type-studio':'propTypeStudio','t-prop-type-com':'propTypeCom',
     't-prop-vacant':'propVacant','t-prop-rented':'propRented',
@@ -1068,6 +1080,8 @@ function applyLangUI(){
     var el=document.getElementById(id);
     if(el) el.textContent=t(ids[id]);
   });
+  var upgradeBody=document.getElementById('upgrade-body');
+  if(upgradeBody) upgradeBody.innerHTML=t('upgradeBodyHtml');
   ['edit-bill-status','add-bill-status'].forEach(function(sid){
     var sel=document.getElementById(sid);
     if(sel) sel.querySelectorAll('option').forEach(function(opt){opt.textContent=t(opt.value);});
@@ -1483,7 +1497,7 @@ function rDashboard(){
     if(myManager){
       h+='<div style="display:flex;align-items:center;gap:14px;margin-bottom:1rem">';
       h+='<div style="width:48px;height:48px;border-radius:50%;background:var(--eml);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:16px;color:var(--em);border:2px solid var(--borderem)">'+(myManager.full_name?myManager.full_name.charAt(0).toUpperCase():'?')+'</div>';
-      h+='<div><div style="font-weight:500;font-size:15px">'+(myManager.full_name||myManager.email)+'</div><div style="font-size:12px;color:var(--dark60)">Property Manager'+(myManager.phone?' · '+myManager.phone:'')+'</div></div></div>';
+      h+='<div><div style="font-weight:500;font-size:15px">'+(myManager.full_name||myManager.email)+'</div><div style="font-size:12px;color:var(--dark60)">'+t('propManager')+(myManager.phone?' · '+myManager.phone:'')+'</div></div></div>';
       h+='<div style="display:flex;gap:8px;flex-wrap:wrap">';
       h+='<button onclick="goPage(\'page-requests\',null)" class="contact-btn">📋 '+t('newReq')+'</button>';
       h+='</div></div>';
@@ -1663,7 +1677,7 @@ function rBills(){
       h+='<td style="font-size:12px;color:var(--dark60)">'+(pr?pr.address.split(',')[0]:'—')+'</td>';
       h+='<td style="font-weight:600;color:#A32D2D">€'+b.amount+'</td>';
       h+='<td style="white-space:nowrap;font-size:12px"><span style="background:#FCEBEB;color:#791F1F;padding:2px 7px;border-radius:20px;font-size:11px">'+t('overdue')+' · '+monthLabel+'</span></td>';
-      h+='<td style="white-space:nowrap"><button class="btn btn-em btn-sm" onclick="openPayModal(\''+b.id+'\')">💳 Pay</button> <button class="btn btn-sm" onclick="openEditBillModal(\''+b.id+'\')">✏</button></td>';
+      h+='<td style="white-space:nowrap"><button class="btn btn-em btn-sm" onclick="openPayModal(\''+b.id+'\')">💳 '+t('payBtn')+'</button> <button class="btn btn-sm" onclick="openEditBillModal(\''+b.id+'\')">✏</button></td>';
       h+='</tr>';
     });
     h+='</tbody></table></div></div>';
@@ -1687,7 +1701,7 @@ function rBills(){
       h+='<td style="white-space:nowrap">'+(b.due||'—')+'</td>';
       h+='<td><span class="pill '+bPill(b.status)+'">'+t(b.status)+'</span></td>';
       h+='<td style="white-space:nowrap">';
-      if(b.status==='due'||b.status==='overdue') h+='<button class="btn btn-em btn-sm" onclick="openPayModal(\''+b.id+'\')">💳 Pay</button> ';
+      if(b.status==='due'||b.status==='overdue') h+='<button class="btn btn-em btn-sm" onclick="openPayModal(\''+b.id+'\')">💳 '+t('payBtn')+'</button> ';
       h+='<button class="btn btn-sm" onclick="openEditBillModal(\''+b.id+'\')">✏</button>';
       h+='</td></tr>';
     });
@@ -2015,7 +2029,7 @@ function openPayModal(bid){
   }
   document.getElementById('pay-title').textContent=providerLabel+' — €'+b.amount;
   document.getElementById('pay-body').innerHTML=bodyHtml;
-  document.getElementById('pay-go-btn').textContent='Перейти к оплате →';
+  document.getElementById('pay-go-btn').textContent=t('payGoBtn');
   document.getElementById('pay-go-btn').onclick=function(){
     window.open(url,'_blank');
     closeModal('modal-pay');
