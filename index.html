@@ -1432,6 +1432,7 @@ function buildNav(){
   var isTenant=curRole==='tenant';
   var dueBillsCnt=bills.filter(function(b){return b.status==='due'||b.status==='overdue';}).length;
   var newReqsCnt=reqs.filter(function(r){return r.status==='new';}).length;
+  var quotedReqsCnt=reqs.filter(function(r){return r.status==='quoted';}).length;
   var h='';
   if(isMgr){
     h+=ni('page-dashboard','⌂',t('dashboard'));
@@ -1451,7 +1452,7 @@ function buildNav(){
     h+=ni('page-properties','⊞',t('properties'));
     h+=ni('page-bills','◎',t('bills'),dueBillsCnt||null);
     h+=ni('page-finances','€',t('finances'));
-    h+=ni('page-requests','✦',t('requests'));
+    h+=ni('page-requests','✦',t('requests'),quotedReqsCnt||null);
   }
   nav.innerHTML=h;
 }
@@ -1807,6 +1808,7 @@ function rRequests(){
       h+='</div>';
       h+='<div class="req-right">';
       h+='<span class="pill '+rPill(r.status)+'">'+rStatusLabel(r.status)+'</span>';
+      if(!isMgr&&r.status==='quoted') h+='<div style="font-size:11px;color:var(--gold);font-weight:600;margin-top:4px">'+t('quotedPending')+'</div>';
       h+='<button class="btn btn-sm" onclick="openReqModal(\''+r.id+'\')">'+(isMgr?'✏ '+t('updateReq'):t('view'))+'</button>';
       h+='</div></div>';
     });
@@ -2389,6 +2391,24 @@ async function cancelReq(){
   var rid=document.getElementById('req-id').value;
   var res=await sb.from('requests').update({status:'cancelled'}).eq('id',rid);
   if(res.error){alert('Error: '+res.error.message);return;}
+  closeModal('modal-req');await loadReqs();rRequests();buildNav();
+}
+async function approveReq(){
+  var btn=document.getElementById('req-approve-btn');
+  if(btn.disabled)return;btn.disabled=true;
+  var rid=document.getElementById('req-id').value;
+  var note=document.getElementById('req-owner-note').value.trim();
+  var res=await sb.from('requests').update({status:'approved',owner_note:note||null}).eq('id',rid);
+  if(res.error){btn.disabled=false;alert('Error: '+res.error.message);return;}
+  closeModal('modal-req');await loadReqs();rRequests();buildNav();
+}
+async function declineReq(){
+  var btn=document.getElementById('req-decline-btn');
+  if(btn.disabled)return;btn.disabled=true;
+  var rid=document.getElementById('req-id').value;
+  var note=document.getElementById('req-owner-note').value.trim();
+  var res=await sb.from('requests').update({status:'declined',owner_note:note||null}).eq('id',rid);
+  if(res.error){btn.disabled=false;alert('Error: '+res.error.message);return;}
   closeModal('modal-req');await loadReqs();rRequests();buildNav();
 }
 async function loadReqs(){
