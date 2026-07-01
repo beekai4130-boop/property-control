@@ -772,10 +772,27 @@ tr:hover td{background:rgba(27,77,62,.02)}
       <label class="form-label" id="t-req-cost-label">Cost / Expenses (€)</label>
       <input class="form-input" type="number" id="req-cost" placeholder="0.00">
     </div>
+    <div class="form-group" id="req-manager-note-grp" style="display:none">
+      <label class="form-label" id="t-req-manager-note-label">Comment for owner</label>
+      <textarea class="form-textarea" id="req-manager-note" rows="2"></textarea>
+    </div>
+    <div class="form-group" id="req-quote-view-grp" style="display:none">
+      <label class="form-label" id="t-req-quotecost-label">Service cost</label>
+      <div id="req-quote-view-content" style="padding:14px;background:var(--eml);border-radius:10px;border:1px solid var(--borderem)"></div>
+    </div>
+    <div class="form-group" id="req-owner-note-grp" style="display:none">
+      <label class="form-label" id="t-req-owner-note-label">Your comment (optional)</label>
+      <textarea class="form-textarea" id="req-owner-note" rows="2"></textarea>
+    </div>
     </div>
     <div class="modal-acts">
       <button class="modal-cancel" id="req-cancel-btn" onclick="closeModal('modal-req')">Cancel</button>
+      <button class="modal-cancel" id="req-cancelreq-btn" onclick="cancelReq()" style="display:none;color:var(--red);border-color:var(--red)">Cancel request</button>
       <button class="modal-confirm" id="req-save-btn" onclick="saveReq()">Submit Request</button>
+      <button class="modal-confirm" id="req-quote-btn" onclick="quoteReq()" style="display:none">Send for approval</button>
+      <button class="modal-confirm" id="req-complete-btn" onclick="completeReq()" style="display:none">Mark as completed</button>
+      <button class="modal-confirm" id="req-approve-btn" onclick="approveReq()" style="display:none">✓ Confirm</button>
+      <button class="modal-cancel" id="req-decline-btn" onclick="declineReq()" style="display:none;color:var(--red);border-color:var(--red)">✗ Decline</button>
     </div>
   </div>
 </div>
@@ -2272,33 +2289,58 @@ async function saveProp(){
 }
 // ─ REQUEST MODAL ─
 function openReqModal(rid){
-  document.getElementById('req-id').value=rid||'';
   var isMgr=curRole==='manager'||curRole==='agent';
-  document.getElementById('req-modal-title').textContent=rid?t('updateReq'):t('reqNewTitle');
-  document.getElementById('req-save-btn').textContent=rid?t('savePropBtn'):t('submitReq');
+  document.getElementById('req-id').value=rid||'';
   document.getElementById('req-cancel-btn').textContent=t('cancel');
-  document.getElementById('req-status-grp').style.display=(rid&&isMgr)?'':'none';
-  document.getElementById('req-cost-grp').style.display=(rid&&isMgr)?'':'none';
-  document.getElementById('req-client-grp').style.display=isMgr&&!rid?'block':'none';
-  if(isMgr){
-    document.getElementById('req-client').innerHTML=clients.map(function(c){return '<option value="'+c.id+'">'+c.name+'</option>';}).join('');
-  }
-  if(rid){
-    var r=reqs.find(function(x){return x.id===rid;});
-    if(r){
-      document.getElementById('req-type').value=r.type;
-      document.getElementById('req-desc').value=r.desc;
-      document.getElementById('req-status').value=r.status;
-      document.getElementById('req-cost').value=r.cost||'';
+  // Hide all conditional groups
+  ['req-client-grp','req-status-grp','req-cost-grp','req-manager-note-grp',
+   'req-quote-view-grp','req-owner-note-grp','req-photo-grp'].forEach(function(gid){
+    var el=document.getElementById(gid);if(el)el.style.display='none';
+  });
+  // Reset all action buttons
+  ['req-save-btn','req-quote-btn','req-complete-btn','req-cancelreq-btn','req-approve-btn','req-decline-btn'].forEach(function(bid){
+    var el=document.getElementById(bid);if(el){el.style.display='none';el.disabled=false;}
+  });
+  document.getElementById('req-type').disabled=false;
+  document.getElementById('req-desc').readOnly=false;
+  var r=rid?reqs.find(function(x){return x.id===rid;}):null;
+  if(!rid){
+    // New request
+    document.getElementById('req-modal-title').textContent=t('reqNewTitle');
+    document.getElementById('req-desc').value='';document.getElementById('req-type').value='repair';
+    reqPhotoBase64=null;document.getElementById('req-photo-input').value='';
+    document.getElementById('req-photo-preview').style.display='none';document.getElementById('req-photo-preview').innerHTML='';
+    document.getElementById('req-photo-grp').style.display='';
+    if(isMgr){document.getElementById('req-client-grp').style.display='block';document.getElementById('req-client').innerHTML=clients.map(function(c){return '<option value="'+c.id+'">'+c.name+'</option>';}).join('');}
+    var saveBtn=document.getElementById('req-save-btn');saveBtn.textContent=t('submitReq');saveBtn.style.display='';
+  } else if(r){
+    document.getElementById('req-type').value=r.type;document.getElementById('req-desc').value=r.desc;
+    document.getElementById('req-type').disabled=true;document.getElementById('req-desc').readOnly=true;
+    if(isMgr){
+      document.getElementById('req-modal-title').textContent=t('updateReq')+' · '+rStatusLabel(r.status);
+      if(r.status==='new'){
+        document.getElementById('req-type').disabled=false;document.getElementById('req-desc').readOnly=false;
+        document.getElementById('req-cost').value=r.cost||'';document.getElementById('req-cost-grp').style.display='';
+        document.getElementById('req-manager-note').value=r.manager_note||'';document.getElementById('req-manager-note-grp').style.display='';
+        document.getElementById('req-quote-btn').textContent=t('sendQuote');document.getElementById('req-quote-btn').style.display='';
+        document.getElementById('req-cancelreq-btn').textContent=t('cancelReqBtn');document.getElementById('req-cancelreq-btn').style.display='';
+      } else if(r.status==='approved'){
+        document.getElementById('req-complete-btn').textContent=t('markComplete');document.getElementById('req-complete-btn').style.display='';
+        document.getElementById('req-cancelreq-btn').textContent=t('cancelReqBtn');document.getElementById('req-cancelreq-btn').style.display='';
+      } else if(r.status==='quoted'){
+        document.getElementById('req-cancelreq-btn').textContent=t('cancelReqBtn');document.getElementById('req-cancelreq-btn').style.display='';
+      }
+    } else {
+      document.getElementById('req-modal-title').textContent=rStatusLabel(r.status);
+      if(r.status==='quoted'){
+        var qc=document.getElementById('req-quote-view-content');
+        qc.innerHTML='<div style="font-size:24px;font-weight:700;color:var(--em);margin-bottom:6px">€'+r.cost+'</div>'+(r.manager_note?'<div style="font-size:13px;color:var(--dark60);line-height:1.5">'+r.manager_note+'</div>':'');
+        document.getElementById('req-quote-view-grp').style.display='';
+        document.getElementById('req-owner-note').value=r.owner_note||'';document.getElementById('req-owner-note-grp').style.display='';
+        document.getElementById('req-approve-btn').textContent=t('confirmReq');document.getElementById('req-approve-btn').style.display='';
+        document.getElementById('req-decline-btn').textContent=t('declineReqBtn');document.getElementById('req-decline-btn').style.display='';
+      }
     }
-  } else {
-    document.getElementById('req-desc').value='';
-    document.getElementById('req-cost').value='';
-    document.getElementById('req-type').value='repair';
-    reqPhotoBase64=null;
-    document.getElementById('req-photo-input').value='';
-    document.getElementById('req-photo-preview').style.display='none';
-    document.getElementById('req-photo-preview').innerHTML='';
   }
   openModal('modal-req');
 }
@@ -2312,6 +2354,42 @@ function previewReqPhoto(input){
     preview.style.display='block';
   };
   reader.readAsDataURL(input.files[0]);
+}
+async function quoteReq(){
+  var btn=document.getElementById('req-quote-btn');
+  if(btn.disabled)return;btn.disabled=true;
+  var rid=document.getElementById('req-id').value;
+  var cost=parseFloat(document.getElementById('req-cost').value)||0;
+  var note=document.getElementById('req-manager-note').value.trim();
+  if(!cost){btn.disabled=false;alert('Please enter the service cost.');return;}
+  var res=await sb.from('requests').update({status:'quoted',cost:cost,manager_note:note,type:document.getElementById('req-type').value,description:document.getElementById('req-desc').value.trim()}).eq('id',rid);
+  if(res.error){btn.disabled=false;alert('Error: '+res.error.message);return;}
+  var req=reqs.find(function(r){return r.id===rid;});
+  if(req){
+    var ownerCl=clients.find(function(c){return c.id===req.cid;});
+    if(ownerCl) fetch(SB_URL+'/functions/v1/notify-request',{method:'POST',headers:sbH(),body:JSON.stringify({notifType:'quote',cost:cost,managerNote:note,ownerEmail:ownerCl.email,ownerName:ownerCl.name,reqType:req.type})}).catch(function(){});
+  }
+  closeModal('modal-req');await loadReqs();rRequests();buildNav();
+}
+async function completeReq(){
+  var btn=document.getElementById('req-complete-btn');
+  if(btn.disabled)return;btn.disabled=true;
+  var rid=document.getElementById('req-id').value;
+  var req=reqs.find(function(r){return r.id===rid;});
+  if(!req){btn.disabled=false;return;}
+  var res=await sb.from('requests').update({status:'completed'}).eq('id',rid);
+  if(res.error){btn.disabled=false;alert('Error: '+res.error.message);return;}
+  var today=new Date();
+  var due=new Date(today.getTime()+7*24*60*60*1000).toISOString().split('T')[0];
+  var rb=await sb.from('bills').insert({property_id:req.pid||null,owner_id:req.cid,provider:'service',service:t('serviceName')+': '+rLabel(req.type),amount:req.cost,due_date:due,status:'due'});
+  if(rb.error){btn.disabled=false;alert('Bill error: '+rb.error.message);return;}
+  closeModal('modal-req');await loadReqs();rRequests();buildNav();
+}
+async function cancelReq(){
+  var rid=document.getElementById('req-id').value;
+  var res=await sb.from('requests').update({status:'cancelled'}).eq('id',rid);
+  if(res.error){alert('Error: '+res.error.message);return;}
+  closeModal('modal-req');await loadReqs();rRequests();buildNav();
 }
 async function loadReqs(){
   if(!curUser||!curUser.id){reqs=[];return;}
@@ -2384,7 +2462,7 @@ function exportExcel(){
 // HELPERS
 // ══════════════════════════════════════════
 function sc(label,val,sub,cls){return '<div class="stat"><div class="slabel">'+label+'</div><div class="sval '+(cls||'')+'">'+val+'</div>'+(sub?'<div class="ssub">'+sub+'</div>':'')+'</div>';}
-function pName(code){var m={EVN:'EVN Bulgaria','ViK-Burgas':'ВиК Бургас','ViK-Varna':'ВиК Варна','ViK-Sofia':'Софийска Вода',cez:'ЧЕЗ',toplofikacia:'Топлофикация',sofwater:'Софийска Вода',vivacom:'Vivacom',nap:'Данък (NAP / egov.bg)',hoa:'Такса поддържки',other:'Друго'};return m[code]||code;}
+function pName(code){var m={EVN:'EVN Bulgaria','ViK-Burgas':'ВиК Бургас','ViK-Varna':'ВиК Варна','ViK-Sofia':'Софийска Вода',cez:'ЧЕЗ',toplofikacia:'Топлофикация',sofwater:'Софийска Вода',vivacom:'Vivacom',nap:'Данък (NAP / egov.bg)',hoa:'Такса поддържки',other:'Друго',service:t('serviceName')};return m[code]||code;}
 function bPill(s){return s==='paid'?'p-paid':s==='due'?'p-due':s==='overdue'?'p-over':'p-soon';}
 function rIcon(t){var m={repair:'🔧',cleaning:'🧹',photo:'📷','tenant-check':'👤',emergency:'🚨',other:'📋'};return m[t]||'📋';}
 function rLabel(type){var m={repair:t('repair'),cleaning:t('cleaning'),photo:t('photo'),'tenant-check':t('tenantCheck'),emergency:t('emergency'),other:t('other')};return m[type]||type;}
