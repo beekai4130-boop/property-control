@@ -731,7 +731,7 @@ tr:hover td{background:rgba(27,77,62,.02)}
       <select class="form-select" id="req-client"></select>
     </div>
     <div class="form-group">
-      <label class="form-label">Request Type</label>
+      <label class="form-label" id="t-req-type-label">Request Type</label>
       <select class="form-select" id="req-type">
         <option value="repair">🔧 Repair</option>
         <option value="cleaning">🧹 Cleaning</option>
@@ -742,11 +742,11 @@ tr:hover td{background:rgba(27,77,62,.02)}
       </select>
     </div>
     <div class="form-group">
-      <label class="form-label">Description</label>
+      <label class="form-label" id="t-req-desc-label">Description</label>
       <textarea class="form-textarea" id="req-desc" placeholder="Describe the issue or request in detail..."></textarea>
     </div>
     <div class="form-group" id="req-status-grp" style="display:none">
-      <label class="form-label">Status</label>
+      <label class="form-label" id="t-req-status-label">Status</label>
       <select class="form-select" id="req-status">
         <option value="new">🆕 New</option>
         <option value="accepted">✅ Accepted</option>
@@ -755,11 +755,11 @@ tr:hover td{background:rgba(27,77,62,.02)}
       </select>
     </div>
     <div class="form-group" id="req-cost-grp" style="display:none">
-      <label class="form-label">Cost / Expenses (€)</label>
+      <label class="form-label" id="t-req-cost-label">Cost / Expenses (€)</label>
       <input class="form-input" type="number" id="req-cost" placeholder="0.00">
     </div>
     <div class="modal-acts">
-      <button class="modal-cancel" onclick="closeModal('modal-req')">Cancel</button>
+      <button class="modal-cancel" id="req-cancel-btn" onclick="closeModal('modal-req')">Cancel</button>
       <button class="modal-confirm" id="req-save-btn" onclick="saveReq()">Submit Request</button>
     </div>
   </div>
@@ -852,7 +852,19 @@ var T = {
     billOutstanding:'Outstanding',billPaidYear:'Paid This Year',billNextTax:'Next Tax',
     cancel:'Cancel',edit:'Edit',payBtn:'Go to payment →',
     soon:'Soon',editBill:'Edit Bill',labelAmount:'Amount (€)',labelDueDate:'Due Date',
-    payBadgeTitle:'Your security is our priority',payBadgeDesc:'Property Control does not store or process payments. You pay directly on the official provider website.'
+    payBadgeTitle:'Your security is our priority',payBadgeDesc:'Property Control does not store or process payments. You pay directly on the official provider website.',
+    reqNewTitle:'New Request',updateReq:'Update Request',submitReq:'Submit Request',
+    reqTypeLabel:'Request Type',reqDescLabel:'Description',reqStatusLabel:'Status',reqCostLabel:'Cost / Expenses (€)',
+    recentReqs:'Recent Requests',viewAll:'View All →',billsDueTitle:'Bills Due / Overdue',
+    allBillsPaid:'All bills are paid',noOutstandingBills:'No outstanding bills',yourManager:'Your Personal Manager',
+    perMonth:'per month',outstanding:'outstanding',estimated:'estimated',billsServices:'bills + services',
+    freePlanDesc:'Up to 3 properties · Services are paid separately',
+    proPlanDesc:'Up to 10 properties · Monthly visits included',
+    upgradePro:'Upgrade to Pro →',upgradeMore:'Upgrade for more',
+    freeLimitMsg:'You have reached the limit of {n} properties on the Free plan.',
+    paymentHistory:'Payment History',exportExcel:'↓ Export Excel',overdueHeader:'Overdue Bills',
+    months:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+    allObjects:'All properties'
   },
   ru:{
     dashboard:'Обзор',properties:'Мои объекты',bills:'Счета и налоги',
@@ -888,7 +900,19 @@ var T = {
     billOutstanding:'К оплате',billPaidYear:'Оплачено в этом году',billNextTax:'Ближайший налог',
     cancel:'Отмена',edit:'Изменить',payBtn:'Перейти к оплате →',
     soon:'Скоро',editBill:'Изменить счёт',labelAmount:'Сумма (€)',labelDueDate:'Срок оплаты',
-    payBadgeTitle:'Ваша безопасность — наш приоритет',payBadgeDesc:'Property Control не хранит и не обрабатывает платежи. Вы платите напрямую на официальном сайте провайдера.'
+    payBadgeTitle:'Ваша безопасность — наш приоритет',payBadgeDesc:'Property Control не хранит и не обрабатывает платежи. Вы платите напрямую на официальном сайте провайдера.',
+    reqNewTitle:'Новая заявка',updateReq:'Обновить заявку',submitReq:'Отправить заявку',
+    reqTypeLabel:'Тип заявки',reqDescLabel:'Описание',reqStatusLabel:'Статус',reqCostLabel:'Стоимость / Расходы (€)',
+    recentReqs:'Последние заявки',viewAll:'Смотреть все →',billsDueTitle:'Счета к оплате',
+    allBillsPaid:'Все счета оплачены',noOutstandingBills:'Нет просроченных счетов',yourManager:'Ваш личный менеджер',
+    perMonth:'в месяц',outstanding:'к оплате',estimated:'примерно',billsServices:'счета + услуги',
+    freePlanDesc:'До 3 объектов · Услуги оплачиваются отдельно',
+    proPlanDesc:'До 10 объектов · Ежемесячные визиты включены',
+    upgradePro:'Upgrade to Pro →',upgradeMore:'Расширить план',
+    freeLimitMsg:'Достигнут лимит — {n} объекта на Free плане.',
+    paymentHistory:'История платежей',exportExcel:'↓ Excel',overdueHeader:'Просроченные счета',
+    months:['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'],
+    allObjects:'Все объекты'
   },
   bg:{
     dashboard:'Преглед',properties:'Моите имоти',bills:'Сметки и данъци',
@@ -924,7 +948,19 @@ var T = {
     billOutstanding:'За плащане',billPaidYear:'Платено тази година',billNextTax:'Следващ данък',
     cancel:'Отказ',edit:'Промени',payBtn:'Към плащане →',
     soon:'Скоро',editBill:'Промени сметка',labelAmount:'Сума (€)',labelDueDate:'Срок на плащане',
-    payBadgeTitle:'Вашата сигурност е наш приоритет',payBadgeDesc:'Property Control не съхранява и не обработва плащания. Плащате директно на официалния сайт на доставчика.'
+    payBadgeTitle:'Вашата сигурност е наш приоритет',payBadgeDesc:'Property Control не съхранява и не обработва плащания. Плащате директно на официалния сайт на доставчика.',
+    reqNewTitle:'Нова заявка',updateReq:'Обнови заявка',submitReq:'Изпрати заявка',
+    reqTypeLabel:'Тип заявка',reqDescLabel:'Описание',reqStatusLabel:'Статус',reqCostLabel:'Разходи (€)',
+    recentReqs:'Последни заявки',viewAll:'Виж всички →',billsDueTitle:'Сметки за плащане',
+    allBillsPaid:'Всички сметки са платени',noOutstandingBills:'Няма неплатени сметки',yourManager:'Вашият личен мениджър',
+    perMonth:'на месец',outstanding:'за плащане',estimated:'приблизително',billsServices:'сметки + услуги',
+    freePlanDesc:'До 3 имота · Услугите се заплащат отделно',
+    proPlanDesc:'До 10 имота · Месечни посещения включени',
+    upgradePro:'Upgrade to Pro →',upgradeMore:'Разшири плана',
+    freeLimitMsg:'Достигнахте лимита от {n} имота на Free плана.',
+    paymentHistory:'История на плащанията',exportExcel:'↓ Excel',overdueHeader:'Просрочени сметки',
+    months:['Яну','Фев','Мар','Апр','Май','Юни','Юли','Авг','Сеп','Окт','Ное','Дек'],
+    allObjects:'Всички имоти'
   }
 };
 function t(k){return (T[lang]&&T[lang][k])||(T['en']&&T['en'][k])||k;}
@@ -1017,6 +1053,8 @@ function applyLangUI(){
     't-prop-cancel':'cancel',
     'pay-badge-title':'payBadgeTitle','pay-badge-desc':'payBadgeDesc',
     't-edit-bill-amount':'labelAmount','t-edit-bill-due':'labelDueDate',
+    't-req-type-label':'reqTypeLabel','t-req-desc-label':'reqDescLabel',
+    't-req-status-label':'reqStatusLabel','t-req-cost-label':'reqCostLabel',
     't-prop-type-apt':'propTypeApt','t-prop-type-house':'propTypeHouse',
     't-prop-type-studio':'propTypeStudio','t-prop-type-com':'propTypeCom',
     't-prop-vacant':'propVacant','t-prop-rented':'propRented',
@@ -1034,6 +1072,14 @@ function applyLangUI(){
     var sel=document.getElementById(sid);
     if(sel) sel.querySelectorAll('option').forEach(function(opt){opt.textContent=t(opt.value);});
   });
+  var reqTypeKeys={repair:'repair',cleaning:'cleaning',photo:'photo','tenant-check':'tenantCheck',emergency:'emergency',other:'other'};
+  var reqTypeEmoji={repair:'🔧',cleaning:'🧹',photo:'📷','tenant-check':'👤',emergency:'🚨',other:'📋'};
+  var reqTypeSel=document.getElementById('req-type');
+  if(reqTypeSel) reqTypeSel.querySelectorAll('option').forEach(function(opt){opt.textContent=(reqTypeEmoji[opt.value]||'')+' '+t(reqTypeKeys[opt.value]||opt.value);});
+  var reqStatusKeys={new:'req_new',accepted:'accepted',progress:'progress',done:'done'};
+  var reqStatusEmoji={new:'🆕',accepted:'✅',progress:'🔄',done:'✔️'};
+  var reqStatSel=document.getElementById('req-status');
+  if(reqStatSel) reqStatSel.querySelectorAll('option').forEach(function(opt){opt.textContent=(reqStatusEmoji[opt.value]||'')+' '+t(reqStatusKeys[opt.value]||opt.value);});
   var regPass=document.getElementById('reg-pass');
   if(regPass) regPass.placeholder=t('regPassHint');
   var regBtn=document.getElementById('btn-register');
@@ -1371,13 +1417,13 @@ function rDashboard(){
     h+='<div class="g4">';
     h+=sc(t('totalClients'),clients.length,'','c-em');
     h+=sc(t('totalProp'),props.length,props.filter(function(p){return p.status==='rented';}).length+' rented','c-em');
-    h+=sc(t('activeBills'),dueBills.length,'€'+dueBillsTotal+' outstanding','c-red');
+    h+=sc(t('activeBills'),dueBills.length,'€'+dueBillsTotal+' '+t('outstanding'),'c-red');
     h+=sc(t('openReqs'),openReqsCnt,'','c-gold');
     h+='</div>';
     h+='<div class="g2">';
     // Recent requests
-    h+='<div class="card"><div class="sec-head"><div class="sec-title">Recent Requests</div><button class="btn btn-sm" onclick="goPage(\'page-requests\',null)">View All →</button></div>';
-    if(!reqs.length){h+='<div class="empty"><div class="empty-icon">📋</div><div class="empty-text">No requests yet</div></div>';}
+    h+='<div class="card"><div class="sec-head"><div class="sec-title">'+t('recentReqs')+'</div><button class="btn btn-sm" onclick="goPage(\'page-requests\',null)">'+t('viewAll')+'</button></div>';
+    if(!reqs.length){h+='<div class="empty"><div class="empty-icon">📋</div><div class="empty-text">'+t('noReq')+'</div></div>';}
     else reqs.slice(0,4).forEach(function(r){
       var cl=clients.find(function(c){return c.id===r.cid;});
       var pr=props.find(function(p){return p.id===r.pid;});
@@ -1385,8 +1431,8 @@ function rDashboard(){
     });
     h+='</div>';
     // Overdue bills
-    h+='<div class="card"><div class="sec-head"><div class="sec-title">Bills Due / Overdue</div><button class="btn btn-sm" onclick="goPage(\'page-bills\',null)">View All →</button></div>';
-    if(!dueBills.length){h+='<div class="empty"><div class="empty-icon">✅</div><div class="empty-text">All bills are paid</div></div>';}
+    h+='<div class="card"><div class="sec-head"><div class="sec-title">'+t('billsDueTitle')+'</div><button class="btn btn-sm" onclick="goPage(\'page-bills\',null)">'+t('viewAll')+'</button></div>';
+    if(!dueBills.length){h+='<div class="empty"><div class="empty-icon">✅</div><div class="empty-text">'+t('allBillsPaid')+'</div></div>';}
     else dueBills.slice(0,5).forEach(function(b){
       var cl=clients.find(function(c){return c.id===b.cid;});
       var pr=props.find(function(p){return p.id===b.pid;});
@@ -1404,15 +1450,15 @@ function rDashboard(){
     h+='<div style="background:'+bgGrad+';border:1px solid var(--borderem);border-radius:16px;padding:1.25rem 1.5rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem">';
     h+='<div><div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:'+textColor+';opacity:.7;margin-bottom:4px">'+t('yourPlan')+'</div>';
     h+='<div style="font-family:Cormorant Garamond,serif;font-size:22px;font-weight:500;color:'+textColor+'">'+(isFree?t('freePlan'):'⭐ '+t('proPlan'))+'</div>';
-    h+='<div style="font-size:12px;color:'+textColor+';opacity:.8;margin-top:2px">'+(isFree?'Up to 3 properties · Services are paid separately':'Up to 10 properties · Monthly visits included')+'</div></div>';
-    if(isFree) h+='<button onclick="openModal(\'modal-upgrade\')" style="flex-shrink:0;padding:10px 18px;background:var(--em);color:white;border:none;border-radius:10px;font-family:\'DM Sans\',sans-serif;font-size:13px;font-weight:500;cursor:pointer">Upgrade to Pro →</button>';
+    h+='<div style="font-size:12px;color:'+textColor+';opacity:.8;margin-top:2px">'+(isFree?t('freePlanDesc'):t('proPlanDesc'))+'</div></div>';
+    if(isFree) h+='<button onclick="openModal(\'modal-upgrade\')" style="flex-shrink:0;padding:10px 18px;background:var(--em);color:white;border:none;border-radius:10px;font-family:\'DM Sans\',sans-serif;font-size:13px;font-weight:500;cursor:pointer">'+t('upgradePro')+'</button>';
     else h+='<div style="color:white;font-size:13px;opacity:.8">€99/month</div>';
     h+='</div>';
 
     h+='<div class="g3">';
-    h+=sc(t('income'),'€'+totalRent,'per month','c-em');
-    h+=sc(t('expenses'),'€'+dueBillsTotal,'outstanding','c-red');
-    h+=sc(t('profit'),'€'+profit,'estimated',profit>=0?'c-em':'c-red');
+    h+=sc(t('income'),'€'+totalRent,t('perMonth'),'c-em');
+    h+=sc(t('expenses'),'€'+dueBillsTotal,t('outstanding'),'c-red');
+    h+=sc(t('profit'),'€'+profit,t('estimated'),profit>=0?'c-em':'c-red');
     h+='</div>';
 
     h+='<div class="g2">';
@@ -1424,8 +1470,8 @@ function rDashboard(){
     });
     h+='</div>';
     // Bills summary
-    h+='<div class="card"><div class="sec-head"><div class="sec-title">'+t('bills')+'</div><button class="btn btn-sm" onclick="goPage(\'page-bills\',null)">View All →</button></div>';
-    if(!dueBills.length){h+='<div class="empty"><div class="empty-icon">✅</div><div class="empty-text">No outstanding bills</div></div>';}
+    h+='<div class="card"><div class="sec-head"><div class="sec-title">'+t('bills')+'</div><button class="btn btn-sm" onclick="goPage(\'page-bills\',null)">'+t('viewAll')+'</button></div>';
+    if(!dueBills.length){h+='<div class="empty"><div class="empty-icon">✅</div><div class="empty-text">'+t('noOutstandingBills')+'</div></div>';}
     else dueBills.slice(0,4).forEach(function(b){
       var pr=props.find(function(p){return p.id===b.pid;});
       h+='<div class="fin-row"><div><div style="font-weight:500">'+pName(b.provider)+'</div><div style="font-size:11px;color:var(--dark60)">'+(pr?pr.address.split(',')[0]:'')+'</div></div><div><div style="font-weight:600;color:var(--red)">€'+b.amount+'</div></div></div>';
@@ -1433,7 +1479,7 @@ function rDashboard(){
     h+='</div></div>';
 
     // Your manager
-    h+='<div class="card"><div class="sec-head"><div class="sec-title">Your Personal Manager</div></div>';
+    h+='<div class="card"><div class="sec-head"><div class="sec-title">'+t('yourManager')+'</div></div>';
     if(myManager){
       h+='<div style="display:flex;align-items:center;gap:14px;margin-bottom:1rem">';
       h+='<div style="width:48px;height:48px;border-radius:50%;background:var(--eml);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:16px;color:var(--em);border:2px solid var(--borderem)">'+(myManager.full_name?myManager.full_name.charAt(0).toUpperCase():'?')+'</div>';
@@ -1459,10 +1505,10 @@ function rProperties(){
   var canAdd=isMgr||(props.length<maxProps);
   var h='<div class="sec-head"><div class="sec-title">'+t('properties')+'</div>';
   if(canAdd) h+='<button class="btn btn-em" onclick="openPropModal()">'+t('addProp')+'</button>';
-  else h+='<button class="btn btn-gold" onclick="openModal(\'modal-upgrade\')">⭐ Upgrade for more</button>';
+  else h+='<button class="btn btn-gold" onclick="openModal(\'modal-upgrade\')">⭐ '+t('upgradeMore')+'</button>';
   h+='</div>';
   if(!canAdd&&props.length>=maxProps){
-    h+='<div class="alert alert-w">⚠️ You have reached the limit of '+maxProps+' properties on the Free plan. <a href="#" onclick="openModal(\'modal-upgrade\')" style="color:var(--em);font-weight:500">Upgrade to Pro →</a></div>';
+    h+='<div class="alert alert-w">⚠️ '+t('freeLimitMsg').replace('{n}',maxProps)+' <a href="#" onclick="openModal(\'modal-upgrade\')" style="color:var(--em);font-weight:500">'+t('upgradePro')+'</a></div>';
   }
   if(!props.length){
     h+='<div class="card"><div class="empty"><div class="empty-icon">🏠</div><div class="empty-text">'+t('noProp')+'</div><button class="btn btn-em" onclick="openPropModal()">'+t('addProp')+'</button></div></div>';
@@ -1477,7 +1523,8 @@ function rProperties(){
       h+='<div class="prop-body"><div class="prop-name">'+p.address.split(',')[0]+'</div>';
       h+='<div class="prop-addr">'+p.address.split(',').slice(1).join(',').trim()+'</div>';
       h+='<div class="prop-meta">';
-      h+='<span>'+p.type.charAt(0).toUpperCase()+p.type.slice(1)+(p.area?' · '+p.area+' m²':'')+'</span>';
+      var typeKey={apartment:'propTypeApt',house:'propTypeHouse',studio:'propTypeStudio',commercial:'propTypeCom'};
+      h+='<span>'+(typeKey[p.type]?t(typeKey[p.type]):p.type.charAt(0).toUpperCase()+p.type.slice(1))+(p.area?' · '+p.area+' m²':'')+'</span>';
       if(isRented) h+='<span style="color:var(--em);font-weight:500">€'+p.rent+'/mo</span>';
       if(cl) h+='<span>👤 '+cl.name+(cl.status==='exclusive'?' <span class="pill p-paid" style="margin-left:4px">Эксклюзив</span>':'')+'</span>';
       h+='</div>';
@@ -1555,7 +1602,7 @@ function rBills(){
   months.sort(function(a,b){return a.y!==b.y?a.y-b.y:a.m-b.m;});
 
   var allAddresses=[...new Set(props.map(function(p){return p.address.split(',')[0];}))];
-  var RU_MONTHS=['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'];
+  var MONTHS=(T[lang]&&T[lang].months)||T.en.months;
   var taxMonths=[3,9];
   var isNapMonth=taxMonths.indexOf(curMonth)!==-1;
 
@@ -1572,9 +1619,9 @@ function rBills(){
   if(allAddresses.length>0){
     var sortedAddr=allAddresses.slice().sort(function(a,b){return a.localeCompare(b,'ru');});
     h+='<div style="margin-bottom:14px;display:flex;align-items:center;gap:10px">';
-    h+='<span style="font-size:12px;color:var(--dark60);white-space:nowrap">Объект:</span>';
+    h+='<span style="font-size:12px;color:var(--dark60);white-space:nowrap">'+t('billProperty')+':</span>';
     h+='<select onchange=\"window._billAddr=this.value;rBills()\" style=\"font-size:13px;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--warm);color:var(--dark);min-width:180px;cursor:pointer;appearance:auto\">';
-    h+='<option value="all"'+(activeAddr==='all'?' selected':'')+'>Все объекты</option>';
+    h+='<option value="all"'+(activeAddr==='all'?' selected':'')+'>'+t('allObjects')+'</option>';
     sortedAddr.forEach(function(addr){
       h+='<option value="'+addr+'"'+(activeAddr===addr?' selected':'')+'>'+addr+'</option>';
     });
@@ -1585,11 +1632,11 @@ function rBills(){
   months.forEach(function(mo){
     var isActive=mo.m===curMonth&&mo.y===curYear;
     var hasNap=taxMonths.indexOf(mo.m)!==-1;
-    var label=RU_MONTHS[mo.m]+' '+mo.y+(hasNap?' 🔔':'');
+    var label=MONTHS[mo.m]+' '+mo.y+(hasNap?' 🔔':'');
     h+='<button onclick="window._billMonth='+mo.m+';window._billYear='+mo.y+';rBills()" style="font-size:12px;padding:5px 14px;border-radius:20px;cursor:pointer;white-space:nowrap;border:'+(isActive?'none':'0.5px solid var(--border)')+';background:'+(isActive?'var(--dark)':'transparent')+';color:'+(isActive?'var(--warm)':'var(--dark60)')+'">'+label+'</button>';
   });
   if(!months.length){
-    var label=RU_MONTHS[curMonth]+' '+curYear;
+    var label=MONTHS[curMonth]+' '+curYear;
     h+='<button style="font-size:12px;padding:5px 14px;border-radius:20px;border:none;background:var(--dark);color:var(--warm);white-space:nowrap">'+label+'</button>';
   }
   h+='</div>';
@@ -1599,7 +1646,7 @@ function rBills(){
   }
 
   if(overdue.length){
-    h+='<div style="font-size:11px;font-weight:500;color:#791F1F;text-transform:uppercase;letter-spacing:.05em;padding:4px 0 8px">⚠ Просроченные счета</div>';
+    h+='<div style="font-size:11px;font-weight:500;color:#791F1F;text-transform:uppercase;letter-spacing:.05em;padding:4px 0 8px">⚠ '+t('overdueHeader')+'</div>';
     h+='<div style="background:#FCEBEB22;border-radius:10px;margin-bottom:1rem;overflow:hidden">';
     h+='<div class="tbl-wrap"><table><thead><tr>';
     h+='<th>'+t('billProvider')+'</th>';
@@ -1609,13 +1656,13 @@ function rBills(){
       var cl=clients.find(function(c){return c.id===b.cid;});
       var pr=props.find(function(p){return p.id===b.pid;});
       var d=new Date(b.due);
-      var monthLabel=RU_MONTHS[d.getMonth()]+' '+d.getFullYear();
+      var monthLabel=MONTHS[d.getMonth()]+' '+d.getFullYear();
       h+='<tr style="background:#FCEBEB18">';
       h+='<td style="font-weight:500">'+pName(b.provider)+'</td>';
       if(isMgr) h+='<td>'+(cl?cl.name:'—')+'</td>';
       h+='<td style="font-size:12px;color:var(--dark60)">'+(pr?pr.address.split(',')[0]:'—')+'</td>';
       h+='<td style="font-weight:600;color:#A32D2D">€'+b.amount+'</td>';
-      h+='<td style="white-space:nowrap;font-size:12px"><span style="background:#FCEBEB;color:#791F1F;padding:2px 7px;border-radius:20px;font-size:11px">Просрочен · '+monthLabel+'</span></td>';
+      h+='<td style="white-space:nowrap;font-size:12px"><span style="background:#FCEBEB;color:#791F1F;padding:2px 7px;border-radius:20px;font-size:11px">'+t('overdue')+' · '+monthLabel+'</span></td>';
       h+='<td style="white-space:nowrap"><button class="btn btn-em btn-sm" onclick="openPayModal(\''+b.id+'\')">💳 Pay</button> <button class="btn btn-sm" onclick="openEditBillModal(\''+b.id+'\')">✏</button></td>';
       h+='</tr>';
     });
@@ -1625,7 +1672,7 @@ function rBills(){
   if(!curMonthBills.length&&!overdue.length){
     h+='<div class="empty"><div class="empty-icon">📋</div><div class="empty-text">'+t('noBill')+'</div></div>';
   } else if(curMonthBills.length){
-    if(overdue.length) h+='<div style="font-size:11px;font-weight:500;color:var(--dark60);text-transform:uppercase;letter-spacing:.05em;padding:4px 0 8px">'+RU_MONTHS[curMonth]+' '+curYear+'</div>';
+    if(overdue.length) h+='<div style="font-size:11px;font-weight:500;color:var(--dark60);text-transform:uppercase;letter-spacing:.05em;padding:4px 0 8px">'+MONTHS[curMonth]+' '+curYear+'</div>';
     h+='<div class="tbl-wrap"><table><thead><tr>';
     h+='<th>'+t('billProvider')+'</th>';
     if(isMgr) h+='<th>'+t('billClient')+'</th>';
@@ -1697,15 +1744,15 @@ function rFinances(){
   var totalCostReqs=reqs.filter(function(r){return r.cost>0;}).reduce(function(s,r){return s+(r.cost||0);},0);
   var profit=totalRent-totalExp-totalCostReqs;
   var h='<div class="g3">';
-  h+=sc(t('income'),'€'+totalRent,'per month','c-em');
-  h+=sc(t('expenses'),'€'+(totalExp+totalCostReqs),'bills + services','c-red');
-  h+=sc(t('profit'),'€'+profit,'estimated',profit>=0?'c-em':'c-red');
+  h+=sc(t('income'),'€'+totalRent,t('perMonth'),'c-em');
+  h+=sc(t('expenses'),'€'+(totalExp+totalCostReqs),t('billsServices'),'c-red');
+  h+=sc(t('profit'),'€'+profit,t('estimated'),profit>=0?'c-em':'c-red');
   h+='</div>';
   // Bill history table
-  h+='<div class="card"><div class="sec-head"><div class="sec-title">Payment History</div><button class="btn btn-sm" onclick="exportExcel()">↓ Export Excel</button></div>';
+  h+='<div class="card"><div class="sec-head"><div class="sec-title">'+t('paymentHistory')+'</div><button class="btn btn-sm" onclick="exportExcel()">'+t('exportExcel')+'</button></div>';
   h+='<div class="tbl-wrap"><table><thead><tr>';
-  if(isMgr) h+='<th>Client</th>';
-  h+='<th>Property</th><th>Provider</th><th>Amount</th><th>Due Date</th><th>Status</th></tr></thead><tbody>';
+  if(isMgr) h+='<th>'+t('billClient')+'</th>';
+  h+='<th>'+t('billProperty')+'</th><th>'+t('billProvider')+'</th><th>'+t('billAmount')+'</th><th>'+t('billDue')+'</th><th>'+t('billStatus')+'</th></tr></thead><tbody>';
   bills.forEach(function(b){
     var cl=isMgr?clients.find(function(c){return c.id===b.cid;}):null;
     var pr=props.find(function(p){return p.id===b.pid;});
@@ -1733,7 +1780,7 @@ function rFinances(){
   });
   h+='</tbody></table></div></div>';
   pg.innerHTML=h;
-  document.getElementById('topbar-acts').innerHTML='<button class="btn btn-sm" onclick="exportExcel()">↓ Excel</button>';
+  document.getElementById('topbar-acts').innerHTML='<button class="btn btn-sm" onclick="exportExcel()">'+t('exportExcel')+'</button>';
 }
   
 // ══════════════════════════════════════════
@@ -2161,8 +2208,9 @@ async function saveProp(){
 function openReqModal(rid){
   document.getElementById('req-id').value=rid||'';
   var isMgr=curRole==='manager'||curRole==='agent';
-  document.getElementById('req-modal-title').textContent=rid?'Update Request':'New Request';
-  document.getElementById('req-save-btn').textContent=rid?'Save Changes':'Submit Request';
+  document.getElementById('req-modal-title').textContent=rid?t('updateReq'):t('reqNewTitle');
+  document.getElementById('req-save-btn').textContent=rid?t('savePropBtn'):t('submitReq');
+  document.getElementById('req-cancel-btn').textContent=t('cancel');
   document.getElementById('req-status-grp').style.display=(rid&&isMgr)?'':'none';
   document.getElementById('req-cost-grp').style.display=(rid&&isMgr)?'':'none';
   document.getElementById('req-client-grp').style.display=isMgr&&!rid?'block':'none';
