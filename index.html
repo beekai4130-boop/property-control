@@ -2306,21 +2306,24 @@ async function loadReqs(){
   if(q.data) reqs=q.data.map(function(r){return {id:r.id,type:r.type,desc:r.description,status:r.status,created:r.created_at?r.created_at.split('T')[0]:'',cost:0,cid:r.owner_id,pid:r.property_id,photo:r.photo_url};});
 }
 async function saveReq(){
+  var btn=document.getElementById('req-save-btn');
+  if(btn.disabled) return;
+  btn.disabled=true;
   var rid=document.getElementById('req-id').value;
   var desc=document.getElementById('req-desc').value.trim();
-  if(!desc){alert('Please describe your request.');return;}
+  if(!desc){btn.disabled=false;alert('Please describe your request.');return;}
   var isMgr=curRole==='manager'||curRole==='agent';
   var reqType=document.getElementById('req-type').value;
   if(rid){
     var updates={type:reqType,description:desc};
     if(isMgr){updates.status=document.getElementById('req-status').value;}
     var res=await sb.from('requests').update(updates).eq('id',rid);
-    if(res.error){alert('Error: '+res.error.message);return;}
+    if(res.error){btn.disabled=false;alert('Error: '+res.error.message);return;}
   } else {
     var ownerId=isMgr?document.getElementById('req-client').value:curUser.id;
     var ins={owner_id:ownerId,type:reqType,description:desc,status:'new',photo_url:reqPhotoBase64||null};
     var res=await sb.from('requests').insert(ins);
-    if(res.error){alert('Error: '+res.error.message);return;}
+    if(res.error){btn.disabled=false;alert('Error: '+res.error.message);return;}
     var ownerName=(curUser.user_metadata&&curUser.user_metadata.full_name)||curUser.email.split('@')[0];
     fetch(SB_URL+'/functions/v1/notify-request',{method:'POST',headers:sbH(),body:JSON.stringify({type:reqType,description:desc,ownerName:ownerName,ownerEmail:curUser.email,propertyAddress:'—'})}).catch(function(){});
     var typeEmoji={repair:'🔧',cleaning:'🧹',photo:'📷','tenant-check':'👤',emergency:'🚨',other:'📋'};
