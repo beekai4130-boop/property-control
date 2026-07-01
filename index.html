@@ -816,6 +816,7 @@ var props = [];
 var bills = [];
 var reqs = [];
 var clients = [];
+var reqPhotoBase64 = null;
 var myManager = null;
 
 // ══════════════════════════════════════════
@@ -1241,6 +1242,7 @@ function finishLogin(user){
         if(rb.data) bills=rb.data.map(function(b){return {id:b.id,pid:b.property_id,provider:b.provider,service:b.service,amount:b.amount||0,due:b.due_date,status:b.status,cid:b.owner_id};});
       }
     }
+    await loadReqs();
     rProperties();
     rBills();
     buildNav();
@@ -2254,25 +2256,37 @@ function openReqModal(rid){
   }
   openModal('modal-req');
 }
-function saveReq(){
+async function loadReqs(){
+  if(!curUser||!curUser.id){reqs=[];return;}
+  var q;
+  if(curRole==='manager'||curRole==='agent'){
+    var ownerIds=clients.map(function(c){return c.id;});
+    if(!ownerIds.length){reqs=[];return;}
+    q=await sb.from('requests').select('*').in('owner_id',ownerIds).order('created_at',{ascending:false});
+  } else {
+    q=await sb.from('requests').select('*').eq('owner_id',curUser.id).order('created_at',{ascending:false});
+  }
+  if(q.data) reqs=q.data.map(function(r){return {id:r.id,type:r.type,desc:r.description,status:r.status,created:r.created_at?r.created_at.split('T')[0]:'',cost:0,cid:r.owner_id,pid:r.property_id,photo:r.photo_url};});
+}
+async function saveReq(){
   var rid=document.getElementById('req-id').value;
   var desc=document.getElementById('req-desc').value.trim();
   if(!desc){alert('Please describe your request.');return;}
   var isMgr=curRole==='manager'||curRole==='agent';
+  var reqType=document.getElementById('req-type').value;
   if(rid){
-    var r=reqs.find(function(x){return x.id===rid;});
-    if(r){
-      r.type=document.getElementById('req-type').value;
-      r.desc=desc;
-      if(isMgr){r.status=document.getElementById('req-status').value;r.cost=parseFloat(document.getElementById('req-cost').value)||0;}
-    }
+    var updates={type:reqType,description:desc};
+    if(isMgr){updates.status=document.getElementById('req-status').value;}
+    var res=await sb.from('requests').update(updates).eq('id',rid);
+    if(res.error){alert('Error: '+res.error.message);return;}
   } else {
-    var data={id:'r'+Date.now(),type:document.getElementById('req-type').value,desc:desc,status:'new',created:new Date().toISOString().split('T')[0],cost:0};
-    if(isMgr) data.cid=document.getElementById('req-client').value;
-    else data.cid='me';
-    reqs.push(data);
+    var ownerId=isMgr?document.getElementById('req-client').value:curUser.id;
+    var ins={owner_id:ownerId,type:reqType,description:desc,status:'new',photo_url:reqPhotoBase64||null};
+    var res=await sb.from('requests').insert(ins);
+    if(res.error){alert('Error: '+res.error.message);return;}
   }
   closeModal('modal-req');
+  await loadReqs();
   rRequests();
   buildNav();
 }
