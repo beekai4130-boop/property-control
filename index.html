@@ -2361,10 +2361,12 @@ async function quoteReq(){
   var btn=document.getElementById('req-quote-btn');
   if(btn.disabled)return;btn.disabled=true;
   var rid=document.getElementById('req-id').value;
-  var cost=parseFloat(document.getElementById('req-cost').value)||0;
+  var costVal=parseFloat(document.getElementById('req-cost').value);
   var note=document.getElementById('req-manager-note').value.trim();
-  if(!cost){btn.disabled=false;alert('Please enter the service cost.');return;}
-  var res=await sb.from('requests').update({status:'quoted',cost:cost,manager_note:note,type:document.getElementById('req-type').value,description:document.getElementById('req-desc').value.trim()}).eq('id',rid);
+  if(!(costVal>0)){btn.disabled=false;alert('Please enter the service cost.');return;}
+  var upd={status:'quoted',manager_note:note,type:document.getElementById('req-type').value,description:document.getElementById('req-desc').value.trim()};
+  upd.cost=costVal;
+  var res=await sb.from('requests').update(upd).eq('id',rid);
   if(res.error){btn.disabled=false;alert('Error: '+res.error.message);return;}
   var req=reqs.find(function(r){return r.id===rid;});
   if(req){
