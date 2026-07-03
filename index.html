@@ -118,6 +118,14 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--cream);c
 .sval{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:500;line-height:1}
 .ssub{font-size:12px;color:var(--dark60);margin-top:4px}
 .c-em{color:var(--em)}.c-red{color:var(--red)}.c-mid{color:var(--emm)}.c-gold{color:var(--gold)}
+.stat-fin{position:relative;box-shadow:var(--shadow);padding-top:1.25rem}
+.stat-fin::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:14px 14px 0 0}
+.stat-fin.stripe-em::before{background:var(--em)}
+.stat-fin.stripe-red::before{background:var(--red)}
+.stat-fin.stripe-blue::before{background:var(--blue)}
+.stat-delta{display:flex;align-items:center;gap:4px;font-size:12px;margin-top:4px;font-weight:500}
+.stat-delta-up{color:var(--em)}
+.stat-delta-down{color:var(--red)}
 .sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
 .sec-title{font-size:14px;font-weight:500}
 
@@ -870,7 +878,7 @@ var T = {
     noProp:'No properties yet',noBill:'No bills yet',noReq:'No requests yet',
     rented:'Rented',vacant:'Vacant',paid:'Paid',due:'Due',overdue:'Overdue',
     upcoming:'Upcoming',req_new:'New',accepted:'Accepted',progress:'In Progress',done:'Done',
-    income:'Rental Income',expenses:'Bill Expenses',profit:'Net Profit',
+    income:'Rental Income',expenses:'Bill Expenses',profit:'Net Profit',vsLastMonth:'vs last month',
     totalProp:'Total Properties',activeBills:'Active Bills',openReqs:'Open Requests',totalClients:'Total Clients',
     yourPlan:'Your Plan',freePlan:'Free Plan',proPlan:'Pro Plan',
     manager:'Manager',owner:'Property Owner',agent:'Agent',tenant:'Tenant',
@@ -928,7 +936,7 @@ var T = {
     noProp:'Объекты не добавлены',noBill:'Счета не добавлены',noReq:'Заявок нет',
     rented:'Сдан',vacant:'Свободен',paid:'Оплачен',due:'К оплате',overdue:'Просрочен',
     upcoming:'Предстоит',req_new:'Новая',accepted:'Принята',progress:'В работе',done:'Выполнена',
-    income:'Доход от аренды',expenses:'Расходы на счета',profit:'Чистая прибыль',
+    income:'Доход от аренды',expenses:'Расходы на счета',profit:'Чистая прибыль',vsLastMonth:'к прошлому месяцу',
     totalProp:'Всего объектов',activeBills:'Активных счетов',openReqs:'Открытых заявок',totalClients:'Всего клиентов',
     yourPlan:'Ваш тариф',freePlan:'Бесплатный',proPlan:'Pro тариф',
     manager:'Менеджер',owner:'Собственник',agent:'Агент',tenant:'Жилец',
@@ -986,7 +994,7 @@ var T = {
     noProp:'Няма добавени имоти',noBill:'Няма добавени сметки',noReq:'Няма заявки',
     rented:'Отдаден',vacant:'Свободен',paid:'Платено',due:'За плащане',overdue:'Просрочено',
     upcoming:'Предстои',req_new:'Нова',accepted:'Приета',progress:'В процес',done:'Изпълнена',
-    income:'Приход от наем',expenses:'Разходи за сметки',profit:'Нетна печалба',
+    income:'Приход от наем',expenses:'Разходи за сметки',profit:'Нетна печалба',vsLastMonth:'спрямо миналия месец',
     totalProp:'Общо имоти',activeBills:'Активни сметки',openReqs:'Отворени заявки',totalClients:'Общо клиенти',
     yourPlan:'Вашият план',freePlan:'Безплатен план',proPlan:'Pro план',
     manager:'Мениджър',owner:'Собственик',agent:'Агент',tenant:'Наемател',
@@ -1540,9 +1548,9 @@ function rDashboard(){
     h+='</div>';
 
     h+='<div class="g3">';
-    h+=sc(t('income'),'€'+totalRent,t('perMonth'),'c-em');
-    h+=sc(t('expenses'),'€'+dueBillsTotal,t('outstanding'),'c-red');
-    h+=sc(t('profit'),'€'+profit,t('estimated'),profit>=0?'c-em':'c-red');
+    h+=scFin(t('income'),'€'+totalRent,t('perMonth'),'c-em','em',null);
+    h+=scFin(t('expenses'),'€'+dueBillsTotal,t('outstanding'),'c-red','red',null);
+    h+=scFin(t('profit'),'€'+profit,t('estimated'),profit>=0?'c-em':'c-red','blue',null);
     h+='</div>';
 
     h+='<div class="g2">';
@@ -2484,6 +2492,14 @@ function exportExcel(){
 // HELPERS
 // ══════════════════════════════════════════
 function sc(label,val,sub,cls){return '<div class="stat"><div class="slabel">'+label+'</div><div class="sval '+(cls||'')+'">'+val+'</div>'+(sub?'<div class="ssub">'+sub+'</div>':'')+'</div>';}
+function scFin(label,val,sub,cls,stripe,delta){
+  var deltaHtml='';
+  if(delta!==null&&delta!==undefined&&delta!==0){
+    var up=delta>0;
+    deltaHtml='<div class="stat-delta '+(up?'stat-delta-up':'stat-delta-down')+'">'+(up?'↑':'↓')+' '+Math.abs(delta)+'% '+t('vsLastMonth')+'</div>';
+  }
+  return '<div class="stat stat-fin stripe-'+stripe+'"><div class="slabel">'+label+'</div><div class="sval '+(cls||'')+'">'+val+'</div>'+deltaHtml+(sub?'<div class="ssub">'+sub+'</div>':'')+'</div>';
+}
 function pName(code){var m={EVN:'EVN Bulgaria','ViK-Burgas':'ВиК Бургас','ViK-Varna':'ВиК Варна','ViK-Sofia':'Софийска Вода',cez:'ЧЕЗ',toplofikacia:'Топлофикация',sofwater:'Софийска Вода',vivacom:'Vivacom',nap:'Данък (NAP / egov.bg)',hoa:'Такса поддържки',other:'Друго',service:t('serviceName')};return m[code]||code;}
 function bPill(s){return s==='paid'?'p-paid':s==='due'?'p-due':s==='overdue'?'p-over':'p-soon';}
 function rIcon(t){var m={repair:'🔧',cleaning:'🧹',photo:'📷','tenant-check':'👤',emergency:'🚨',other:'📋'};return m[t]||'📋';}
