@@ -252,6 +252,46 @@ tr:hover td{background:rgba(27,77,62,.02)}
 @media(max-width:480px){
   .g3,.g4{grid-template-columns:1fr}
 }
+
+.onb-wrap{max-width:1024px;margin:2rem auto;background:#fff;border-radius:22px;padding:32px;box-shadow:0 4px 30px rgba(0,0,0,.06)}
+.onb-top{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:26px}
+.onb-steps{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--dark60)}
+.onb-dot{width:7px;height:7px;border-radius:50%;background:var(--border);display:inline-block}
+.onb-dot.on{background:var(--em)}
+.onb-grid{display:grid;grid-template-columns:1fr 380px;gap:36px;align-items:center}
+@media(max-width:800px){.onb-grid{grid-template-columns:1fr}}
+.onb-icon{width:64px;height:64px;border-radius:50%;background:var(--eml,#E8F4F0);display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:18px}
+.onb-h1{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--em);line-height:1.25;margin-bottom:14px}
+.onb-desc{font-size:14px;color:var(--dark);line-height:1.6;margin-bottom:20px}
+.onb-feat-box{background:var(--warm);border-radius:14px;padding:16px 20px}
+.onb-feat-title{font-size:12.5px;font-weight:600;color:var(--em);margin-bottom:10px}
+.onb-feat{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--dark)}
+.onb-feat:last-child{border-bottom:none}
+.onb-why{display:flex;gap:10px;background:#FBF3E4;border-radius:14px;padding:14px 18px;margin-top:20px;font-size:12.5px;color:var(--dark)}
+.onb-why b{color:#C79A45;display:block;font-size:12.5px;margin-bottom:4px}
+.onb-illust{display:flex;justify-content:center}
+.onb-illust img{max-width:100%;border-radius:10px}
+.onb-cta{margin-top:24px;background:var(--em);color:#fff;text-align:center;padding:13px;border-radius:12px;font-size:14px;font-weight:500;cursor:pointer}
+
+.plan-select-wrap{max-width:980px;margin:2rem auto}
+.plan-select-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:var(--em);text-align:center;margin-bottom:6px}
+.plan-select-sub{text-align:center;font-size:13px;color:var(--dark60);margin-bottom:28px}
+.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:820px){.plans-grid{grid-template-columns:1fr}}
+.plan-box{background:#fff;border:1px solid var(--border);border-radius:18px;padding:24px 20px;position:relative;display:flex;flex-direction:column;cursor:pointer}
+.plan-box.pro{border:2px solid var(--em);transform:translateY(-6px);box-shadow:0 10px 34px rgba(27,77,62,.14)}
+.plan-box.biz{border:1px dashed rgba(27,77,62,.3)}
+.plan-box.chosen{outline:2px solid var(--em)}
+.plan-badge-pop{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--em);color:#fff;font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;white-space:nowrap}
+.plan-badge-flex{display:inline-flex;font-size:11px;font-weight:600;background:#FBF3E4;color:#7A5200;padding:3px 10px;border-radius:20px;margin-bottom:8px;width:fit-content}
+.plan-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600}
+.plan-aud{font-size:12px;color:var(--dark60);margin-top:5px;line-height:1.5;min-height:36px}
+.plan-price{margin-top:14px;display:flex;align-items:baseline;gap:4px}
+.plan-price .amt{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--em)}
+.plan-price .unit{font-size:12px;color:var(--dark60)}
+.plan-feat-list{list-style:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);flex:1}
+.plan-feat-list li{display:flex;gap:8px;font-size:12.5px;color:var(--dark);margin-bottom:9px}
+.plan-continue{margin-top:22px;background:var(--em);color:#fff;text-align:center;padding:13px;border-radius:12px;font-size:14px;font-weight:500;cursor:pointer}
 </style>
 </head>
 <body>
@@ -366,20 +406,7 @@ tr:hover td{background:rgba(27,77,62,.02)}
           <option value="tenant" id="t-tenant">Tenant</option>
         </select>
       </div>
-      <div class="form-group">
-        <label class="form-label" id="t-reg-plan">Select Plan</label>
-        <div class="tier-cards">
-          <div class="tier-card sel" id="tier-free-card" onclick="selTier('free')">
-            <div class="tier-name">Free</div>
-            <div class="tier-desc" id="t-free-desc">Up to 3 properties</div>
-          </div>
-          <div class="tier-card" id="tier-pro-card" onclick="selTier('pro')">
-            <div class="tier-name">Pro</div>
-            <div class="tier-desc" id="t-pro-desc">Up to 10 properties</div>
-            <div class="tier-badge">€99/month</div>
-          </div>
-        </div>
-      </div>
+      <!-- Plan selection moved to post-login onboarding flow (screen-plan-select) -->
       <div class="form-group">
         <label class="form-label" id="t-reg-pass">Password</label>
         <input class="form-input" type="password" id="reg-pass" placeholder="Min. 8 characters" required>
@@ -838,6 +865,19 @@ tr:hover td{background:rgba(27,77,62,.02)}
   </div>
 </div>
 
+<div class="screen" id="screen-onboarding">
+  <div class="onb-wrap" id="onb-content"></div>
+</div>
+
+<div class="screen" id="screen-plan-select">
+  <div class="plan-select-wrap">
+    <div class="plan-select-title" id="t-plan-title">Выберите тариф</div>
+    <div class="plan-select-sub" id="t-plan-sub">Можно сменить план в любой момент</div>
+    <div class="plans-grid" id="plan-select-grid"></div>
+    <div class="plan-continue" id="plan-continue-btn" onclick="confirmPlanSelect()">Продолжить</div>
+  </div>
+</div>
+
 <script>
 // ══════════════════════════════════════════
 // CONFIG
@@ -927,7 +967,12 @@ var T = {
     managerNote:'Comment for owner',sendQuote:'Send for approval',markComplete:'Mark as completed',
     cancelReqBtn:'Cancel request',confirmReq:'✓ Confirm',declineReqBtn:'✗ Decline',
     quotedPending:'⏳ Awaiting your decision',quoteCost:'Service cost',quoteComment:"Manager's comment",
-    ownerNote:'Your comment (optional)',serviceName:'Manager Service'
+    ownerNote:'Your comment (optional)',serviceName:'Manager Service',
+    onbOf:'of',onbFeatTitle:'What you can do',onbWhyTitle:'Why this matters',onbNext:'Next →',onbDone:'Done ✓',
+    planSelectTitle:'Choose your plan',planSelectSub:'You can change your plan anytime',planPerMonth:'/mo',planPerProperty:'/property/mo',planRecommended:'Recommended',planFlexBadge:'⇅ Flexible pricing',planContinue:'Continue',
+    planFreeAud:'For owners who want control without monthly costs',planFreeF1:'Up to 3 properties',planFreeF2:'Online bill payments',planFreeF3:'Push notifications',
+    planProAud:'For owners who want to delegate and have a personal manager',planProF1:'Up to 5 properties',planProF2:'Personal manager',planProF3:'1 scheduled + 1 emergency visit',
+    planBizAud:'For investors with a growing portfolio',planBizF1:'Pay per managed property',planBizF2:'No property limit',planBizF3:'All Pro features'
   },
   ru:{
     dashboard:'Обзор',properties:'Мои объекты',bills:'Счета и налоги',
@@ -985,7 +1030,12 @@ var T = {
     managerNote:'Комментарий для собственника',sendQuote:'Отправить на согласование',markComplete:'Отметить выполненным',
     cancelReqBtn:'Отменить заявку',confirmReq:'✓ Подтвердить',declineReqBtn:'✗ Отклонить',
     quotedPending:'⏳ Ожидает решения',quoteCost:'Стоимость услуги',quoteComment:'Комментарий менеджера',
-    ownerNote:'Ваш комментарий (необязательно)',serviceName:'Услуга менеджера'
+    ownerNote:'Ваш комментарий (необязательно)',serviceName:'Услуга менеджера',
+    onbOf:'из',onbFeatTitle:'Что вы сможете делать',onbWhyTitle:'Почему это важно',onbNext:'Далее →',onbDone:'Готово ✓',
+    planSelectTitle:'Выберите тариф',planSelectSub:'Можно сменить план в любой момент',planPerMonth:'/мес',planPerProperty:'/объект в мес',planRecommended:'Рекомендуем',planFlexBadge:'⇅ Гибкая оплата',planContinue:'Продолжить',
+    planFreeAud:'Для собственников, которым нужен контроль без ежемесячных расходов',planFreeF1:'До 3 объектов',planFreeF2:'Онлайн-оплата счетов',planFreeF3:'Push-уведомления',
+    planProAud:'Для владельцев, которые хотят делегировать и иметь личного менеджера',planProF1:'До 5 объектов',planProF2:'Персональный менеджер',planProF3:'1 плановый + 1 экстренный выезд',
+    planBizAud:'Для инвесторов с растущим портфелем',planBizF1:'Оплата за управляемый объект',planBizF2:'Без лимита объектов',planBizF3:'Все возможности Pro'
   },
   bg:{
     dashboard:'Преглед',properties:'Моите имоти',bills:'Сметки и данъци',
@@ -1043,7 +1093,12 @@ var T = {
     managerNote:'Коментар за собственика',sendQuote:'Изпрати за съгласуване',markComplete:'Отбележи като изпълнено',
     cancelReqBtn:'Отмени заявка',confirmReq:'✓ Потвърди',declineReqBtn:'✗ Откажи',
     quotedPending:'⏳ Очаква решение',quoteCost:'Цена на услугата',quoteComment:'Коментар на мениджъра',
-    ownerNote:'Вашият коментар (по желание)',serviceName:'Услуга на мениджъра'
+    ownerNote:'Вашият коментар (по желание)',serviceName:'Услуга на мениджъра',
+    onbOf:'от',onbFeatTitle:'Какво можете да правите',onbWhyTitle:'Защо е важно',onbNext:'Напред →',onbDone:'Готово ✓',
+    planSelectTitle:'Изберете тарифа',planSelectSub:'Можете да смените плана по всяко време',planPerMonth:'/мес',planPerProperty:'/обект на мес',planRecommended:'Препоръчваме',planFlexBadge:'⇅ Гъвкаво плащане',planContinue:'Продължи',
+    planFreeAud:'За собственици, които искат контрол без месечни разходи',planFreeF1:'До 3 обекта',planFreeF2:'Онлайн плащане на сметки',planFreeF3:'Push известия',
+    planProAud:'За собственици, които искат да делегират и имат личен мениджър',planProF1:'До 5 обекта',planProF2:'Личен мениджър',planProF3:'1 планов + 1 спешен оглед',
+    planBizAud:'За инвеститори с растящо портфолио',planBizF1:'Плащане за управляван обект',planBizF2:'Без лимит на обекти',planBizF3:'Всички функции на Pro'
   }
 };
 function t(k){return (T[lang]&&T[lang][k])||(T['en']&&T['en'][k])||k;}
@@ -1279,12 +1334,167 @@ function doLogout(){
   showScreen('screen-login');
 }
 
-function finishLogin(user){
+// ══════════════════════════════════════════
+// ONBOARDING
+// ══════════════════════════════════════════
+var ONB_SLIDES=[
+{icon:'🔌',img:'assets/onboarding/slide1_illustration.png',
+ title:{ru:'Свет больше не отключат из-за пропущенного платежа',en:'Never lose power over a missed payment',bg:'Токът вече не спира заради пропуснато плащане'},
+ desc:{ru:'Вы больше не зависите от бумажных квитанций и случайных уведомлений. Property Control заранее сообщит о новых счетах, напомнит о сроках оплаты и позволит оплатить их онлайн всего за несколько минут — где бы вы ни находились.',
+       en:'No more paper bills or missed reminders. Property Control notifies you about new invoices, tracks due dates, and lets you pay online in minutes — wherever you are.',
+       bg:'Вече не зависите от хартиени сметки и случайни известия. Property Control ви уведомява за нови сметки, напомня за срокове и позволява плащане онлайн за минути — където и да сте.'},
+ feats:{ru:['Получать уведомления о новых счетах','Оплачивать коммунальные услуги и налоги онлайн','Контролировать все платежи по каждому объекту','Просматривать историю оплаченных счетов','Получать напоминания до наступления срока оплаты'],
+        en:['Get notified about new bills','Pay utilities and taxes online','Track all payments per property','View payment history','Get reminders before due dates'],
+        bg:['Известия за нови сметки','Плащане на комунални услуги и данъци онлайн','Контрол на плащанията по обект','История на платените сметки','Напомняния преди крайния срок']},
+ why:{ru:'В Болгарии поставщики коммунальных услуг редко напоминают о задолженности. Property Control помогает избежать отключений и держать все платежи под контролем.',
+      en:'Utility providers in Bulgaria rarely send reminders. Property Control helps you avoid disconnections and stay on top of every payment.',
+      bg:'В България доставчиците на комунални услуги рядко напомнят за задължения. Property Control помага да избегнете прекъсване и да следите всички плащания.'}},
+
+{icon:'🔧',img:'assets/onboarding/slide2_illustration.png',
+ title:{ru:'Любой бытовой вопрос — один запрос в приложении',en:'Any household issue — one request in the app',bg:'Всеки битов проблем — една заявка в приложението'},
+ desc:{ru:'То, что раньше занимало часы поиска исполнителей и десятки сообщений, теперь решается через одну заявку. Мы найдём нужного специалиста, организуем работы, проконтролируем результат и сообщим вам, когда всё будет выполнено.',
+       en:"What used to take hours of searching and dozens of messages now takes one request. We find the right specialist, organize the work, check the result, and let you know when it's done.",
+       bg:'Това, което преди отнемаше часове търсене и десетки съобщения, сега се решава с една заявка. Намираме специалист, организираме работата, проверяваме резултата и ви уведомяваме при завършване.'},
+ feats:{ru:['Заказывать уборку, ремонт и другие услуги','Создавать заявки в несколько кликов','Работать только с проверенными специалистами','Отслеживать статус и результат выполненных работ','Получать фото-отчёты с объекта'],
+        en:['Order cleaning, repairs and other services','Create requests in a few clicks','Work only with vetted specialists','Track status and results of completed work','Get photo reports from the property'],
+        bg:['Заявки за почистване, ремонт и други услуги','Създаване на заявки с няколко клика','Работа само с проверени специалисти','Проследяване на статус и резултат','Снимков отчет от обекта']},
+ why:{ru:'Бытовые проблемы в апартаментах нельзя откладывать. Быстрое решение сохраняет имущество, комфорт арендаторов и ваше спокойствие.',
+      en:"Household issues can't wait. A quick fix protects your property, your tenants' comfort, and your peace of mind.",
+      bg:'Битовите проблеми не търпят отлагане. Бързото решение пази имота, комфорта на наемателите и вашето спокойствие.'}},
+
+{icon:'📈',img:'assets/onboarding/slide3_illustration.png',
+ title:{ru:'Заставим недвижимость работать на вас',en:'Let your property work for you',bg:'Нека имотът работи за вас'},
+ desc:{ru:'Мы поможем раскрыть потенциал вашей недвижимости: подскажем, что улучшить, как повысить привлекательность объекта для арендаторов, организуем поиск жильцов и при необходимости поможем с продажей.',
+       en:"We help unlock your property's potential: what to improve, how to make it more attractive to tenants, and we organize tenant search or a sale when needed.",
+       bg:'Помагаме да разкриете потенциала на имота: какво да подобрите, как да го направите по-привлекателен за наематели, а при нужда организираме и продажба.'},
+ feats:{ru:['Получать рекомендации по улучшению апартаментов','Мы будем искать и подбирать надежных арендаторов','Контролировать показы, переговоры и договоры','Анализировать доходность по каждому объекту','Получать помощь в продаже недвижимости'],
+        en:['Get recommendations to improve the property','We source and vet reliable tenants','Track viewings, negotiations and contracts','Analyze profitability per property','Get help selling the property'],
+        bg:['Препоръки за подобряване на апартамента','Търсим и подбираме надеждни наематели','Контрол на огледи, преговори и договори','Анализ на доходността по обект','Помощ при продажба на имота']},
+ why:{ru:'Даже небольшие изменения и правильная стратегия аренды могут значительно увеличить доход. Мы знаем рынок Болгарии.',
+      en:'Even small changes and the right rental strategy can significantly increase income. We know the Bulgarian market.',
+      bg:'Дори малки промени и правилна стратегия за отдаване могат значително да увеличат дохода. Познаваме пазара в България.'}},
+
+{icon:'📊',img:'assets/onboarding/slide4_illustration.png',
+ title:{ru:'Сделаем вашу инвестицию понятной и предсказуемой',en:'Make your investment clear and predictable',bg:'Правим инвестицията ви ясна и предвидима'},
+ desc:{ru:'Недвижимость должна приносить доход, а не постоянные вопросы. В одном месте вы видите поступления от аренды, расходы, обязательные платежи и реальную прибыль по каждому объекту.',
+       en:'Property should generate income, not endless questions. In one place you see rental income, expenses, mandatory payments and real profit per property.',
+       bg:'Имотът трябва да носи доход, а не постоянни въпроси. На едно място виждате приходи от наем, разходи, задължителни плащания и реална печалба по обект.'},
+ feats:{ru:['Видеть доходы от аренды по каждому объекту','Контролировать расходы и платежи','Смотреть чистую прибыль по каждому объекту','Анализировать показатели за любой период','Скачивать отчеты и делиться с партнерами'],
+        en:['See rental income per property','Track expenses and payments','View net profit per property','Analyze metrics for any period','Download reports and share with partners'],
+        bg:['Приходи от наем по обект','Контрол на разходи и плащания','Нетна печалба по обект','Анализ на показатели за всеки период','Изтегляне на отчети и споделяне']},
+ why:{ru:'Вы всегда знаете, сколько приносит каждый объект и на что обратить внимание. Решения на основе данных, а не догадок.',
+      en:'You always know how much each property earns and what to watch. Decisions based on data, not guesses.',
+      bg:'Винаги знаете колко печели всеки обект и на какво да обърнете внимание. Решения на база данни, а не догадки.'}},
+
+{icon:'🤝',img:'assets/onboarding/slide5_illustration.png',
+ title:{ru:'Мы рядом, даже когда вас нет в Болгарии',en:"We're here, even when you're not in Bulgaria",bg:'Ние сме до вас, дори когато не сте в България'},
+ desc:{ru:'Покупка недвижимости — это только начало. Property Control помогает управлять объектами, решать вопросы на месте и сохранять полный контроль, где бы вы ни находились.',
+       en:'Buying property is just the start. Property Control helps manage it, handle issues on-site, and keep full control wherever you are.',
+       bg:'Покупката на имот е само началото. Property Control помага да го управлявате, решава въпроси на място и запазва пълен контрол, където и да сте.'},
+ feats:{ru:['Управлять всеми объектами из одного кабинета','Решать любые вопросы удаленно','Получать помощь персонального менеджера (для Pro)','Заказывать услуги в несколько кликов','Быть уверенным, что ваша недвижимость под контролем'],
+        en:['Manage all properties from one dashboard','Resolve any issue remotely','Get personal manager support (Pro)','Order services in a few clicks','Be confident your property is under control'],
+        bg:['Управление на всички обекти от едно място','Решаване на въпроси дистанционно','Личен мениджър (за Pro)','Заявки за услуги с няколко клика','Увереност, че имотът е под контрол']},
+ why:{ru:'Когда вы за пределами Болгарии, важно иметь надежного партнера. Мы решаем вопросы на месте — вы получаете спокойствие и полный контроль.',
+      en:'When you\'re abroad, having a reliable partner matters. We handle things locally — you get peace of mind and full control.',
+      bg:'Когато сте извън България, е важно да имате надежден партньор. Ние решаваме въпросите на място — вие получавате спокойствие и пълен контрол.'}}
+];
+
+var onbIndex=0;
+
+function renderOnbSlide(){
+  var s=ONB_SLIDES[onbIndex];
+  var l=lang||'ru';
+  var dots='';
+  for(var i=0;i<5;i++){dots+='<span class="onb-dot'+(i===onbIndex?' on':'')+'"></span>';}
+  var featsHtml=s.feats[l].map(function(f){return '<div class="onb-feat">'+f+'</div>';}).join('');
+  var isLast=onbIndex===ONB_SLIDES.length-1;
+  document.getElementById('onb-content').innerHTML=
+    '<div class="onb-top"><div style="font-family:\'Cormorant Garamond\',serif;font-size:17px;font-weight:600;color:var(--em)">Property Control</div>'+
+    '<div class="onb-steps">'+(onbIndex+1)+' '+t('onbOf')+' 5 &nbsp;'+dots+'</div></div>'+
+    '<div class="onb-grid">'+
+      '<div><div class="onb-icon">'+s.icon+'</div>'+
+      '<div class="onb-h1">'+s.title[l]+'</div>'+
+      '<div class="onb-desc">'+s.desc[l]+'</div>'+
+      '<div class="onb-feat-box"><div class="onb-feat-title">'+t('onbFeatTitle')+'</div>'+featsHtml+'</div>'+
+      '<div class="onb-why"><div><b>'+t('onbWhyTitle')+'</b>'+s.why[l]+'</div></div></div>'+
+      '<div class="onb-illust"><img src="'+s.img+'" alt=""></div>'+
+    '</div>'+
+    '<div class="onb-cta" onclick="onbNext()">'+(isLast?t('onbDone'):t('onbNext'))+'</div>';
+}
+
+function onbNext(){
+  if(onbIndex<ONB_SLIDES.length-1){onbIndex++;renderOnbSlide();}
+  else{finishOnboarding();}
+}
+
+async function finishOnboarding(){
+  if(curUser){
+    await sb.from('profiles').update({onboarding_done:true}).eq('id',curUser.id);
+  }
+  showScreen('screen-plan-select');
+  renderPlanSelect();
+}
+
+var PLAN_SELECTED='free';
+
+function renderPlanSelect(){
+  document.getElementById('t-plan-title').textContent=t('planSelectTitle');
+  document.getElementById('t-plan-sub').textContent=t('planSelectSub');
+  var grid=document.getElementById('plan-select-grid');
+  grid.innerHTML=
+    '<div class="plan-box'+(PLAN_SELECTED==='free'?' chosen':'')+'" onclick="choosePlan(\'free\')">'+
+      '<div class="plan-name">Free</div>'+
+      '<div class="plan-aud">'+t('planFreeAud')+'</div>'+
+      '<div class="plan-price"><span class="amt">€0</span><span class="unit">'+t('planPerMonth')+'</span></div>'+
+      '<ul class="plan-feat-list"><li>✓ '+t('planFreeF1')+'</li><li>✓ '+t('planFreeF2')+'</li><li>✓ '+t('planFreeF3')+'</li></ul>'+
+    '</div>'+
+    '<div class="plan-box pro'+(PLAN_SELECTED==='pro'?' chosen':'')+'" onclick="choosePlan(\'pro\')">'+
+      '<div class="plan-badge-pop">'+t('planRecommended')+'</div>'+
+      '<div class="plan-name">Pro</div>'+
+      '<div class="plan-aud">'+t('planProAud')+'</div>'+
+      '<div class="plan-price"><span class="amt">€79</span><span class="unit">'+t('planPerMonth')+'</span></div>'+
+      '<ul class="plan-feat-list"><li>✓ '+t('planProF1')+'</li><li>✓ '+t('planProF2')+'</li><li>✓ '+t('planProF3')+'</li></ul>'+
+    '</div>'+
+    '<div class="plan-box biz'+(PLAN_SELECTED==='business'?' chosen':'')+'" onclick="choosePlan(\'business\')">'+
+      '<span class="plan-badge-flex">'+t('planFlexBadge')+'</span>'+
+      '<div class="plan-name">Business</div>'+
+      '<div class="plan-aud">'+t('planBizAud')+'</div>'+
+      '<div class="plan-price"><span class="amt">€49</span><span class="unit">'+t('planPerProperty')+'</span></div>'+
+      '<ul class="plan-feat-list"><li>✓ '+t('planBizF1')+'</li><li>✓ '+t('planBizF2')+'</li><li>✓ '+t('planBizF3')+'</li></ul>'+
+    '</div>';
+  document.getElementById('plan-continue-btn').textContent=t('planContinue');
+}
+
+function choosePlan(p){PLAN_SELECTED=p;renderPlanSelect();}
+
+async function confirmPlanSelect(){
+  if(curUser){
+    await sb.from('profiles').update({tier:PLAN_SELECTED}).eq('id',curUser.id);
+    if(!curUser.user_metadata) curUser.user_metadata={};
+    curUser.user_metadata.tier=PLAN_SELECTED;
+  }
+  finishLogin(curUser);
+}
+
+// ══════════════════════════════════════════
+// LOGIN COMPLETE
+// ══════════════════════════════════════════
+async function finishLogin(user){
   if(!user||!user.email) return;
   curUser=user;
   curRole=user.email===MANAGER_EMAIL?'manager':(user.user_metadata&&user.user_metadata.role)||'owner';
   curTier=(user.user_metadata&&user.user_metadata.tier)||'free';
   if(sbToken) localStorage.setItem('pc_sess',JSON.stringify({token:sbToken,user:user}));
+  // Show onboarding for non-manager users who haven't completed it yet
+  if(curRole!=='manager'){
+    var profRes=await sb.from('profiles').select('onboarding_done').eq('id',user.id).single();
+    if(!profRes.data||profRes.data.onboarding_done===false){
+      onbIndex=0;
+      showScreen('screen-onboarding');
+      renderOnbSlide();
+      return;
+    }
+  }
   initApp();
   setTimeout(async function(){
     if(!curUser||!curUser.id) return;
