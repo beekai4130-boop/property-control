@@ -279,7 +279,7 @@ tr:hover td{background:rgba(27,77,62,.02)}
 .plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 @media(max-width:820px){.plans-grid{grid-template-columns:1fr}}
 .plan-box{background:#fff;border:1px solid var(--border);border-radius:18px;padding:24px 20px;position:relative;display:flex;flex-direction:column;cursor:pointer}
-.plan-box.pro{border:2px solid var(--em);transform:translateY(-6px);box-shadow:0 10px 34px rgba(27,77,62,.14)}
+.plan-box.pro{border:2px solid rgba(27,77,62,.35);transform:translateY(-6px);box-shadow:0 10px 34px rgba(27,77,62,.14)}
 .plan-box.biz{border:1px dashed rgba(27,77,62,.3)}
 .plan-box.chosen{outline:2px solid var(--em)}
 .plan-badge-pop{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--em);color:#fff;font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;white-space:nowrap}
@@ -1438,6 +1438,7 @@ var ONB_SLIDES=[
 ];
 
 var onbIndex=0;
+var onbCompleted=false;
 
 function renderOnbSlide(){
   var s=ONB_SLIDES[onbIndex];
@@ -1473,6 +1474,7 @@ async function finishOnboarding(){
       body:JSON.stringify({onboarding_done:true})
     });
   }
+  onbCompleted=true;
   showScreen('screen-plan-select');
   renderPlanSelect();
 }
@@ -1532,7 +1534,7 @@ async function finishLogin(user){
   curTier=(user.user_metadata&&user.user_metadata.tier)||'free';
   if(sbToken) localStorage.setItem('pc_sess',JSON.stringify({token:sbToken,user:user}));
   // Show onboarding for non-manager users who haven't completed it yet
-  if(curRole!=='manager'){
+  if(curRole!=='manager'&&!onbCompleted){
     var profRes=await sb.from('profiles').select('onboarding_done').eq('id',user.id).single();
     if(!profRes.data||profRes.data.onboarding_done===false){
       onbIndex=0;
@@ -1541,6 +1543,7 @@ async function finishLogin(user){
       return;
     }
   }
+  onbCompleted=false;
   initApp();
   setTimeout(async function(){
     if(!curUser||!curUser.id) return;
