@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Пользовательское соглашение — Property Control</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--em:#1B4D3E;--warm:#F7F4EE;--border:#E5E0D8;--dark:#2C2C2C;--dark60:#888}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:var(--warm);color:var(--dark);min-height:100vh;padding:0 0 60px}
+    .top-bar{background:#fff;border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .brand-mark{width:30px;height:30px;background:var(--em);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600}
+    .brand-name{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--em)}
+    .back-link{font-size:13px;color:var(--em);text-decoration:none;font-weight:500}
+    .back-link:hover{text-decoration:underline}
+    .wrap{max-width:760px;margin:40px auto;padding:0 24px}
+    .doc-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--em);margin-bottom:6px;line-height:1.2}
+    .doc-meta{font-size:13px;color:var(--dark60);margin-bottom:36px;padding-bottom:20px;border-bottom:2px solid var(--em)}
+    h2{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:var(--em);margin:28px 0 10px;text-transform:uppercase;letter-spacing:.04em}
+    p{font-size:14px;line-height:1.75;color:var(--dark);margin-bottom:12px}
+    ul{padding-left:0;list-style:none;margin-bottom:12px}
+    ul li{font-size:14px;line-height:1.7;color:var(--dark);padding:4px 0 4px 18px;position:relative}
+    ul li::before{content:'—';position:absolute;left:0;color:var(--em)}
+    .plan-block{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:12px}
+    .plan-block h3{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--em);margin-bottom:8px}
+    .placeholder{background:#FEF3C7;color:#92400E;padding:1px 6px;border-radius:4px;font-style:italic;font-size:13px}
+    /* Future lang blocks: only ru shown initially */
+    [data-lang]:not([data-lang="ru"]){display:none}
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="../" class="brand">
+    <div class="brand-mark">P</div>
+    <div class="brand-name">Property Control</div>
+  </a>
+  <a href="../" class="back-link">← Вернуться в приложение</a>
+</div>
+
+<div class="wrap">
+  <!-- RU version -->
+  <div data-lang="ru">
+    <div class="doc-title">Пользовательское соглашение</div>
+    <div class="doc-meta">Дата вступления в силу: 07.07.2026 &nbsp;·&nbsp; Версия 1.0</div>
+
+    <h2>1. Общие положения</h2>
+    <p>Настоящее Пользовательское соглашение (далее — «Соглашение») регулирует использование программной платформы Property Control (сайт: propertycontrol.eu, далее — «Платформа»).</p>
+    <p>Оператором Платформы является Екатерина Мерзлякова, физическое лицо, (далее — «Оператор»). На момент публикации настоящего Соглашения процесс регистрации юридического лица (ЕООД) не завершён; после завершения регистрации в Соглашение вносятся соответствующие изменения с указанием реквизитов юридического лица в порядке, предусмотренном разделом 7 настоящего Соглашения.</p>
+    <p>Регистрируясь на Платформе и/или используя её функционал, пользователь подтверждает, что ознакомился с условиями настоящего Соглашения и принимает их в полном объёме.</p>
+
+    <h2>2. Предмет Соглашения</h2>
+    <p>Property Control — программное обеспечение для дистанционного учёта и организации управления объектами недвижимости: учёт объектов, начисление и оплата коммунальных счетов, заказ услуг, аналитика и отчётность, коммуникация между собственником, арендатором и агентом.</p>
+    <p>Платформа не является:</p>
+    <ul>
+      <li>агентством недвижимости в смысле сделок купли-продажи объектов;</li>
+      <li>стороной договоров аренды, заключаемых пользователями между собой с использованием шаблонов, размещённых на Платформе;</li>
+      <li>гарантом исполнения финансовых обязательств между пользователями Платформы.</li>
+    </ul>
+    <p>Услуги по физическому управлению объектом (плановые и экстренные визиты представителя Оператора, приём и передача ключей, контроль состояния объекта и иные услуги, требующие физического присутствия) регулируются отдельным Договором на услуги управления недвижимостью, заключаемым между Оператором и собственником до начала фактического оказания таких услуг. Настоящее Соглашение регулирует исключительно использование программного обеспечения Платформы.</p>
+
+    <h2>3. Тарифные планы</h2>
+    <div class="plan-block">
+      <h3>Free</h3>
+      <ul>
+        <li>до 3 (трёх) объектов недвижимости в учёте;</li>
+        <li>оплата коммунальных и иных счетов через Платформу;</li>
+        <li>заказ услуг через приложение.</li>
+      </ul>
+    </div>
+    <div class="plan-block">
+      <h3>Pro — €79/месяц</h3>
+      <ul>
+        <li>до 5 (пяти) объектов недвижимости в учёте;</li>
+        <li>всё, что входит в тариф Free;</li>
+        <li>аналитика и финансовые отчёты, статистика по объектам;</li>
+        <li>1 (один) плановый и 1 (один) экстренный визит представителя Оператора — суммарно на все объекты собственника в рамках оплаченного периода.</li>
+      </ul>
+    </div>
+    <div class="plan-block">
+      <h3>Business — €49/месяц/объект</h3>
+      <ul>
+        <li>функционал идентичен тарифу Pro, без ограничения по количеству объектов недвижимости в учёте.</li>
+      </ul>
+    </div>
+    <p>Оператор вправе изменять состав и наполнение тарифных планов, уведомив пользователей в порядке, предусмотренном разделом 7 настоящего Соглашения.</p>
+
+    <h2>4. Оплата и возврат средств</h2>
+    <p>Обработка платежей по тарифам Pro и Business осуществляется платёжным провайдером Paddle.com, выступающим продавцом записи (merchant of record) по данным операциям.</p>
+    <p>Оплаченный период подписки возврату не подлежит, за исключением случаев, прямо предусмотренных обязательными правилами платёжного провайдера Paddle и применимым законодательством о защите прав потребителей по месту жительства пользователя.</p>
+    <p>Отмена подписки прекращает автоматическое продление на следующий расчётный период; доступ к оплаченному функционалу сохраняется до окончания уже оплаченного периода.</p>
+
+    <h2>5. Ответственность Оператора</h2>
+    <p>Оператор обеспечивает работу программного обеспечения Платформы на условиях «как есть» (as is), прилагая разумные усилия для его бесперебойной работы, но не гарантирует полное отсутствие технических сбоев.</p>
+    <p>Оператор не несёт ответственности за содержание и юридическую силу договоров аренды, заключаемых пользователями между собой с использованием шаблонов, размещённых на Платформе, — ответственность за такие договоры несут стороны, их заключившие.</p>
+    <p>Ответственность Оператора и его представителей при оказании услуг, требующих физического присутствия на объекте (плановые и экстренные визиты в рамках тарифов Pro и Business), регулируется отдельным Договором на услуги управления недвижимостью и не является предметом настоящего Соглашения.</p>
+
+    <h2>6. Обязанности пользователя</h2>
+    <ul>
+      <li>предоставлять достоверные и актуальные данные при регистрации и использовании Платформы;</li>
+      <li>не использовать Платформу для незаконной деятельности;</li>
+      <li>самостоятельно нести ответственность за соблюдение налогового и иного законодательства своей юрисдикции в отношении операций, совершаемых с использованием Платформы.</li>
+    </ul>
+
+    <h2>7. Персональные данные</h2>
+    <p>Обработка персональных данных пользователей регулируется <a href="../privacy/" style="color:var(--em)">Политикой конфиденциальности</a>, являющейся неотъемлемой частью настоящего Соглашения и приведённой ниже в настоящем документе.</p>
+
+    <h2>8. Изменение условий Соглашения</h2>
+    <p>Оператор вправе изменять условия настоящего Соглашения, уведомив пользователей не менее чем за 7 (семь) календарных дней до вступления изменений в силу путём размещения уведомления на Платформе и/или направления сообщения на email, указанный при регистрации.</p>
+
+    <h2>9. Применимое право</h2>
+    <p>Настоящее Соглашение регулируется законодательством Республики Болгария.</p>
+
+    <h2>10. Контакты Оператора</h2>
+    <p>beekai4130@gmail.com &nbsp;·&nbsp; <span class="placeholder">[почтовый адрес для юридической переписки]</span></p>
+  </div>
+
+  <!-- EN version (add content when ready) -->
+  <div data-lang="en" style="display:none">
+    <div class="doc-title">Terms of Service</div>
+    <div class="doc-meta">Effective date: 07.07.2026 &nbsp;·&nbsp; Version 1.0</div>
+    <p style="color:var(--dark60);font-style:italic">English version coming soon.</p>
+  </div>
+
+  <!-- BG version (add content when ready) -->
+  <div data-lang="bg" style="display:none">
+    <div class="doc-title">Общи условия</div>
+    <div class="doc-meta">Дата на влизане в сила: 07.07.2026 &nbsp;·&nbsp; Версия 1.0</div>
+    <p style="color:var(--dark60);font-style:italic">Българската версия предстои.</p>
+  </div>
+</div>
+
+</body>
+</html>

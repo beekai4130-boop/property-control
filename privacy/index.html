@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Политика конфиденциальности — Property Control</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--em:#1B4D3E;--warm:#F7F4EE;--border:#E5E0D8;--dark:#2C2C2C;--dark60:#888}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:var(--warm);color:var(--dark);min-height:100vh;padding:0 0 60px}
+    .top-bar{background:#fff;border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .brand-mark{width:30px;height:30px;background:var(--em);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600}
+    .brand-name{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--em)}
+    .back-link{font-size:13px;color:var(--em);text-decoration:none;font-weight:500}
+    .back-link:hover{text-decoration:underline}
+    .wrap{max-width:760px;margin:40px auto;padding:0 24px}
+    .doc-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--em);margin-bottom:6px;line-height:1.2}
+    .doc-meta{font-size:13px;color:var(--dark60);margin-bottom:36px;padding-bottom:20px;border-bottom:2px solid var(--em)}
+    h2{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:var(--em);margin:28px 0 10px;text-transform:uppercase;letter-spacing:.04em}
+    p{font-size:14px;line-height:1.75;color:var(--dark);margin-bottom:12px}
+    ul{padding-left:0;list-style:none;margin-bottom:12px}
+    ul li{font-size:14px;line-height:1.7;color:var(--dark);padding:4px 0 4px 18px;position:relative}
+    ul li::before{content:'—';position:absolute;left:0;color:var(--em)}
+    .gdpr-ref{display:inline-block;font-size:11px;font-weight:600;background:#E8F4F0;color:var(--em);padding:1px 7px;border-radius:20px;margin-left:4px;vertical-align:middle}
+    [data-lang]:not([data-lang="ru"]){display:none}
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="../" class="brand">
+    <div class="brand-mark">P</div>
+    <div class="brand-name">Property Control</div>
+  </a>
+  <a href="../" class="back-link">← Вернуться в приложение</a>
+</div>
+
+<div class="wrap">
+  <!-- RU version -->
+  <div data-lang="ru">
+    <div class="doc-title">Политика конфиденциальности</div>
+    <div class="doc-meta">Дата вступления в силу: 07.07.2026 &nbsp;·&nbsp; Версия 1.0</div>
+
+    <h2>1. Оператор персональных данных</h2>
+    <p>Оператором персональных данных является Екатерина Мерзлякова, физическое лицо (на момент публикации настоящей Политики — до завершения регистрации юридического лица ЕООД). Контакт для запросов, связанных с обработкой персональных данных: beekai4130@gmail.com.</p>
+
+    <h2>2. Какие данные собираются</h2>
+    <ul>
+      <li>При регистрации: имя, email, номер телефона, страна проживания;</li>
+      <li>При использовании Платформы: адрес объекта недвижимости, данные по коммунальным счетам, идентификационные данные, необходимые для выставления счетов (ЕИК/ЕГН — при применимости);</li>
+      <li>Платёжные данные — обрабатываются платёжным провайдером Paddle и не хранятся на серверах Оператора;</li>
+      <li>Технические данные — IP-адрес, файлы cookie, данные об использовании Платформы.</li>
+    </ul>
+
+    <h2>3. Цели и правовые основания обработки</h2>
+    <ul>
+      <li>Исполнение договора — предоставление функционала Платформы пользователю <span class="gdpr-ref">ст. 6(1)(b) GDPR</span>;</li>
+      <li>Согласие пользователя — при регистрации и в иных случаях, предусмотренных законом <span class="gdpr-ref">ст. 6(1)(a) GDPR</span>;</li>
+      <li>Законный интерес Оператора — обеспечение безопасности и работоспособности Платформы <span class="gdpr-ref">ст. 6(1)(f) GDPR</span>.</li>
+    </ul>
+
+    <h2>4. Обработчики данных третьих лиц</h2>
+    <p>Для функционирования Платформы Оператор привлекает следующих обработчиков данных (data processors), действующих на основании отдельных соглашений об обработке данных:</p>
+    <ul>
+      <li>Supabase — хостинг базы данных Платформы;</li>
+      <li>Paddle — обработка платежей по тарифам Pro и Business, выступает продавцом записи (merchant of record).</li>
+    </ul>
+    <p>Указанные лица не являются получателями данных для собственных маркетинговых или иных целей и обрабатывают данные исключительно в объёме, необходимом для оказания соответствующих технических услуг Оператору.</p>
+
+    <h2>5. Срок хранения данных</h2>
+    <p>Персональные данные пользователя хранятся в течение всего срока действия его учётной записи на Платформе и в течение 5 (пяти) лет после её удаления — в связи с требованиями законодательства Республики Болгария к хранению документов, связанных с финансовыми операциями и расчётами.</p>
+
+    <h2>6. Международная передача данных</h2>
+    <p>В связи с тем, что пользователями Платформы являются лица, проживающие за пределами Европейского союза (включая Россию, Израиль, ОАЭ, Казахстан), обработка данных может включать их передачу за пределы ЕЭП. В случаях, когда данные обрабатываются на серверах, расположенных за пределами Европейской экономической зоны, Оператор обеспечивает применение соответствующих гарантий защиты данных, предусмотренных законодательством ЕС о защите персональных данных, включая типовые договорные условия (Standard Contractual Clauses) там, где это применимо.</p>
+
+    <h2>7. Права субъекта данных</h2>
+    <p>Пользователь вправе: получить доступ к своим персональным данным; требовать их исправления или удаления; ограничить их обработку; получить данные в структурированном виде (право на портируемость); отозвать согласие на обработку данных в любой момент, без ущерба для законности обработки, произведённой до момента отзыва; подать жалобу в надзорный орган — Комисия за защита на личните данни (КЗЛД), Республика Болгария.</p>
+
+    <h2>8. Изменение Политики</h2>
+    <p>Оператор вправе изменять настоящую Политику, уведомив пользователей не менее чем за 7 (семь) календарных дней до вступления изменений в силу в порядке, аналогичном порядку, предусмотренному Пользовательским соглашением.</p>
+
+    <h2>9. Контакты</h2>
+    <p>По вопросам обработки персональных данных: <a href="mailto:beekai4130@gmail.com" style="color:var(--em)">beekai4130@gmail.com</a></p>
+  </div>
+
+  <!-- EN version (add content when ready) -->
+  <div data-lang="en" style="display:none">
+    <div class="doc-title">Privacy Policy</div>
+    <div class="doc-meta">Effective date: 07.07.2026 &nbsp;·&nbsp; Version 1.0</div>
+    <p style="color:var(--dark60);font-style:italic">English version coming soon.</p>
+  </div>
+
+  <!-- BG version (add content when ready) -->
+  <div data-lang="bg" style="display:none">
+    <div class="doc-title">Политика за поверителност</div>
+    <div class="doc-meta">Дата на влизане в сила: 07.07.2026 &nbsp;·&nbsp; Версия 1.0</div>
+    <p style="color:var(--dark60);font-style:italic">Българската версия предстои.</p>
+  </div>
+</div>
+
+</body>
+</html>
