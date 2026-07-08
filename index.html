@@ -1467,7 +1467,11 @@ function onbNext(){
 
 async function finishOnboarding(){
   if(curUser){
-    await sb.from('profiles').update({onboarding_done:true}).eq('id',curUser.id);
+    await fetch(SB_URL+'/rest/v1/profiles?id=eq.'+curUser.id,{
+      method:'PATCH',
+      headers:Object.assign(sbH(),{'Prefer':'return=minimal'}),
+      body:JSON.stringify({onboarding_done:true})
+    });
   }
   showScreen('screen-plan-select');
   renderPlanSelect();
@@ -1507,7 +1511,11 @@ function choosePlan(p){PLAN_SELECTED=p;renderPlanSelect();}
 
 async function confirmPlanSelect(){
   if(curUser){
-    await sb.from('profiles').update({tier:PLAN_SELECTED}).eq('id',curUser.id);
+    await fetch(SB_URL+'/rest/v1/profiles?id=eq.'+curUser.id,{
+      method:'PATCH',
+      headers:Object.assign(sbH(),{'Prefer':'return=minimal'}),
+      body:JSON.stringify({tier:PLAN_SELECTED})
+    });
     if(!curUser.user_metadata) curUser.user_metadata={};
     curUser.user_metadata.tier=PLAN_SELECTED;
   }
