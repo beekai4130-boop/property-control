@@ -298,12 +298,48 @@ tr:hover td{background:rgba(27,77,62,.02)}
 .consent-label a{color:var(--em);text-decoration:underline}
 .consent-hint{font-size:12px;color:#C0392B;margin-bottom:12px;display:none}
 .btn-main:disabled{opacity:.45;cursor:not-allowed}
+
+/* PUBLIC LANDING PAGE */
+.landing{min-height:100vh;background:#f7faf8;color:#14251f;overflow-x:hidden}
+.landing-nav{max-width:1180px;margin:0 auto;padding:22px 28px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.landing-brand{display:flex;align-items:center;gap:10px;font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--em)}
+.landing-brand-mark{width:34px;height:34px;border-radius:10px;background:var(--em);display:grid;place-items:center;color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700}
+.landing-nav-right{display:flex;align-items:center;gap:12px}
+.landing-langs{display:flex;background:#fff;border:1px solid var(--border);padding:3px;border-radius:9px}
+.landing-langs button{border:0;background:transparent;border-radius:6px;padding:5px 7px;color:#66736d;font:500 11px 'DM Sans',sans-serif;cursor:pointer}
+.landing-langs button.on{background:var(--em);color:#fff}
+.landing-login{border:0;background:transparent;color:var(--em);font:500 13px 'DM Sans',sans-serif;cursor:pointer;padding:8px}
+.landing-hero{max-width:1180px;margin:0 auto;padding:55px 28px 86px;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:60px}
+.landing-eyebrow{display:inline-flex;align-items:center;gap:8px;background:#e6f1eb;color:var(--em);border-radius:999px;padding:7px 12px;font-size:12px;font-weight:500}
+.landing-eyebrow::before{content:'✦';font-size:13px}
+.landing-title{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,5vw,68px);font-weight:600;letter-spacing:-.035em;line-height:.98;margin:20px 0;color:#173d30}
+.landing-title em{font-style:normal;color:#a4783b}
+.landing-copy{max-width:550px;font-size:17px;line-height:1.65;color:#53645d;margin-bottom:28px}
+.landing-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.landing-primary{border:0;background:var(--em);color:#fff;border-radius:10px;padding:14px 20px;font:500 14px 'DM Sans',sans-serif;cursor:pointer;box-shadow:0 12px 25px rgba(27,77,62,.2);transition:transform .2s,background .2s}
+.landing-primary:hover{background:var(--emd);transform:translateY(-2px)}
+.landing-secondary{border:0;background:transparent;color:var(--em);font:500 14px 'DM Sans',sans-serif;cursor:pointer;padding:12px 0}
+.landing-trust{display:flex;gap:22px;align-items:center;margin-top:34px;color:#687871;font-size:12px;flex-wrap:wrap}.landing-trust span::before{content:'✓';margin-right:6px;color:var(--em);font-weight:700}
+.landing-visual{position:relative;min-height:425px;border-radius:28px;background:linear-gradient(145deg,#1a4b3d 0%,#347660 100%);box-shadow:0 25px 50px rgba(20,61,48,.2);overflow:hidden;padding:28px}
+.landing-visual::before{content:'';position:absolute;width:380px;height:380px;right:-150px;top:-125px;border:1px solid rgba(255,255,255,.18);border-radius:50%;box-shadow:0 0 0 40px rgba(255,255,255,.04),0 0 0 100px rgba(255,255,255,.03)}
+.visual-label{position:relative;color:rgba(255,255,255,.72);font-size:12px;letter-spacing:.08em;text-transform:uppercase}.visual-card{position:absolute;background:rgba(255,255,255,.96);border-radius:16px;box-shadow:0 14px 30px rgba(4,27,19,.25)}
+.visual-home{left:28px;right:28px;bottom:28px;padding:20px}.visual-home-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}.visual-home-title{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600}.visual-status{font-size:11px;background:#e4f2ea;color:var(--em);padding:5px 9px;border-radius:999px}.visual-bars{display:flex;align-items:end;gap:9px;height:86px;padding-top:9px}.visual-bar{flex:1;background:#dfeae4;border-radius:4px 4px 0 0}.visual-bar:nth-child(1){height:43%}.visual-bar:nth-child(2){height:62%}.visual-bar:nth-child(3){height:48%}.visual-bar:nth-child(4){height:83%;background:#be9360}.visual-bar:nth-child(5){height:68%}.visual-income{display:flex;justify-content:space-between;margin-top:11px;font-size:12px;color:#73817b}.visual-income b{color:var(--em);font-size:14px}.visual-float{top:70px;right:20px;padding:13px 16px;min-width:170px}.visual-float small{display:block;color:#78857f;font-size:10px;margin-bottom:3px}.visual-float b{font-size:13px}.visual-float i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#4caa75;margin-right:5px}
+.landing-section{max-width:1180px;margin:0 auto;padding:82px 28px}.landing-section-alt{max-width:none;background:#edf4f0}.landing-section-alt>div{max-width:1180px;margin:0 auto}.landing-kicker{font-size:12px;color:#a4783b;text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-bottom:12px}.landing-h2{font-family:'Cormorant Garamond',serif;font-size:42px;line-height:1.05;font-weight:600;color:#173d30;max-width:650px}.landing-lead{font-size:16px;line-height:1.65;color:#617169;max-width:650px;margin-top:14px}
+.benefit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}.benefit{background:#fff;border:1px solid #dce8e1;border-radius:16px;padding:24px;min-height:190px}.benefit-icon{font-size:24px;margin-bottom:22px}.benefit h3{font-size:15px;margin-bottom:8px;font-weight:600;color:#1e3d32}.benefit p{font-size:13px;line-height:1.6;color:#63736b}
+.service-layout{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}.service-list{margin-top:25px}.service-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #d4e1da}.service-item:last-child{border-bottom:none}.service-num{width:26px;height:26px;border-radius:50%;background:var(--em);color:#fff;display:grid;place-items:center;font-size:11px;flex-shrink:0}.service-item h3{font-size:14px;font-weight:600;margin-bottom:3px}.service-item p{font-size:13px;color:#66766e;line-height:1.5}.quote-card{background:#1b4d3e;padding:38px;border-radius:22px;color:white;box-shadow:0 18px 40px rgba(27,77,62,.2)}.quote-mark{font-family:'Cormorant Garamond',serif;font-size:58px;color:#c69b65;line-height:.6}.quote-card p{font-family:'Cormorant Garamond',serif;font-size:27px;line-height:1.13;margin:16px 0 24px}.quote-card small{color:rgba(255,255,255,.68);font-size:12px}
+.landing-cta{max-width:1124px;margin:0 auto 60px;border-radius:23px;padding:48px;background:linear-gradient(120deg,#1a4a3c,#2f725d);color:#fff;text-align:center}.landing-cta h2{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:600;line-height:1.05}.landing-cta p{font-size:15px;opacity:.78;margin:12px auto 24px;max-width:520px;line-height:1.55}.landing-cta .landing-primary{background:#fff;color:var(--em);box-shadow:none}.landing-footer{padding:0 28px 35px;text-align:center;color:#718078;font-size:12px}
+@media(max-width:800px){.landing-nav{padding:16px 18px}.landing-login{display:none}.landing-hero{grid-template-columns:1fr;padding:35px 20px 56px;gap:36px}.landing-title{font-size:47px}.landing-copy{font-size:15px}.landing-visual{min-height:330px}.benefit-grid{grid-template-columns:1fr}.landing-section{padding:58px 20px}.landing-h2{font-size:36px}.service-layout{grid-template-columns:1fr;gap:32px}.landing-cta{margin:0 20px 42px;padding:35px 20px}.landing-cta h2{font-size:34px}.landing-footer{padding-bottom:25px}}
 </style>
 </head>
 <body>
 
+<!-- SCREEN: PUBLIC LANDING -->
+<div class="screen active" id="screen-landing">
+  <main class="landing" id="landing-content"></main>
+</div>
+
 <!-- SCREEN: LANGUAGE -->
-<div class="screen active" id="screen-lang">
+<div class="screen" id="screen-lang">
   <div class="lang-screen">
     <div class="lang-logo">
       <div class="lang-mark"><div class="lang-mark-inner"></div></div>
@@ -903,7 +939,7 @@ var sb = supabase.createClient(SB_URL, SB_KEY);
 // ══════════════════════════════════════════
 // STATE
 // ══════════════════════════════════════════
-var lang = 'en';
+var lang = 'ru';
 var sbToken = null;
 var curUser = null;
 var curRole = null;
@@ -1119,6 +1155,28 @@ var T = {
   }
 };
 function t(k){return (T[lang]&&T[lang][k])||(T['en']&&T['en'][k])||k;}
+
+// ══════════════════════════════════════════
+// PUBLIC LANDING
+// ══════════════════════════════════════════
+var LANDING={
+  ru:{eyebrow:'Управление недвижимостью в Болгарии',title:'Ваша недвижимость — <em>под контролем.</em> Где бы вы ни были.',copy:'Property Control помогает собственникам спокойно управлять недвижимостью: контролировать платежи, заказывать услуги и решать любые вопросы на месте.',start:'Создать аккаунт',login:'Войти',learn:'Посмотреть возможности ↓',trust1:'Безопасные данные',trust2:'Поддержка на месте',trust3:'Полный контроль онлайн',dash:'Ваш кабинет',income:'Доход за месяц',b1:'Все объекты — в одном месте',d1:'Контролируйте аренду, счета, документы и состояние каждого объекта из любой точки мира.',b2:'Быстрое решение вопросов',d2:'Закажите уборку, ремонт, проверку арендатора или фотоотчёт — мы организуем всё на месте.',b3:'Понятные финансы',d3:'Видите поступления, расходы и обязательные платежи по каждому объекту без таблиц и хаоса.',kicker:'Как мы помогаем',h2:'Меньше забот. Больше уверенности в каждом решении.',lead:'Неважно, живёте вы в Болгарии или в другой стране: ваша недвижимость остаётся прозрачной, защищённой и управляемой.',s1:'Управление объектами',sd1:'Актуальные данные по недвижимости, аренде, платежам и состоянию каждого апартамента.',s2:'Сервисы под ключ',sd2:'Ремонт, клининг, фотоотчёт, проверка арендатора и любые локальные задачи — по одной заявке.',s3:'Аренда и продажа',sd3:'Поможем найти надёжного арендатора, подготовить объект или организовать продажу.',quote:'«Мы берём на себя операционные вопросы, чтобы недвижимость приносила спокойствие и доход.»',quoteBy:'Property Control · ваш партнёр на месте',cta:'Начните управлять недвижимостью спокойно',ctaText:'Создайте аккаунт, добавьте объект — и получите полный контроль в одном кабинете.',footer:'Property Control · Remote Property Management'},
+  en:{eyebrow:'Property management in Bulgaria',title:'Your property, <em>under control.</em> Wherever you are.',copy:'Property Control helps owners manage property with confidence: track payments, order services, and resolve local matters quickly.',start:'Create account',login:'Sign in',learn:'Explore the benefits ↓',trust1:'Secure data',trust2:'Local support',trust3:'Full online control',dash:'Your dashboard',income:'Monthly income',b1:'Every property in one place',d1:'Track rent, bills, documents, and each property’s condition from anywhere in the world.',b2:'Fast local solutions',d2:'Order cleaning, repairs, tenant checks, or photo reports — we organise everything on site.',b3:'Clear finances',d3:'See income, expenses, and upcoming payments for every property without spreadsheets or chaos.',kicker:'How we help',h2:'Less to worry about. More confidence in every decision.',lead:'Whether you live in Bulgaria or abroad, your property stays transparent, protected, and easy to manage.',s1:'Property management',sd1:'Current property, rent, payment, and condition information — all in one place.',s2:'Services end to end',sd2:'Repairs, cleaning, photo reports, tenant checks, and any local task — with one request.',s3:'Renting and selling',sd3:'We help find reliable tenants, prepare the property, or organise a sale.',quote:'“We take care of the operational details, so your property brings peace of mind and income.”',quoteBy:'Property Control · your local partner',cta:'Start managing property with confidence',ctaText:'Create an account, add a property, and get full control in one dashboard.',footer:'Property Control · Remote Property Management'},
+  bg:{eyebrow:'Управление на имоти в България',title:'Вашият имот — <em>под контрол.</em> Където и да сте.',copy:'Property Control помага на собствениците да управляват спокойно: да следят плащания, да заявяват услуги и бързо да решават въпроси на място.',start:'Създайте акаунт',login:'Вход',learn:'Разгледайте възможностите ↓',trust1:'Защитени данни',trust2:'Подкрепа на място',trust3:'Пълен онлайн контрол',dash:'Вашият кабинет',income:'Месечен доход',b1:'Всички имоти на едно място',d1:'Следете наеми, сметки, документи и състоянието на всеки имот от всяка точка на света.',b2:'Бързи решения на място',d2:'Заявете почистване, ремонт, проверка на наемател или фотоотчет — ние организираме всичко.',b3:'Ясни финанси',d3:'Виждате приходи, разходи и предстоящи плащания за всеки имот без таблици и хаос.',kicker:'Как помагаме',h2:'По-малко грижи. Повече сигурност във всяко решение.',lead:'Независимо дали сте в България или в чужбина, имотът ви остава прозрачен, защитен и лесен за управление.',s1:'Управление на имоти',sd1:'Актуална информация за имоти, наеми, плащания и състояние — на едно място.',s2:'Услуги от край до край',sd2:'Ремонт, почистване, фотоотчет, проверка на наемател и всяка местна задача — с една заявка.',s3:'Наемане и продажба',sd3:'Помагаме да намерите надежден наемател, да подготвите имота или да организирате продажба.',quote:'„Поемаме оперативните детайли, за да носи имотът ви спокойствие и доход.“',quoteBy:'Property Control · вашият местен партньор',cta:'Управлявайте имота си спокойно',ctaText:'Създайте акаунт, добавете имот и получете пълен контрол в един кабинет.',footer:'Property Control · Remote Property Management'}
+};
+function landingLang(l){lang=l;localStorage.setItem('pc_lang',l);renderLanding();}
+function landingRegister(){showScreen('screen-register');applyLangUI();chooseLangReg(lang);}
+function landingLogin(){showScreen('screen-login');applyLangUI();}
+function landingScroll(){var el=document.getElementById('landing-benefits');if(el)el.scrollIntoView({behavior:'smooth'});}
+function renderLanding(){
+  var x=LANDING[lang]||LANDING.ru;
+  document.getElementById('landing-content').innerHTML=
+    '<nav class="landing-nav"><div class="landing-brand"><span class="landing-brand-mark">P</span>Property Control</div><div class="landing-nav-right"><div class="landing-langs"><button class="'+(lang==='en'?'on':'')+'" onclick="landingLang(\'en\')">EN</button><button class="'+(lang==='ru'?'on':'')+'" onclick="landingLang(\'ru\')">RU</button><button class="'+(lang==='bg'?'on':'')+'" onclick="landingLang(\'bg\')">BG</button></div><button class="landing-login" onclick="landingLogin()">'+x.login+'</button></div></nav>'+
+    '<section class="landing-hero"><div><div class="landing-eyebrow">'+x.eyebrow+'</div><h1 class="landing-title">'+x.title+'</h1><p class="landing-copy">'+x.copy+'</p><div class="landing-actions"><button class="landing-primary" onclick="landingRegister()">'+x.start+' →</button><button class="landing-secondary" onclick="landingScroll()">'+x.learn+'</button></div><div class="landing-trust"><span>'+x.trust1+'</span><span>'+x.trust2+'</span><span>'+x.trust3+'</span></div></div><div class="landing-visual"><div class="visual-label">'+x.dash+'</div><div class="visual-card visual-float"><small><i></i>'+x.income+'</small><b>€ 2,450</b></div><div class="visual-card visual-home"><div class="visual-home-top"><div class="visual-home-title">Sunny Beach Residence</div><span class="visual-status">● Active</span></div><div class="visual-bars"><span class="visual-bar"></span><span class="visual-bar"></span><span class="visual-bar"></span><span class="visual-bar"></span><span class="visual-bar"></span></div><div class="visual-income"><span>Jan</span><b>+ 14.8%</b><span>May</span></div></div></div></section>'+
+    '<section class="landing-section landing-section-alt" id="landing-benefits"><div><div class="landing-kicker">'+x.kicker+'</div><h2 class="landing-h2">'+x.h2+'</h2><p class="landing-lead">'+x.lead+'</p><div class="benefit-grid"><article class="benefit"><div class="benefit-icon">⌂</div><h3>'+x.b1+'</h3><p>'+x.d1+'</p></article><article class="benefit"><div class="benefit-icon">✦</div><h3>'+x.b2+'</h3><p>'+x.d2+'</p></article><article class="benefit"><div class="benefit-icon">◌</div><h3>'+x.b3+'</h3><p>'+x.d3+'</p></article></div></div></section>'+
+    '<section class="landing-section"><div class="service-layout"><div><div class="landing-kicker">Property Control</div><h2 class="landing-h2">'+x.kicker+'</h2><div class="service-list"><div class="service-item"><span class="service-num">01</span><div><h3>'+x.s1+'</h3><p>'+x.sd1+'</p></div></div><div class="service-item"><span class="service-num">02</span><div><h3>'+x.s2+'</h3><p>'+x.sd2+'</p></div></div><div class="service-item"><span class="service-num">03</span><div><h3>'+x.s3+'</h3><p>'+x.sd3+'</p></div></div></div></div><aside class="quote-card"><div class="quote-mark">“</div><p>'+x.quote+'</p><small>'+x.quoteBy+'</small></aside></div></section>'+
+    '<section class="landing-cta"><h2>'+x.cta+'</h2><p>'+x.ctaText+'</p><button class="landing-primary" onclick="landingRegister()">'+x.start+' →</button></section><footer class="landing-footer">'+x.footer+'</footer>';
+}
 
 // ══════════════════════════════════════════
 // SUPABASE
@@ -1369,7 +1427,8 @@ function doGoogleLogin(){
 function doLogout(){
   sbToken=null;curUser=null;curRole=null;
   localStorage.removeItem('pc_sess');
-  showScreen('screen-login');
+  renderLanding();
+  showScreen('screen-landing');
 }
 
 // ══════════════════════════════════════════
@@ -1607,8 +1666,8 @@ window.addEventListener('load',function(){
     }catch(e){localStorage.removeItem('pc_sess');}
   }
 
-  if(!savedLang) showScreen('screen-lang');
-  else showScreen('screen-login');
+  renderLanding();
+  showScreen('screen-landing');
 });
 
 // ══════════════════════════════════════════
